@@ -1,0 +1,157 @@
+---
+title: 'RetroXR v0.3.0: achievements, memory cards, and a Wii you have to sync'
+date: 2026-08-15T18:00:00Z
+authors: ryan
+excerpt: RetroAchievements, PS1 memory cards you slot in by hand, a Wii with a sensor bar you place on the TV, four composite inputs, and a stereoscopic 3DS.
+tags:
+  - release
+---
+
+import { Image } from 'astro:assets';
+import Turntable from '../../../components/Turntable.astro';
+import achievement from '../../../assets/blog/v030_achievement.png';
+import memoryCards from '../../../assets/blog/v030_memory_cards.png';
+import consolePoster from '../../../assets/wii/console_poster.png';
+import wiimotePoster from '../../../assets/wii/wiimote_poster.png';
+
+**[Full changelog](https://github.com/XenuIsWatching/RetroXR/compare/v0.2.0...v0.3.0)** ·
+[SideQuest](https://sidequestvr.com/app/61366/retroxr) ·
+[Discord](https://discord.gg/mdjdBDTdW)
+
+## Major new features
+
+### 🌟 RetroAchievements
+
+Log in with your [RetroAchievements](https://retroachievements.org) account and have it
+sync your achievements along with rich presence and notifications. You can even view
+achievements from the menu without running the game.
+
+<Image src={achievement} alt="An achievement toast in the headset reading “Achievement unlocked · 1 — Now You're Playing With Fire! Find and collect a Fire Flower”, floating above a TV running Super Mario Bros., with an NES controller held in front of it." />
+
+*Hardcore mode achievements are not yet supported, as this project needs to exist for six
+months per RetroAchievements' policy.*
+
+### 🎮 PS1 memory card
+
+Now supports PlayStation 1 memory cards. The card is a real 3D object that you slot into
+the PlayStation. There is even a manager for all these cards. Keep multiple saves on one
+card, move them to another card, back them up with RomM, or delete them off the card.
+
+<Image src={memoryCards} alt="The memory card manager, showing a card named “this is my save” with 3 of 15 blocks used and three saves — Crash Bandicoot 2, FF7 and Metal Gear Solid — each with move, cloud-backup and delete buttons, above a “Restore a save from RomM” option." />
+
+### 📡 HDHomeRun tuner support
+
+Have an HDHomeRun with an antenna on your local network? Now it can automatically discover
+it, set the source on your TV to the tuner, and use the CH up and down buttons to cycle
+through your local channels.
+
+### 🎮 Wii
+
+Now there is a primitive model for the Wii, along with a sensor bar that you have to place
+on your TV. This allows you to play a Wii game just like you would in real life! Pick up
+the Wiimote and swing it around. You can even spawn in a Wii MotionPlus to attach to this
+Wiimote and enjoy Wii MotionPlus games.
+
+Spawn a Wii and Wiimote and then press the sync button on both to connect them, just like a
+real Wii — press the sync button on the Wii first.
+
+<Turntable
+	src="/video/wii/console.mp4"
+	poster={consolePoster}
+	alt="The Wii console model rotating: a white slab with a disc slot along its front face."
+	caption="The Wii."
+/>
+
+<Turntable
+	src="/video/wii/wiimote.mp4"
+	poster={wiimotePoster}
+	alt="The Wii Remote model rotating: a white wand with a d-pad, an A button, and the 1 and 2 buttons down its face."
+	caption="The Wii Remote. Its sync button sits under the battery cover."
+/>
+
+[See it in action on YouTube.](https://youtu.be/PHeaNuKQqNM)
+
+A Wii composite adapter must be used with the Wii for A/V out, which can now be spawned.
+
+*Unfortunately, due to limitations of libretro, Wii Nunchuk support isn't in, where the
+second accelerometer from the Nunchuk is used. I am trying to see if I can get a proposal
+into RetroArch (libretro) that will allow for a standard way of having a "second" sensor on
+a controller port.*
+
+*A custom fork of Dolphin is now downloaded by the core manager which includes a fix for a
+race condition on Android, IR passthrough for the sensor bar, and Wii MotionPlus gyro
+fixes. Fork source is [here](https://github.com/XenuIsWatching/dolphin).*
+
+### 🎮 3DS
+
+A custom build is now provided which gives the 3D effect, which can be downloaded from the
+core manager.
+
+*Fork source is
+[here](https://github.com/XenuIsWatching/azahar/tree/libretro-stereo-options). Although the
+patch has already been merged upstream, nightly builds are not available as of the time of
+this release.*
+
+## ✨ Minor new features
+
+### 💿 Disc model
+
+- A model of each disc has been made for each system.
+
+### 📺 TV
+
+- Sick and tired of swapping composite cables into a TV? Now there are **four** composite
+  inputs on a TV. Use the source button on the TV or remote to cycle through them.
+- TV now has an aspect ratio button to switch between 16:9 and 4:3.
+- Have an older game console like the NES? Hook up an NES RF adapter to the antenna input.
+  - The ANT IN on the RF adapter is unused "for now 😉".
+
+### 🖥️ Desktop computer
+
+- Now has a primitive model for PS/2 mouse and keyboard plugs, as well as the VGA DE-15
+  port and the 3.5 mm TRS (lime) audio connector.
+- Spawn a monitor and speakers to connect the 3.5 mm audio connector and the VGA input to.
+  - The speaker has a knob on it to adjust its volume.
+
+### 🎮 ⌨️ 🖱️ Bluetooth controller / keyboard / mouse adapter
+
+- Have your own Bluetooth controller? Now in the Controllers tab, with automatic detection
+  of a connected controller, spawn a **Controller Receiver** which will forward all input
+  from that Bluetooth (or USB) controller to the system controller port that you plug it
+  into.
+
+### 📋 Menu
+
+- Platforms which don't have any core downloaded now show up as purple.
+- Compact tiles, and hiding a system from the Systems/Cartridges grids.
+- Options menu is now split into tabs.
+- Saves for a cartridge are now reachable from the spawn menu.
+- Graphics controls have been expanded.
+- Debug options have been added as well for debugging issues.
+- Secondary systems are now displayed: Satellaview, Sufami Turbo, Amiga CD32, Amiga CDTV,
+  Famicom Disk System, 64DD, SuperGrafx, PCE-CD, Atari 8-bit, SVI, 32X, SG-1000, Pico, Game
+  Gear and Sega CD (now systems in their own right rather than folded into others), Channel
+  F, Wii, and Game & Watch.
+
+## 📦 Other
+
+- Haptic tick when a VR hand presses a key, button, or mouse click.
+
+## 🐛 Bug and performance fixes
+
+- Numerous libretro crashes fixed.
+- Better Vulkan synchronization.
+- Fixed getting the correct disk image for a multi-disk game, where only the image for the
+  first disk was retrieved for all disks.
+- Fixed issue with downloading multi-file games from RomM.
+- Multiple fixes with saving and loading a room.
+- Many primitive model and collision adjustments.
+- Many, many other numerous things 😜
+
+## ⚠️ Known issues
+
+- Dolphin with passthrough and Vulkan seems to leave odd artifacts on the screen, on Quest
+  only.
+  - Select **OpenGL ES 3** as the preferred HW renderer in the Core Manager options for
+    Dolphin.
+- Netplay is *extremely experimental*.
