@@ -1,0 +1,221 @@
+/* RetroXR palette.
+   These values are the app's own, from Tools/gen_app_icons.py in the game repo,
+   and they are what retroxr-lockup.svg is drawn with. Keep the two in step. */
+:root {
+	--rxr-ink: #0b0f1c;
+	--rxr-panel: #141c33;
+	--rxr-panel-2: #1b2440;
+	--rxr-text: #eef3ff;
+	--rxr-muted: #b9c5e0;
+	--rxr-accent: #2de3a7;
+	--rxr-glow: #1cc98e;
+	--rxr-kofi: #ff6433;
+}
+
+/* Dark is the brand: phosphor green on ink, the way a CRT actually looks. */
+:root {
+	--sl-color-accent-low: #0a3b2b;
+	--sl-color-accent: #1cc98e;
+	--sl-color-accent-high: #8ff3d0;
+
+	--sl-color-white: #ffffff;
+	--sl-color-gray-1: #eef3ff;
+	--sl-color-gray-2: #d3dcf0;
+	--sl-color-gray-3: #b9c5e0;
+	--sl-color-gray-4: #7f8cad;
+	--sl-color-gray-5: #495270;
+	--sl-color-gray-6: #1b2440;
+	--sl-color-gray-7: #141c33;
+	--sl-color-black: #0b0f1c;
+
+	--sl-color-bg: var(--rxr-ink);
+	--sl-color-bg-nav: color-mix(in srgb, var(--rxr-panel) 92%, transparent);
+	--sl-color-bg-sidebar: var(--rxr-ink);
+	--sl-color-bg-inline-code: var(--rxr-panel-2);
+	--sl-color-hairline-shade: #223054;
+}
+
+/* Light theme keeps the same hues but darkens the green — #2de3a7 on white is
+   about 1.7:1, which is unreadable. */
+:root[data-theme='light'] {
+	--sl-color-accent-low: #c6f4e4;
+	--sl-color-accent: #0f7a5a;
+	--sl-color-accent-high: #0a4636;
+
+	--sl-color-white: #0b0f1c;
+	--sl-color-gray-1: #131a2c;
+	--sl-color-gray-2: #2c3654;
+	--sl-color-gray-3: #5a6482;
+	--sl-color-gray-4: #7f8cad;
+	--sl-color-gray-5: #c3cade;
+	--sl-color-gray-6: #e3e7f2;
+	--sl-color-gray-7: #eef1f8;
+	--sl-color-black: #ffffff;
+
+	--sl-color-bg: #ffffff;
+	--sl-color-bg-nav: #f4f6fb;
+	--sl-color-bg-sidebar: #f8f9fd;
+	--sl-color-bg-inline-code: #eef1f8;
+	--sl-color-hairline-shade: #dfe4f0;
+}
+
+/* The header lockup is a wide wordmark, so it is sized by height and left to
+   find its own width. Below ~2.5rem the "RetroXR" text stops being legible. */
+.site-title img {
+	height: 2.5rem;
+	width: auto;
+	max-width: none;
+}
+
+@media (max-width: 50rem) {
+	.site-title img {
+		height: 2rem;
+	}
+}
+
+/* ── Splash / landing ───────────────────────────────────────────────────── */
+
+.hero > img,
+.hero .hero-html img {
+	filter: drop-shadow(0 0 3rem color-mix(in srgb, var(--rxr-glow) 30%, transparent));
+	border-radius: 1.25rem;
+}
+
+.rxr-lede {
+	font-size: var(--sl-text-lg);
+	color: var(--sl-color-gray-2);
+	max-width: 52ch;
+}
+
+.rxr-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(19rem, 100%), 1fr));
+	gap: 1.5rem;
+	margin-block: 2.5rem;
+	padding: 0;
+	list-style: none;
+}
+
+.rxr-card {
+	display: flex;
+	flex-direction: column;
+	background: var(--rxr-panel);
+	border: 1px solid var(--sl-color-hairline-shade);
+	border-radius: 0.9rem;
+	overflow: hidden;
+}
+
+:root[data-theme='light'] .rxr-card {
+	background: var(--sl-color-gray-7);
+}
+
+/* These are UI screenshots, so they letterbox rather than crop — `cover` was
+   slicing the last nav tab off every menu shot. */
+.rxr-card img,
+.rxr-card video {
+	display: block;
+	width: 100%;
+	height: auto;
+	aspect-ratio: 16 / 10;
+	object-fit: contain;
+	background: var(--rxr-ink);
+	border-bottom: 1px solid var(--sl-color-hairline-shade);
+}
+
+.rxr-card-body {
+	padding: 1rem 1.15rem 1.25rem;
+}
+
+.rxr-card h3 {
+	margin: 0 0 0.4rem;
+	font-size: var(--sl-text-lg);
+	color: var(--sl-color-white);
+}
+
+.rxr-card p {
+	margin: 0;
+	color: var(--sl-color-gray-3);
+	font-size: var(--sl-text-sm);
+	line-height: 1.6;
+}
+
+/* A card whose media should span the grid's full width rather than sit in a
+   single column — used for the page-turn clip. */
+@media (min-width: 50rem) {
+	.rxr-card--wide {
+		grid-column: 1 / -1;
+		flex-direction: row;
+	}
+	.rxr-card--wide img,
+	.rxr-card--wide video {
+		width: 50%;
+		border-bottom: none;
+		border-right: 1px solid var(--sl-color-hairline-shade);
+	}
+	.rxr-card--wide .rxr-card-body {
+		align-self: center;
+	}
+}
+
+/* ── Honest-caveats strip ───────────────────────────────────────────────── */
+
+.rxr-caveats {
+	border: 1px solid var(--sl-color-hairline-shade);
+	border-left: 3px solid var(--rxr-accent);
+	border-radius: 0.6rem;
+	background: color-mix(in srgb, var(--rxr-panel) 60%, transparent);
+	padding: 1.1rem 1.35rem;
+	margin-block: 2.5rem;
+}
+
+.rxr-caveats h2 {
+	margin-top: 0;
+	font-size: var(--sl-text-lg);
+	border: none;
+}
+
+.rxr-caveats ul {
+	margin-bottom: 0;
+}
+
+/* ── Autoplaying demo clips ─────────────────────────────────────────────── */
+
+video[autoplay] {
+	pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	video[autoplay] {
+		display: none;
+	}
+}
+
+/* A row of connector photos with captions, used on the platform pages. */
+.rxr-conn-pair-row {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(12rem, 100%), 1fr));
+	gap: 1rem;
+	margin-block: 1.5rem;
+}
+
+.rxr-conn-pair-row figure {
+	margin: 0;
+}
+
+.rxr-conn-pair-row img {
+	display: block;
+	width: 100%;
+	height: auto;
+	aspect-ratio: 4 / 3;
+	object-fit: contain;
+	background: var(--rxr-ink);
+	border: 1px solid var(--sl-color-hairline-shade);
+	border-radius: 0.6rem;
+}
+
+.rxr-conn-pair-row figcaption {
+	margin-top: 0.35rem;
+	text-align: center;
+	font-size: var(--sl-text-xs);
+	color: var(--sl-color-gray-4);
+}

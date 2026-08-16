@@ -1,0 +1,77 @@
+---
+title: Box art and manuals
+description: Scrape cover art, screenshots and scanned manuals for the games you own, and read the manual while you play.
+sidebar:
+  order: 2
+---
+
+import { Steps, Aside } from '@astrojs/starlight/components';
+import { Image } from 'astro:assets';
+import credentials from '../../../../assets/scraper/scraper_credentials.png';
+import scrapeRom from '../../../../assets/scraper/scrape_a_rom.png';
+
+A shelf of identical gray cartridges is not much of a shelf. RetroXR can fetch cover art,
+screenshots, game details and **scanned manuals** from
+[ScreenScraper](https://screenscraper.fr), so your library looks like a library.
+
+## Setting up your account
+
+ScreenScraper accounts are free, and worth the two minutes — anonymous scraping is heavily
+rate-limited.
+
+<Steps>
+
+1. Register at [screenscraper.fr](https://screenscraper.fr), then open the menu in RetroXR
+   and go to `OPTIONS`.
+
+2. Pick the **Scraper** tab, marked ① below.
+
+3. Enter your **Username (ssid)** and **Password** in the fields marked ②.
+
+</Steps>
+
+<Image src={credentials} alt="The OPTIONS screen with the Scraper tab highlighted, and a box around the Username (ssid) and Password fields. Region Priority and Language Priority sit below them." />
+
+Below the credentials are two more settings worth knowing about:
+
+- **Region Priority** — which region's cover you get when several exist. The default is
+  `us, eu, jp, ss`.
+- **Language Priority** — the same idea for language, defaulting to `en, fr`.
+
+Reorder these if you would rather have European boxes than North American ones.
+
+## Scraping a game
+
+Open `SPAWN` → **Cartridges**, pick a system, and find the game in the list. Each row
+carries its own controls on the right.
+
+<Image src={scrapeRom} alt="A row in the Cartridges list for 3-D WorldRunner, with circles around two icons on the right: a database-and-magnifier icon for scraping, and an open-book icon for reading the manual." />
+
+**① — the database-and-magnifier icon starts a scrape** for that one game. RetroXR hashes
+the ROM, sends it to ScreenScraper, and fills in whatever comes back.
+
+**② — the open-book icon appears once a manual has been found**, and spawns it as a book
+you can hold.
+
+The other two icons on the row are the gamepad, which spawns the cartridge and starts it,
+and the list, which reaches that game's saves.
+
+## What you get
+
+- **Box art** on the cartridge itself and in the Cartridges list.
+- **Screenshots and game details.**
+- **Marquees**, for the arcade systems that had them.
+- **Manuals**, which become real books.
+
+## Reading the manual while you play
+
+This is the part worth doing. A scraped manual spawns as a physical book — leave it open
+on the desk next to the TV while the game runs, which is what manuals were for.
+
+Page turning, sizing and the half-page option are covered on
+[books and magazines](/guide/room/books/).
+
+<Aside type="note">
+	ScreenScraper matches on file hashes and names, so an unusually named or heavily patched
+	ROM may not be found. That is a limitation of the database rather than of RetroXR.
+</Aside>

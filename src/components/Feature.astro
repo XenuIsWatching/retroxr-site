@@ -1,0 +1,41 @@
+---
+import { Image } from 'astro:assets';
+
+interface Props {
+	title: string;
+	img?: ImageMetadata;
+	alt?: string;
+	video?: string;
+	poster?: ImageMetadata;
+	wide?: boolean;
+}
+
+const { title, img, alt = '', video, poster, wide = false } = Astro.props;
+---
+
+<li class:list={['rxr-card', wide && 'rxr-card--wide']}>
+	{
+		video ? (
+			<video
+				src={video}
+				poster={poster?.src}
+				autoplay
+				loop
+				muted
+				playsinline
+				aria-label={alt}
+			/>
+		) : img ? (
+			<Image
+				src={img}
+				alt={alt}
+				widths={[320, 640, 960]}
+				sizes="(min-width: 72rem) 22rem, (min-width: 50rem) 45vw, 92vw"
+			/>
+		) : null
+	}
+	<div class="rxr-card-body">
+		<h3>{title}</h3>
+		<p><slot /></p>
+	</div>
+</li>

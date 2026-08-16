@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Tools/wii_sync_anim.gd" id="1_wsync"]
+
+[node name="WiiSyncAnim" type="Node"]
+script = ExtResource("1_wsync")

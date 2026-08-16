@@ -1,0 +1,133 @@
+---
+title: PlayStation
+description: Discs, BIOS files, and memory cards you slot in by hand and manage card by card.
+sidebar:
+  order: 3
+---
+
+import { Steps, Aside } from '@astrojs/starlight/components';
+import { Image } from 'astro:assets';
+import Turntable from '../../../../components/Turntable.astro';
+import cardPoster from '../../../../assets/ps1/memory_card_poster.png';
+import cardAnnotated from '../../../../assets/ps1/memory_card_annotated.png';
+import biosPsx from '../../../../assets/screenshots/cores_bios_psx.png';
+import RommMark from '../../../../components/RommMark.astro';
+
+The PlayStation is the platform that best shows what RetroXR does with saves. Your save is
+not a hidden file in a folder — it is on a **memory card**, and the card is an object you
+hold, slot in, and can lose.
+
+## Before anything: the BIOS
+
+The PlayStation will not boot without its BIOS, and RetroXR cannot ship it. Open `CORES` →
+**BIOS / Extras** and pick PlayStation to see exactly which files it wants.
+
+<Image src={biosPsx} alt="The BIOS / Extras view for PlayStation, listing scph5500.bin, scph5501.bin, scph5502.bin and psxonpsp660.bin with their required or optional status and per-file download buttons." />
+
+The filenames have to match exactly — `scph5500.bin`, `scph5501.bin`, `scph5502.bin` and
+`psxonpsp660.bin`. A file that is right in every way except its name will not be found.
+
+If you run a [RomM](https://romm.app) server holding your firmware, RetroXR can pull these
+down directly. Otherwise copy them in the usual way — see
+[adding your games](/guide/adding-games/) and [BIOS files](/guide/cores/bios/).
+
+## Memory cards
+
+<Turntable
+	src="/video/ps1/memory_card.mp4"
+	poster={cardPoster}
+	alt="A PlayStation memory card model rotating, showing the label reading MEMORY CARD 1 and the connector edge."
+	caption="A memory card. Slot it into the console's card port; your saves live on it, not in a folder."
+/>
+
+<Image src={cardAnnotated} alt="A PlayStation memory card with two parts circled: the connector edge marked 1, and the printed label reading MEMORY CARD 1 marked 2." />
+
+**① The connector edge** goes into the console's card slot. **② The label** names the
+card, which is how you tell two of them apart on a shelf.
+
+### Using one
+
+<Steps>
+
+1. Spawn a **memory card** from `SPAWN` → **Objects**.
+
+2. Push it into one of the console's two card slots.
+
+3. Play. The game saves to that card, in that slot.
+
+</Steps>
+
+Because a card is a real object rather than a setting, the things you could do with a real
+one work here:
+
+- **Keep several saves on one card**, until it runs out of blocks.
+- **Move a save from one card to another.**
+- **Delete a save** to free blocks.
+- **Back a card up** to your RomM server.
+
+There is a manager for all of this, reachable from the card itself: point at it and press
+the **menu button**.
+
+<Aside type="tip" title="If a game cannot find your save">
+	Saves are per card, and per slot. The usual cause is a different card in the slot, or
+	the right card in the wrong slot. Check the card before suspecting the emulator.
+</Aside>
+
+<Aside type="caution" title="You cannot delete a save while the console is on">
+	Power the machine down first. It is the same rule cartridge saves follow — see
+	[game saves and backups](/guide/connecting/saves/).
+</Aside>
+
+### <RommMark />Backing a card up to RomM
+
+A card you can lose is a card worth backing up, and this is the reason to connect a
+[RomM](https://romm.app) server even if you copy your games across by hand.
+
+<Steps>
+
+1. [Connect RomM](/guide/connecting/romm/).
+
+2. Back the card up from its own manager.
+
+3. The card's contents live on your server, not only on the headset.
+
+</Steps>
+
+That matters more here than for most saves: on a Quest you cannot safely copy save files
+back **in** from a PC — files pushed from a computer land owned by the shell rather than
+the app, and RetroXR can no longer write to them. RomM is the route that avoids the
+problem entirely.
+
+Full detail on [game saves and backups](/guide/connecting/saves/).
+
+## Discs
+
+Spawn a game from `SPAWN` → **Cartridges** and it arrives as a disc rather than a
+cartridge. Open the console's lid, set the disc in the tray, close it, and power on.
+
+Multi-disc games work — RetroXR retrieves the right image for each disc rather than
+handing every disc the first one, which was a real bug fixed in
+[v0.3.0](/blog/).
+
+<Aside type="note" title="A procedural stand-in">
+	The PlayStation is one of the machines wearing a clean procedural stand-in rather than
+	a detailed replica — fully playable, deliberately minimalist, like most of the hardware
+	in the room. The memory cards above are the exception, and they are in.
+</Aside>
+
+## Controllers
+
+Plug a pad into one of the two controller ports. For a real gamepad, spawn a **Controller
+Receiver** and plug that in instead — see
+[controllers and peripherals](/guide/playing/controllers/).
+
+## Cores
+
+The PlayStation has several libretro cores with different accuracy and speed trade-offs.
+Pick the default in `CORES` → **Manager** — see [downloading and managing
+cores](/guide/cores/downloading/).
+
+:::caution[Needs an in-headset pass]
+The memory card manager's exact controls, and the lid and tray interaction, are written
+from the code and the v0.3.0 release notes rather than from a session in the headset.
+:::

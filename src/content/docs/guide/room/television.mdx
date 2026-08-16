@@ -1,0 +1,94 @@
+---
+title: The television
+description: The set's own buttons, its four inputs, the CRT effect, and live TV from an HDHomeRun tuner.
+sidebar:
+  order: 0
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import { Image } from 'astro:assets';
+import Turntable from '../../../../components/Turntable.astro';
+import avPanel from '../../../../assets/av/tv_av_panel.png';
+import tvPoster from '../../../../assets/av/tv_poster.png';
+
+The television is the most important object in the room, because nothing else means
+anything until something is showing on it. It behaves like a television: it has a power
+button, a volume control, inputs you switch between, and it shows a blank screen when
+nothing is reaching it.
+
+<Turntable
+	src="/video/av/tv.mp4"
+	poster={tvPoster}
+	alt="The television model rotating, showing the screen and control buttons on the front and the labeled input panel on the back."
+	caption="The set. Controls along the front, inputs across the back."
+/>
+
+## The buttons on the set
+
+All of these are on the set itself, and all of them are also on the
+[TV remote](/guide/room/tv-remote/) if you would rather not walk over.
+
+| Button | Does |
+| --- | --- |
+| **Power** | Turns the set on and off. A powered-off set shows nothing even if a console is running |
+| **Volume −** / **Volume +** | Volume for whatever input is currently showing |
+| **Mute** | Silence without changing the volume |
+| **Source** | Cycles the inputs — Composite 1 through 4, the antenna, and VGA |
+| **Channel −** / **Channel +** | Tunes up and down when the set is on the antenna input |
+| **Audio mode** | Switches between stereo and mono output |
+| **Aspect** | Switches the picture between 16:9 and 4:3 |
+| **CRT** | Turns the CRT effect on and off — scanlines, curvature and phosphor glow |
+| **3D** | For stereoscopic sources: both eyes, left eye only, or right eye only |
+
+<Aside type="tip" title="The 3D button">
+	Systems that produce a stereoscopic picture — the 3DS, the Virtual Boy — can be shown in
+	3D, or forced to a single eye if that is more comfortable. The cap shows an eye leaning
+	toward whichever side it is showing, so you can tell at a glance.
+</Aside>
+
+## The inputs
+
+<Image src={avPanel} alt="The back panel of a television: four blocks labeled Composite 1 to Composite 4, each with yellow video and white and red audio sockets marked AV IN, and a separate Antenna block with a single RF IN socket." />
+
+- **Composite 1–4** — four full phono rows, so four machines can stay wired up at once.
+- **Antenna (RF IN)** — for an RF switch, or for a real tuner.
+- **VGA** — on sets that have it, for a computer's DE-15 output.
+
+Which one you see is whatever **Source** last landed on. A machine on an input you are not
+watching keeps running.
+
+Wiring is covered in full on [plugging things in](/guide/playing/plugging-in/).
+
+## Live TV with an HDHomeRun
+
+If you own a [SiliconDust HDHomeRun](https://www.silicondust.com/) tuner with an antenna
+attached, RetroXR can watch actual broadcast television on it. Set the source to the
+antenna input and the channel buttons tune through your real local channels.
+
+### How it finds the box
+
+Discovery is layered, cheapest and most reliable first:
+
+1. An explicit host, if you have named one in `channels.json`.
+2. The last address that worked, cached between sessions.
+3. A UDP broadcast on port 65001 — SiliconDust's own discovery protocol.
+4. `http://hdhomerun.local/discover.json` over mDNS.
+
+mDNS is last on purpose: it is the flakiest of the four. It has returned a link-local IPv6
+address ahead of IPv4 and hung a resolver outright, and Android may not resolve `.local`
+at all. Every other route yields a plain IPv4 address, which always works.
+
+Every URL the tuner hands back is rewritten onto the address that actually answered, for
+the same reason — the headset should never have to resolve a `.local` name while you are
+trying to watch something.
+
+<Aside type="note">
+	The tuner and the headset have to be on the same network. A guest network or a VPN on
+	either end will stop discovery finding anything.
+</Aside>
+
+## Snow
+
+Tune the antenna input to a channel with nothing on it and you get **snow**. That is not a
+failure state — it is the set telling you it works and nothing is reaching it on that
+channel. The same picture appears if an RF switch is connected but its console is off.

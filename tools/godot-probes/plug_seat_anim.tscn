@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Tools/plug_seat_anim.gd" id="1_seat"]
+
+[node name="PlugSeatAnim" type="Node"]
+script = ExtResource("1_seat")

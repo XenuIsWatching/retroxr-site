@@ -1,0 +1,152 @@
+---
+title: Using a real gamepad, keyboard or mouse
+description: Receivers forward the hardware already on your desk into a machine's controller port, with nothing held in your hands.
+sidebar:
+  order: 5
+---
+
+import { Steps, Aside } from '@astrojs/starlight/components';
+import Turntable from '../../../../components/Turntable.astro';
+import { Image } from 'astro:assets';
+import padPoster from '../../../../assets/receivers/pad_receiver_poster.png';
+import kbPoster from '../../../../assets/receivers/keyboard_receiver_poster.png';
+import mousePoster from '../../../../assets/receivers/mouse_receiver_poster.png';
+import controllersTab from '../../../../assets/screenshots/menu_spawn_controllers.png';
+
+Holding an imaginary controller is charming for about ten minutes. If you have a real
+gamepad, keyboard or mouse — Bluetooth or USB — RetroXR can forward it into a machine, and
+your hands stay free.
+
+The way it does that is a **receiver**: a small box on a one-meter lead that seats in a
+controller port and forwards exactly one real device to it. Put the Quest controllers down
+and the room still works while the game runs on the hardware in front of you.
+
+<Aside type="tip" title="The object is the binding">
+	There is no menu of devices, no capture mode, and nothing to arbitrate. **Seat a
+	receiver to start, unplug it to stop.** What is plugged in is the whole configuration,
+	and you can see it from across the room.
+</Aside>
+
+## The three receivers
+
+Spawn them from `SPAWN` → **Controllers**. They are color-coded, and each carries a glyph
+for what it forwards.
+
+<Image src={controllersTab} alt="The Controllers tab of the spawn menu, listing a primitive controller, ray gun, mouse and keyboard — with no receivers, because no device was connected." />
+
+<Aside type="caution" title="A receiver only appears once its device is connected">
+	The list above has **no receivers in it** — that screenshot was taken with nothing
+	plugged in. The Controllers tab is rebuilt from what is actually connected right now,
+	so a gamepad receiver only appears once RetroXR can see a gamepad.
+
+	If you cannot find the receiver you want, connect the device first, then reopen the
+	tab.
+</Aside>
+
+### The LED
+
+Every receiver has a small **lit LED** on its body. That is the whole status display:
+seated and live, or not. It is deliberately a light on an object rather than a mode
+indicator in a menu, because an object you can see across the room is easier to find again
+than a setting you toggled.
+
+### Gamepad
+
+<Turntable
+	src="/video/receivers/pad_receiver.mp4"
+	poster={padPoster}
+	alt="The pad receiver rotating: a gray box with a gamepad glyph and a name label on its top face."
+	caption="The pad receiver. Its top face names the gamepad it forwards — and reads NO PAD when nothing is paired."
+/>
+
+A gamepad receiver forwards **one named gamepad**, chosen when it was spawned. That is why
+the label matters: with two pads connected you spawn two receivers, seat them in ports 1
+and 2, and get genuine two-player with nobody holding a virtual controller.
+
+Connect the pad to your headset or PC first — the Controllers tab detects what is
+connected and offers a receiver for it. The one in the picture reads **NO PAD** because
+nothing was paired when it was rendered; normally it carries the name of the gamepad it
+forwards.
+
+### Keyboard
+
+<Turntable
+	src="/video/receivers/keyboard_receiver.mp4"
+	poster={kbPoster}
+	alt="The keyboard receiver rotating: a tan box with keyboard and Bluetooth glyphs on its top face."
+	caption="The keyboard receiver. Seat it in a computer's port and type — no capture key, no mode."
+/>
+
+There is only one keyboard, so there is nothing to choose. Seat the receiver in a
+computer's port and type.
+
+This is deliberately simpler than the virtual keyboard you can pick up and hold, which
+needs **Scroll Lock** pressed before your typing reaches the core. Holding a keyboard is
+ambiguous — you might merely be carrying it — but plugging a receiver in is not. **Seated
+is live**, and the box has a lit LED on it, which is easier to find again than a mode you
+toggled with a key.
+
+### Mouse
+
+<Turntable
+	src="/video/receivers/mouse_receiver.mp4"
+	poster={mousePoster}
+	alt="The mouse receiver rotating: a blue box with mouse and Bluetooth glyphs on its top face."
+	caption="The mouse receiver. The mouse already on your desk, pointing at the machine."
+/>
+
+The virtual mouse is a shell you slide across a surface in VR. It is a lovely object and a
+poor pointing device — it needs a hand, a flat surface and your attention. The receiver
+feeds the same port from the mouse already on your desk.
+
+## Plugging one in
+
+<Steps>
+
+1. Connect the device to your headset or PC as you normally would.
+
+2. Open `SPAWN` → **Controllers** and spawn the matching receiver.
+
+3. Push its plug into one of the machine's **controller ports**, the same way you would
+   seat a controller lead. See [plugging things in](/guide/playing/plugging-in/).
+
+4. That is it. Nothing is held, and the LED shows it is live.
+
+</Steps>
+
+To stop, pull the receiver out of the port.
+
+## Two of the same thing is a fan-out, not a conflict
+
+Seat two keyboard receivers in two different machines and **both** get your keystrokes.
+That is not a bug or an ambiguity — there is one real keyboard, and seating two receivers
+is exactly how you asked for both. It is what a splitter does.
+
+You cannot type at two machines at once in any meaningful sense, so nothing has to be
+arbitrated.
+
+## Handhelds have no ports
+
+A handheld has nowhere to plug a receiver in. Choose the pad from **that machine's own
+Controllers panel** instead — point at the handheld and press the menu button.
+
+## Desktop mode does not use receivers
+
+<Aside type="caution" title="VR only">
+	Receivers exist for VR, and the keyboard and mouse ones are offered in VR only.
+
+	On desktop, **your keyboard and mouse are the player** — `WASD` walks and the mouse
+	looks around. A dongle silently taking the keyboard would fight the controls you are
+	standing on, and gating mouse-look would stop you turning. Desktop keeps the held
+	keyboard with its Scroll Lock capture, and the held mouse shell, untouched.
+</Aside>
+
+A real gamepad plugged into the PC still works in desktop mode — see
+[desktop controls](/guide/reference/desktop-controls/).
+
+## Related
+
+- [Controllers and peripherals](/guide/playing/controllers/) — the virtual pads, light gun,
+  multitap and the rest.
+- [Desktop controls](/guide/reference/desktop-controls/) — the full keyboard mapping when
+  no headset is connected.

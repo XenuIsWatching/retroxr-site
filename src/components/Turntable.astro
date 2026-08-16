@@ -1,0 +1,38 @@
+---
+interface Props {
+	src: string;
+	poster?: ImageMetadata;
+	caption: string;
+	alt: string;
+}
+
+const { src, poster, caption, alt } = Astro.props;
+---
+
+<figure class="rxr-turntable">
+	<video src={src} poster={poster?.src} autoplay loop muted playsinline aria-label={alt}
+	></video>
+	<figcaption>{caption}</figcaption>
+</figure>
+
+<style>
+	.rxr-turntable {
+		margin: 1.5rem 0;
+		border: 1px solid var(--sl-color-hairline-shade);
+		border-radius: 0.75rem;
+		overflow: hidden;
+		background: var(--rxr-ink);
+	}
+	.rxr-turntable video {
+		display: block;
+		width: 100%;
+		height: auto;
+		background: var(--rxr-ink);
+	}
+	.rxr-turntable figcaption {
+		padding: 0.7rem 1rem;
+		font-size: var(--sl-text-sm);
+		color: var(--sl-color-gray-3);
+		border-top: 1px solid var(--sl-color-hairline-shade);
+	}
+</style>

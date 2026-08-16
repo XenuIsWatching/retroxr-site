@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Tools/wii_back_shot.gd" id="1_wbs"]
+
+[node name="WiiBackShot" type="Node"]
+script = ExtResource("1_wbs")

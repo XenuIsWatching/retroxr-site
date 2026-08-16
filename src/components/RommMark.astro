@@ -1,0 +1,28 @@
+---
+import rommLogo from '../assets/romm/romm_logo.svg';
+
+interface Props {
+	size?: number;
+}
+
+const { size = 26 } = Astro.props;
+---
+
+<img
+	class="rxr-romm-mark"
+	src={rommLogo.src}
+	alt=""
+	width={size}
+	height={size}
+	aria-hidden="true"
+/>
+
+<style>
+	/* Sits on the text baseline rather than the line box, so it reads as part of
+	   the heading instead of a floating badge. */
+	.rxr-romm-mark {
+		display: inline-block;
+		vertical-align: -0.18em;
+		margin-right: 0.35rem;
+	}
+</style>

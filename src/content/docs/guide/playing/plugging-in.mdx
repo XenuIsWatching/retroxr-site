@@ -1,0 +1,173 @@
+---
+title: Plugging things in
+description: A/V leads, RF switches, antennas and VGA — how a machine actually reaches a screen in RetroXR.
+sidebar:
+  order: 2
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import { Image } from 'astro:assets';
+import Turntable from '../../../../components/Turntable.astro';
+import ConnectorGrid from '../../../../components/ConnectorGrid.astro';
+import Connector from '../../../../components/Connector.astro';
+import consoleCart from '../../../../assets/screenshots/obj_console_cart.png';
+import avPanel from '../../../../assets/av/tv_av_panel.png';
+import plugRca from '../../../../assets/av/plug_rca.png';
+import plugVga from '../../../../assets/av/plug_vga.png';
+import plugTrs from '../../../../assets/av/plug_trs.png';
+import plugCoax from '../../../../assets/av/plug_coax.png';
+import jackRca from '../../../../assets/av/jack_rca.png';
+import jackVga from '../../../../assets/av/jack_vga.png';
+import jackTrs from '../../../../assets/av/jack_trs.png';
+import jackCoax from '../../../../assets/av/jack_coax.png';
+import seatPoster from '../../../../assets/av/plug_seat_poster.png';
+import rfPoster from '../../../../assets/av/rf_switch_poster.png';
+
+Nothing in RetroXR is wired for you. A console reaches a television because you ran a
+cable between them, and if you run it to the wrong socket you get the wrong result — not
+an error message.
+
+## Seating a plug
+
+Grab the plug — not the cable — with **grip**, bring it to a socket, and it snaps in when
+it is close enough and roughly lined up.
+
+<Turntable
+	src="/video/av/plug_seat.mp4"
+	poster={seatPoster}
+	alt="A yellow composite plug travels along the socket axis into the Composite 1 VIDEO input on a television's AV IN panel, then withdraws."
+	caption="A composite video plug going into Composite 1. The plug snaps the last few millimeters once it is close and lined up."
+/>
+
+A few things that trip people up:
+
+- **Plugs fall.** Let go of one in mid-air and it drops, swinging on its cable. If it
+  lands near a panel of sockets it can seat itself in one of them — which is how a picture
+  lead ends up in the wrong input without you touching it.
+- **Sockets are close together.** A TV's input panel has several video sockets within a
+  couple of centimeters of each other. Aim deliberately.
+- **Pull a plug out** by grabbing it and moving it away from the socket.
+
+The cables are simulated, not decorative — they hang, swing, and take up slack. Give
+yourself room.
+
+## The connectors
+
+Each kind of lead ends in a connector that only fits its own socket. Plug on the left,
+the socket it goes into on the right.
+
+<ConnectorGrid>
+	<Connector plug={plugRca} jack={jackRca} title="Phono (RCA)"
+		plugAlt="A yellow RCA plug." jackAlt="A yellow-ringed RCA socket.">
+		Composite video and stereo audio. Yellow is video, white and red are left and right
+		audio. Three of them make up a composite lead.
+	</Connector>
+	<Connector plug={plugCoax} jack={jackCoax} title="Coax (RF)"
+		plugAlt="A coaxial RF plug." jackAlt="A threaded coaxial socket.">
+		The antenna connection. Used by an RF switch, and by the TV's own antenna input.
+	</Connector>
+	<Connector plug={plugVga} jack={jackVga} title="VGA (DE-15)"
+		plugAlt="A blue DE-15 VGA plug." jackAlt="A DE-15 VGA socket.">
+		For a computer monitor. Carries picture only — audio needs its own lead.
+	</Connector>
+	<Connector plug={plugTrs} jack={jackTrs} title="3.5 mm (TRS)"
+		plugAlt="A 3.5 millimeter TRS audio plug." jackAlt="A green-ringed 3.5 millimeter socket.">
+		Stereo audio on its own, for speakers or a monitor that has no phono row.
+	</Connector>
+</ConnectorGrid>
+
+## AV IN: the television's panel
+
+The sockets live on the back of the set, each block labeled with what it is.
+
+<Image src={avPanel} alt="The back panel of a television: four blocks labeled Composite 1 to Composite 4, each with yellow video and white and red audio sockets marked AV IN, and a separate Antenna block with a single RF IN socket." />
+
+**Four composite inputs**, so you can leave several machines wired up at once instead of
+swapping cables. Cycle between them with the **source** button on the set, or on the
+[TV remote](/guide/room/tv-remote/). The set shows the input it is switched to; the others
+keep running.
+
+There is also an **aspect ratio** button, switching the set between 16:9 and 4:3.
+
+## AV OUT: the machine's panel
+
+The console end is the mirror image — a row of phono sockets on the back, sometimes
+alongside an RF output.
+
+<Image src={consoleCart} alt="A console stand-in: a gray box with a RESET button, a green START button, four numbered controller ports, and a cartridge seated in the top slot." />
+
+<Aside type="note" title="Not every machine has phono out">
+	Older consoles predate composite sockets entirely and reach a television through an RF
+	switch instead. The Wii goes the other way and uses a single **AV Multi Out** connector
+	that fans out to phono — see [the Wii page](/guide/platforms/wii/).
+</Aside>
+
+## Composite: the normal way
+
+Most consoles come with a **composite** lead: the familiar yellow-white-red trio, video
+plus stereo audio.
+
+1. Grab the plug at the console end of the lead if it is not already attached.
+2. Push it into the matching row of phono sockets on the back of the TV.
+3. Set the TV to that input.
+
+Some machines only put out **mono composite** — video plus a single audio channel. It
+seats in the same row; there is simply one fewer plug.
+
+## RF: the antenna way
+
+Older machines feed the television through an **RF switch** rather than a phono row.
+
+<Turntable
+	src="/video/av/rf_switch.mp4"
+	poster={rfPoster}
+	alt="The RXR-003 RF switch rotating: a small white box with a coaxial lead and a phono lead coming out of it."
+	caption="The RXR-003 RF switch. Phono in from the console, coax out to the television's antenna socket."
+/>
+
+The chain is:
+
+```
+console → RF switch → TV antenna socket
+```
+
+Then tune the television to the channel the switch outputs on. On a channel with nothing
+on it you get **snow**, exactly as you would have in 1988 — that is not a bug, it means
+the set is working and the machine is not reaching it.
+
+A console can feed composite and RF at the same time. Both outputs are live; which one you
+see depends on the input the TV is showing.
+
+## VGA and monitors
+
+A **CRT computer monitor** takes a DE-15 (VGA) lead and has no phono row at all. If you
+are staring at a monitor wondering where to put a composite plug, that is why — it takes a
+different cable, and machines that can drive it have a VGA output of their own.
+
+## Audio
+
+Composite carries its own audio. Where a machine has a separate **3.5 mm** output, run
+that to a speaker pair or to the set, or you will have a picture and silence.
+
+The television's own volume and mute controls act on whatever input it is currently
+showing — so a source you cannot hear may simply not be the selected input.
+
+## Live television
+
+If you have an **HDHomeRun** tuner on your network with an antenna attached, RetroXR finds
+it automatically. Set the TV's source to the tuner and the channel up and down buttons
+cycle your actual local channels.
+
+## When there is no picture
+
+Work down this list — it is ordered by how often each one is the answer.
+
+1. **The plug is not seated**, or is seated in the neighboring socket.
+2. **The TV is showing a different input.**
+3. **The TV is switched off.** Its own power button, not the console's.
+4. **The machine is off**, or has no cartridge or disc in it.
+5. **The channel is untuned**, if you went through an RF switch — snow means exactly this.
+6. **No core is installed** for that system, so there is nothing to produce a picture.
+
+A blank input paints blank. That is deliberate: the television behaves like a television,
+so the state of your wiring is always readable from the screen.

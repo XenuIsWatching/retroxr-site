@@ -1,0 +1,109 @@
+---
+title: Light guns
+description: A light gun that works the way the original did — by looking at the screen, not by moving a cursor.
+sidebar:
+  order: 7
+---
+
+import { Steps, Aside } from '@astrojs/starlight/components';
+import Turntable from '../../../../components/Turntable.astro';
+import Clip from '../../../../components/Clip.astro';
+import gunPoster from '../../../../assets/lightgun/ray_gun_poster.png';
+import duckHuntPoster from '../../../../assets/lightgun/duck_hunt_poster.png';
+
+A light gun is not a pointing device with a cursor. It is a thing you aim at a television,
+and RetroXR treats it that way: the gun casts a ray from its barrel at the screen every
+frame and reports where it lands.
+
+<Clip
+	src="/video/lightgun/duck_hunt.mp4"
+	poster={duckHuntPoster}
+	sound
+	alt="A first-person view in the headset: a CRT on a desk running Duck Hunt, with the ray gun held in view, aimed at the screen and fired at the ducks. The NES sits on the desk beside the set, cabled to it."
+	caption="Duck Hunt on the NES, played with the ray gun. Recorded in-headset on a Quest 3 — the green arcs on the floor are the Guardian boundary, and the row of icons on the set is the TV's own control panel."
+/>
+
+## The gun
+
+<Turntable
+	src="/video/lightgun/ray_gun.mp4"
+	poster={gunPoster}
+	alt="The ray gun rotating: a blocky grey pistol with two red buttons on top of the barrel."
+	caption="The ray gun. Spawn it, plug it into a controller port, and point it at the set."
+/>
+
+## Setting one up
+
+<Steps>
+
+1. Spawn a **Ray Gun** from `SPAWN` → **Controllers**.
+
+2. Plug its lead into one of the machine's controller ports — the same cable and plug a
+   controller uses.
+
+3. Pick it up and aim at the television.
+
+</Steps>
+
+It only reports while it is **held and plugged in**. A gun lying on the desk is not
+aiming at anything.
+
+## The controls
+
+| Your VR controller | Light gun |
+| --- | --- |
+| **Trigger** | Fire |
+| **A / X button** | Aux A |
+| **B / Y button** | Aux B |
+| **Thumbstick click** | Start |
+| **Thumbstick** | The gun's d-pad |
+| **Grip** | Unassigned by default |
+
+All of these are rebindable — see [setting up your
+controls](/guide/reference/setting-controls/).
+
+## Aiming, and shooting off-screen
+
+Because the gun raycasts at the actual screen, aiming works the way it did: point at the
+thing, pull the trigger. There is no cursor to chase and no sensitivity to tune.
+
+Games that used a light gun almost always need you to **shoot off-screen** as well —
+reloading in *Duck Hunt*'s successors, for instance. Point away from the television and
+fire; RetroXR reports that as an off-screen shot, which is exactly what the game expects.
+
+<Aside type="tip" title="The gun needs to see a screen">
+	Aiming is resolved against the screen of the TV the machine is connected to. If the
+	machine has no display, or the gun is plugged into a machine whose picture is going
+	somewhere you are not pointing, there is nothing to hit. See
+	[plugging things in](/guide/playing/plugging-in/).
+</Aside>
+
+## The laser dot
+
+There is an optional aim indicator — a dot on the screen showing where the barrel is
+pointing. Real light guns had no such thing, so it is there as an aid rather than as
+authenticity, and it can be turned off.
+
+## On desktop
+
+Without a headset the gun snaps to the lower-right of the screen like an FPS weapon, and
+aiming uses the camera's centre ray, so the crosshair always matches where the gun is
+pointing.
+
+- **Left-click** — fire.
+- **`Ctrl` + Left-click** — drop it. A plain click fires instead, which is why the
+  FPS-snapped objects need the modifier.
+
+See [desktop controls](/guide/reference/desktop-controls/).
+
+## Which systems
+
+Any system whose core supports the libretro light gun device. The NES is the obvious one,
+and its Zapper exists as a port device option.
+
+:::caution[Partly checked in-headset]
+The clip at the top of this page is a real headset capture, so aiming at the set and firing
+are confirmed working. The bindings and the raycast model come from the source and are
+accurate. How the off-screen reload feels in practice, and which games work well, have not
+been checked against a running build.
+:::

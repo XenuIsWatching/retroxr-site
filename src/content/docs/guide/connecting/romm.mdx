@@ -1,0 +1,84 @@
+---
+title: Connecting RomM
+description: Point RetroXR at your own RomM server, pair it by scanning a QR code, and sync saves back.
+sidebar:
+  order: 1
+---
+
+import { Steps, Aside } from '@astrojs/starlight/components';
+import tokenList from '../../../../assets/romm/romm_token_list.png';
+import createToken from '../../../../assets/romm/romm_create_token.png';
+import deliverToken from '../../../../assets/romm/romm_deliver_token.png';
+import pairQr from '../../../../assets/romm/romm_pair_qr.png';
+import { Image } from 'astro:assets';
+import RommMark from '../../../../components/RommMark.astro';
+
+[RomM](https://romm.app) is a self-hosted library manager for a ROM collection. If you run
+one, RetroXR talks to it directly — so instead of copying files into the headset, you
+browse your whole collection from inside it and pull down only what you want to play.
+
+Saves sync back the other way, so a game you played in the headset carries on where you
+left off elsewhere.
+
+## Pairing, step by step
+
+The awkward part of connecting anything in VR is typing a server address and a long API
+key through a floating keyboard. RomM avoids that entirely: it shows a QR code, and you
+look at it through the headset's camera.
+
+<Steps>
+
+1. **Open RomM in a browser** on your computer and sign in.
+
+2. **Click your avatar** in the top-right, then **Client API Tokens** under *Library*.
+
+   <Image src={tokenList} alt="The Client API Tokens page in RomM, listing existing tokens by name with their permissions, expiry and last-used date, above a Create button." />
+
+3. **Click Create.** Give the token a name you will recognize — `RetroXR` is the obvious
+   one — and leave the permissions alone. RetroXR uses the full set to browse your
+   library, download games and firmware, and write saves back.
+
+   <Image src={createToken} alt="The Create new API token dialog: a token name field, an expiration dropdown set to Never, and a grid of permission checkboxes covering personal, library, administration and other scopes, all ticked." />
+
+4. **Choose how to deliver it.** The token is shown exactly once. Press **Pair device** —
+   not *Copy token*, unless you genuinely want to type it by hand.
+
+   <Image src={deliverToken} alt="The Deliver token dialog: a warning that the token will not be shown again, and two buttons, Copy token and Pair device." />
+
+5. **A QR code appears with a short pairing code and a countdown.** It is only valid for
+   about a minute, so have the headset on before you get here.
+
+   <Image src={pairQr} alt="The Pair device dialog, showing a QR code with the RomM logo in its center, a pairing code beneath it, and a countdown timer." />
+
+6. **In RetroXR**, open `OPTIONS` → **RomM** and start the QR scan. Look at your monitor
+   through the headset. The code carries your server's address as well as the pairing
+   code, so both fields fill themselves in.
+
+</Steps>
+
+
+<Aside type="caution" title="Camera permission">
+	Scanning uses the headset's external camera, which Quest gates behind a permission
+	prompt the first time. If the scanner shows nothing at all, that permission is the thing
+	to check.
+</Aside>
+
+## If you would rather not scan
+
+The same screen accepts a server URL and credentials typed by hand — either an API token
+from step 4's *Copy token*, or your RomM username and password.
+
+## <RommMark />What you get
+
+- **Browse the whole collection** from the menu, not just what is on the headset.
+- **Download individual games** on demand, rather than syncing everything.
+- **Firmware and BIOS** files, if your server holds them — see
+  [BIOS files](/guide/cores/bios/).
+- **Save sync** back to the server, including PlayStation memory cards.
+
+## Known rough edges
+
+- **Very large platforms can be slow to sync.** A system with thousands of entries is much
+  heavier than a handful of favorites.
+- RetroXR reads your library as **individual files**, so how your collection is organized
+  on the server affects what you see.

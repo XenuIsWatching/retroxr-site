@@ -1,0 +1,200 @@
+---
+title: RetroXR
+description: A VR retro-gaming room where the hardware is real — pick up a console, run a cable to the TV, push the cartridge in and hit power. Powered by libretro.
+template: splash
+hero:
+  title: The hardware is real
+  tagline: A VR retro-gaming room where you pick up a console, run a cable to the TV, push the cartridge in and hit power. Powered by libretro.
+  image:
+    alt: The RetroXR mark — a headset with two green phosphor lenses
+    file: ../../assets/retroxr-mark.svg
+  actions:
+    - text: Download
+      link: /download/
+      icon: cloud-download
+      variant: primary
+    - text: How to play
+      link: /guide/first-run/
+      icon: open-book
+      variant: secondary
+    - text: Source on GitHub
+      link: https://github.com/XenuIsWatching/RetroXR
+      icon: external
+      variant: minimal
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import FeatureGrid from '../../components/FeatureGrid.astro';
+import Feature from '../../components/Feature.astro';
+import Clip from '../../components/Clip.astro';
+import duckHuntPoster from '../../assets/lightgun/duck_hunt_poster.png';
+import spawnAndPlayPoster from '../../assets/spawn_and_play_poster.png';
+import gamecubePoster from '../../assets/gamecube_quest_poster.png';
+import wiiQuestPoster from '../../assets/wii_quest_poster.png';
+import virtualBoyPoster from '../../assets/virtual_boy_quest_poster.png';
+import n3dsQuestPoster from '../../assets/n3ds_quest_poster.png';
+import coresScrolled from '../../assets/screenshots/cores_scrolled.png';
+import coresBiosPsx from '../../assets/screenshots/cores_bios_psx.png';
+import coresManager from '../../assets/screenshots/cores_manager.png';
+import objConsoleCart from '../../assets/screenshots/obj_console_cart.png';
+import objDvd from '../../assets/screenshots/obj_dvd.png';
+import objVcr from '../../assets/screenshots/obj_vcr.png';
+import objRemote from '../../assets/screenshots/obj_remote.png';
+import bookPoster from '../../assets/screenshots/book_flip_poster.png';
+
+<div class="rxr-lede">
+
+RetroXR turns emulation into something you handle. Instead of a menu, you get a room: a
+console on the floor, a CRT on the stand, cartridges on the shelf.
+
+Spawn a system and a TV, run the A/V cable between them, push a cartridge into the slot
+and hit power. The picture comes up on the TV. Everything is physical — cables hang and
+swing, lids hinge open, discs sit in trays, and a cartridge has to go in the right way up.
+
+</div>
+
+<Clip
+	src="/video/spawn_and_play.mp4"
+	poster={spawnAndPlayPoster}
+	sound
+	alt="The spawn menu open on the ScummVM library, then a beige computer, monitor, keyboard, mouse and speakers standing on a desk. The monitor lights up with the LucasFilm Games logo, the Monkey Island title screen follows, and the game is played from the desk."
+	caption="Picking The Secret of Monkey Island out of the library, standing the computer on the desk, and playing it — about a minute, with sound. Recorded in-headset on a Quest 3."
+/>
+
+<Clip
+	src="/video/lightgun/duck_hunt.mp4"
+	poster={duckHuntPoster}
+	alt="A first-person view in the headset: a CRT on a desk running Duck Hunt, with the ray gun held in view, aimed at the screen and fired at the ducks. The NES sits on the desk beside the set, cabled to it."
+	caption="Duck Hunt, played with a light gun you point at the television — recorded in-headset on a Quest 3. More on how that works in the guide to light guns."
+/>
+
+## What's in the room
+
+<FeatureGrid>
+	<Feature title="Consoles you plug in" img={objConsoleCart} alt="A console stand-in: a gray box with a RESET button, a green START button, four numbered controller ports, and a cartridge seated in the top slot.">
+		Spawn a system, seat a cartridge, run the A/V lead to a TV and hit power. Wire it wrong and you get a blank input — because that is what would happen.
+	</Feature>
+	<Feature title="Cores, downloaded in-headset" img={coresScrolled} alt="The core downloader: a scrollable grid of systems, each showing how many cores are available.">
+		Powered by libretro, so it plays what libretro plays — NES, SNES, Mega Drive, PlayStation, Saturn, Dreamcast, GameCube, Game Boy, DS, 3DS, PSP and plenty more. No setting anything up on a PC first.
+	</Feature>
+	<Feature title="A default core per system" img={coresManager} alt="The core manager: a grid of systems, each labeled with its currently selected core.">
+		Some systems have several cores with different strengths. Pick the one each platform launches with, and set its options, without leaving the headset.
+	</Feature>
+	<Feature title="BIOS files, tracked" img={coresBiosPsx} alt="The BIOS view for PlayStation, listing the PS1 BIOS files with their required or optional status and per-file download buttons.">
+		The systems that need a BIOS say so, file by file, and mark which are required and which are optional — instead of failing to boot with no explanation.
+	</Feature>
+	<Feature title="A DVD player that plays discs" img={objDvd} alt="The DVD player stand-in: a black deck with a disc slot, transport buttons, and a menu navigation cluster.">
+		Real disc menus and chapter navigation, driven by libVLC. Drop an ISO or a VIDEO_TS folder in, spawn a player and a TV, and wire them together.
+	</Feature>
+	<Feature title="A VCR for your own tapes" img={objVcr} alt="The VCR stand-in: a black deck with a tape slot, a glowing counter display, and transport buttons.">
+		Your video files become VHS tapes you push into a deck. Play, pause, rewind, fast-forward — and it renders onto whichever TV it is plugged into.
+	</Feature>
+	<Feature title="Books you actually turn" video="/video/book_flip.mp4" poster={bookPoster} alt="A hand grabs the outer edge of a page and drags it across, folding it over to reveal the next spread." wide>
+		PDFs and CBZs are physical books. Grab a page by its outer edge and drag it across; release past halfway and the turn completes, short of it and it springs back.
+	</Feature>
+	<Feature title="One remote for all of it" img={objRemote} alt="The TV remote, held in a hand, with a floating command menu above it: eject, a D-pad with a center OK, transport buttons, and audio and subtitle cells.">
+		Point it at a TV, VCR, DVD player or tape deck and the right controls appear above it — including the disc's own menus.
+	</Feature>
+</FeatureGrid>
+
+## Running on a Quest 3
+
+All of these were recorded in the headset, standalone — no PC, no streaming. Each one is a
+machine spawned into the room, cabled up and played.
+
+<Clip
+	src="/video/gamecube_quest.mp4"
+	poster={gamecubePoster}
+	sound
+	alt="A GameCube on a desk with its four controller ports visible, cabled to a television showing The Legend of Zelda: The Wind Waker. A GameCube pad lies on the desk in front of it."
+	caption="A GameCube running The Wind Waker, wired to a television in the room. The disc goes in, the lid shuts, and the pad on the desk plays it."
+/>
+
+<Clip
+	src="/video/wii_quest.mp4"
+	poster={wiiQuestPoster}
+	sound
+	alt="A Wii console beside a television with a sensor bar above it, running Wii Sports Resort. A Wii Remote is held in front of the screen, and the game's MotionPlus connection prompt is showing."
+	caption="Wii Sports Resort, pointer and all — including the game's own “connect the Wii MotionPlus” prompt, which it will not get past unless the remote really is reporting motion."
+/>
+
+<Clip
+	src="/video/virtual_boy_quest.mp4"
+	poster={virtualBoyPoster}
+	sound
+	alt="The Virtual Boy on its stand, its display showing a side-scrolling game in red on black, with the red Virtual Boy controller on the desk below."
+	caption="The Virtual Boy on its bipod, red on black exactly as the hardware was. Flat in this recording only — see the note below."
+/>
+
+<Clip
+	src="/video/n3ds_quest.mp4"
+	poster={n3dsQuestPoster}
+	sound
+	alt="A blue 3DS clamshell standing open on a desk, running Ocarina of Time 3D — the top screen showing the game, the bottom screen showing its touch interface."
+	caption="Ocarina of Time 3D on a 3DS, from picking it out of the library to playing it, touch screen included. The top screen is flat here for the same reason."
+/>
+
+<Aside type="note" title="The two stereoscopic machines look flat in a recording">
+	A headset capture is one flat image, so the Virtual Boy and the 3DS lose the very thing
+	that makes them worth playing here. Both are **genuinely stereoscopic in VR**: the core
+	renders a separate image per eye, and RetroXR feeds the left half to your left eye and the
+	right half to your right. No parallax barrier, no sweet spot to hold your head in.
+
+	See [Virtual Boy](/guide/platforms/virtual-boy/) and
+	[DS and 3DS](/guide/platforms/ds-and-3ds/).
+</Aside>
+
+## Bring your own everything
+
+Copy ROMs across over a web interface on your local network and they show up in the menu,
+ready to spawn into your room, with box art and scanned manuals if you have them.
+
+Already running [RomM](https://romm.app)? RetroXR connects straight to your server. Browse
+your whole collection from inside the headset, pull down just the games you want to play,
+and let your saves sync back — no cable, no shuffling files by hand.
+
+The room does more than games, too. A working VCR and DVD player take your own video
+files, a CD player and tape deck handle music, and PDF manuals are books you can hold and
+page through.
+
+<div class="rxr-caveats">
+
+## This is early days
+
+RetroXR is **in active development**, and it is honest to say so up front:
+
+- Most consoles and controllers are clean **procedural stand-ins** rather than detailed
+  replicas — fully playable, deliberately minimalist. Only a handful, like the NES and the
+  Atari 2600, wear a real shell.
+- **Every room is a placeholder** — somewhere to put your hardware, not a finished space.
+- Tested on **Quest 3**. There is also a Windows desktop build with mouse and keyboard.
+- **Netplay is in, but it is very early.** Treat it as a prototype rather than a feature.
+- RetroXR ships no games and no BIOS files. You bring your own.
+
+</div>
+
+## Help wanted — especially modelers
+
+The biggest gap in RetroXR is **art**, not code. Every grey box is a console someone could
+model properly, and the rooms are barely started.
+
+If you model, this is where a contribution goes furthest — a single good room or console
+shell changes the whole feel of the app. Two rules, both firm:
+
+- Models must be **free of trademarked text and images**.
+- They must be licensed so the project can ship them.
+
+Not a modeler? Bug reports with logs, documentation fixes, and testing on hardware other
+than a Quest 3 are all genuinely useful.
+
+Come and say hello on **[Discord](https://discord.gg/mdjdBDTdW)**, or open an issue on
+**[GitHub](https://github.com/XenuIsWatching/RetroXR/issues)**.
+
+## Get started
+
+- **[Download and install](/download/)** — including a full walkthrough if you have never
+  sideloaded onto a Quest before.
+- **[Your first session](/guide/first-run/)** — spawn a console, wire it up, and get a
+  picture on the TV.
+- **[Devlog](/blog/)** — what is being built, and what just shipped.
+

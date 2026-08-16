@@ -1,0 +1,76 @@
+---
+title: RetroAchievements
+description: Sign in and earn achievements in the games you already own, with unlock toasts, rich presence, and a browsable list per game.
+sidebar:
+  order: 3
+---
+
+import { Steps, Aside } from '@astrojs/starlight/components';
+import { Image } from 'astro:assets';
+import savesPanel from '../../../../assets/saves/saves_panel.png';
+
+[RetroAchievements](https://retroachievements.org) adds achievements to retro games — a
+community-built set for thousands of titles, checked as you play. RetroXR signs in to your
+account and unlocks them in the headset.
+
+New in [v0.3.0](/blog/).
+
+## Signing in
+
+Accounts are free at [retroachievements.org](https://retroachievements.org).
+
+<Steps>
+
+1. Open the menu and go to `OPTIONS`.
+2. Pick the **RetroAchievements** tab.
+3. Enter your **username** and **password**.
+
+</Steps>
+
+:::caution[Two different keys, and the wrong one fails silently]
+Your RetroAchievements profile also shows a **Web API key**. That is **not** the one that
+unlocks achievements — it is a longer value for reading data.
+
+Signing in with it appears to work and then never unlocks anything, which is a
+frustrating way to spend an evening. Use your account password.
+:::
+
+## What you get
+
+- **Unlocks as you play**, with a toast and the achievement's badge.
+- **Rich presence** — your profile shows what you are playing.
+- **Browse a game's achievements without launching it**, from the game's own page in the
+  menu.
+
+## Seeing a game's achievements
+
+Open `SPAWN` → **Cartridges**, find the game, and press the **list** icon on its row. The
+page has two tabs:
+
+<Image src={savesPanel} alt="The page for a game, with two tabs circled: Saves marked 1 and Achievements marked 2." />
+
+**②** is the achievements list. You can read what a game asks of you before deciding to
+start it — which is the point of having it here rather than only in a toast mid-game.
+
+**①** is that game's [saves](/guide/connecting/saves/).
+
+## Hardcore mode
+
+**Not supported yet.** RetroAchievements requires a project to have existed for six months
+before it can enable hardcore, so this is a matter of waiting rather than of work.
+
+## What works and what does not
+
+Achievement support depends on the **core** and the **game**, exactly as it does in any
+other RetroAchievements-capable frontend. A system whose core does not support it will
+never report anything, and that is not a RetroXR fault.
+
+If a game you expect to have achievements is not unlocking any, check that the core you
+have set as default for that system supports them — see
+[downloading and managing cores](/guide/cores/downloading/).
+
+:::caution[Needs an in-headset pass]
+The two-key distinction and the hardcore restriction come straight from the source and the
+v0.3.0 release notes. The exact placement of the sign-in fields and the appearance of the
+unlock toast have not been verified against a running build.
+:::

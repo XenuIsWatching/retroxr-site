@@ -1,0 +1,79 @@
+// @ts-check
+import { defineConfig } from 'astro/config';
+import starlight from '@astrojs/starlight';
+import starlightBlog from 'starlight-blog';
+
+const SITE = 'https://retroxr.app';
+const GAME_REPO = 'https://github.com/XenuIsWatching/RetroXR';
+
+export default defineConfig({
+	// A custom domain serves from the root, so there is no `base` here. Setting one
+	// would break every internal link.
+	site: SITE,
+	integrations: [
+		starlight({
+			title: 'RetroXR',
+			description:
+				'A VR retro-gaming room where the hardware is real — pick up a console, ' +
+				'run a cable to the TV, push the cartridge in and hit power. Powered by libretro.',
+			logo: {
+				src: './src/assets/retroxr-lockup-header.svg',
+				alt: 'RetroXR',
+				replacesTitle: true,
+			},
+			favicon: '/favicon.svg',
+			customCss: ['./src/styles/brand.css'],
+			components: {
+				// Starlight has no built-in Ko-fi icon, so the header's social row is
+				// extended rather than replaced.
+				SocialIcons: './src/components/SocialIcons.astro',
+			},
+			social: [
+				{ icon: 'github', label: 'GitHub', href: GAME_REPO },
+				{ icon: 'discord', label: 'Discord', href: 'https://discord.gg/mdjdBDTdW' },
+			],
+			editLink: {
+				baseUrl: 'https://github.com/XenuIsWatching/retroxr-site/edit/main/',
+			},
+			lastUpdated: true,
+			head: [
+				{ tag: 'meta', attrs: { property: 'og:image', content: `${SITE}/og.jpg` } },
+				{ tag: 'meta', attrs: { name: 'twitter:image', content: `${SITE}/og.jpg` } },
+				{ tag: 'meta', attrs: { name: 'twitter:card', content: 'summary_large_image' } },
+				{ tag: 'meta', attrs: { name: 'theme-color', content: '#0b0f1c' } },
+			],
+			plugins: [
+				starlightBlog({
+					title: 'Devlog',
+					navigation: 'header-end',
+					postCount: 10,
+					recentPostCount: 5,
+					metrics: { readingTime: true },
+					authors: {
+						ryan: {
+							name: 'Ryan McClelland',
+							title: 'Author',
+							url: 'https://github.com/XenuIsWatching',
+						},
+					},
+				}),
+			],
+			sidebar: [
+				{
+					label: 'Get started',
+					items: [
+						{ label: 'Download & install', slug: 'download' },
+						{ label: 'Your first session', slug: 'guide/first-run' },
+						{ label: 'Adding your games', slug: 'guide/adding-games' },
+					],
+				},
+				{ label: 'Playing', items: [{ autogenerate: { directory: 'guide/playing' } }] },
+				{ label: 'Cores & BIOS', items: [{ autogenerate: { directory: 'guide/cores' } }] },
+				{ label: 'Platforms', items: [{ autogenerate: { directory: 'guide/platforms' } }] },
+				{ label: 'The rest of the room', items: [{ autogenerate: { directory: 'guide/room' } }] },
+				{ label: 'Connecting things', items: [{ autogenerate: { directory: 'guide/connecting' } }] },
+				{ label: 'Reference', items: [{ autogenerate: { directory: 'guide/reference' } }] },
+			],
+		}),
+	],
+});

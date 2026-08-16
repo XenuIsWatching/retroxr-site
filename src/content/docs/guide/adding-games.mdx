@@ -1,0 +1,131 @@
+---
+title: Adding your games
+description: Copy ROMs, videos, DVDs, music and books into RetroXR — over the built-in web file manager, or straight onto disk.
+sidebar:
+  order: 3
+---
+
+import { Steps, Tabs, TabItem, Aside, FileTree } from '@astrojs/starlight/components';
+import { Image } from 'astro:assets';
+import RommMark from '../../../components/RommMark.astro';
+import signIn from '../../../assets/webfiles/webfiles_signin.png';
+import rootView from '../../../assets/webfiles/webfiles_root.png';
+import mediaView from '../../../assets/webfiles/webfiles_media.png';
+
+RetroXR ships no games, films, music or books. Everything you play, you supply.
+
+<Aside type="caution" title="Bring your own">
+	No ROMs and no BIOS files are included, and none can be downloaded from inside the app.
+	Dumping games you own is your responsibility and depends on where you live.
+</Aside>
+
+## The folder tree
+
+Everything lives under one folder:
+
+<FileTree>
+
+- retroxr/
+  - roms/
+    - nes/ one folder per system
+    - snes/
+    - psx/
+  - books/ .pdf and .cbz
+  - videos/ .mp4 .mkv .avi .webm .mov
+  - dvd/ a VIDEO_TS folder, or .iso / .img
+  - music/ audio for the CD player and tape deck
+
+</FileTree>
+
+Where that tree lives:
+
+| Platform | Location |
+| --- | --- |
+| Windows | `%USERPROFILE%\retroxr` |
+| Linux / macOS | `~/retroxr` |
+| Quest | `/sdcard/Android/data/com.xenu.retroxr/files` |
+
+The **system folder name** under `roms/` is what tells RetroXR which console a game belongs
+to. If a game does not appear in the menu, a misspelled folder is the first thing to check.
+
+## On Quest: the web file manager
+
+A headset has no file manager, so RetroXR includes one. You copy files from any browser on
+the same network — phone, laptop, anything.
+
+<Steps>
+
+1. In the headset, open the menu and go to **`OPTIONS`**.
+
+2. Turn on **Web File Manager**.
+
+3. The address and a **4-digit PIN** appear underneath it, like
+   `http://192.168.1.42:8080  PIN: 4817`. Note them down.
+
+4. On your computer, open that address in a browser. Enter the PIN.
+
+   <Image src={signIn} alt="The RetroXR Files sign-in box: a title, the line 'Enter the 4-digit PIN shown in the headset options', a four-digit field and a Sign in button." />
+
+5. You land on a root with two folders.
+
+   <Image src={rootView} alt="The RetroXR Files root listing, showing two folders named libretro and media, above a drop zone reading 'Drop files or a folder here — choose files — choose folder'." />
+
+6. **Your games go under `media/`.** Open it and you get `books`, `dvd`, `music`, `roms`
+   and `videos`.
+
+   <Image src={mediaView} alt="The media folder listing, showing books, dvd, music, roms and videos folders." />
+
+7. Drag files — or a whole folder — onto the drop zone at the top. There are also **choose
+   files** and **choose folder** links if you would rather browse.
+
+</Steps>
+
+<Aside type="tip" title="Two branches, not one">
+	That root is assembled by RetroXR rather than being a real folder. **`media/`** is the
+	`retroxr` tree above — your games and films. **`libretro/`** is where downloaded cores
+	and their system files live, and you generally have no reason to touch it: the
+	[core downloader](/guide/cores/downloading/) fills it in for you.
+</Aside>
+
+<Aside type="caution">
+	Leave the file manager switched off when you are not using it. It serves your game
+	folder to anyone on the network who has the PIN.
+</Aside>
+
+## On Quest: over USB
+
+If you already have SideQuest connected from [installing](/download/), its file browser
+works too. The path is:
+
+```
+/sdcard/Android/data/com.xenu.retroxr/files/
+```
+
+<Aside type="danger" title="Do not overwrite files the app writes">
+	Copy **game files** this way by all means. Do not push over save files, config files or
+	the `.romm` folders — files pushed from a PC land with permissions the app cannot write
+	back to, and a config it can no longer update looks exactly like a config that was
+	wiped. Let RetroXR own everything it creates.
+</Aside>
+
+## On Windows, Linux and macOS
+
+Copy files straight into the folder. The web file manager works here too if you would
+rather drag things from another machine — the toggle is in the same place.
+
+## Box art and manuals
+
+Once a game is in place, RetroXR can fetch its box art, screenshots and scanned manual
+from [ScreenScraper](https://screenscraper.fr). Scraped manuals become books you can pull
+off the shelf and read while the game is running.
+
+See [box art and manuals](/guide/connecting/box-art/).
+
+## Or skip all of this with <RommMark />RomM
+
+If you already run a [RomM](https://romm.app) server, you do not have to copy anything by
+hand. RetroXR connects to it directly, browses your whole collection from inside the
+headset, downloads only what you want to play, and syncs your saves back.
+
+Pairing is a QR code you scan with the headset's camera — see
+[connecting RomM](/guide/connecting/romm/).

@@ -1,0 +1,96 @@
+---
+title: Atari 2600
+description: The six-switch VCS — slide switches that latch, a spring-return reset, and carts that pull straight out.
+sidebar:
+  order: 4
+---
+
+import { Steps, Aside } from '@astrojs/starlight/components';
+import Turntable from '../../../../components/Turntable.astro';
+import consolePoster from '../../../../assets/atari/atari_console_poster.png';
+import stickPoster from '../../../../assets/atari/atari_cx40_poster.png';
+import cartPoster from '../../../../assets/atari/atari_cart_poster.png';
+
+The Atari 2600 in RetroXR is the **six-switch VCS** — the "heavy sixer", wood veneer and
+all. Along with the NES it is one of the few machines wearing a detailed shell rather than
+a procedural stand-in.
+
+<Turntable
+	src="/video/atari/atari_console.mp4"
+	poster={consolePoster}
+	alt="The six-switch Atari 2600 VCS rotating, showing its wood-grain front panel, ridged top and the row of switches along the control panel."
+	caption="The six-switch VCS. The switches sit on a control panel sloped at 42.5°, not flat on the top."
+/>
+
+## The switches
+
+This is the detail the 2600 is worth spawning for. They are **slide switches**, not
+buttons — thin levers that travel up and down the sloped control panel — and the two that
+are wired behave differently from each other, as they did on the real thing.
+
+| Switch | Behavior |
+| --- | --- |
+| **POWER** | **Latches.** Two detents; it stays where you put it |
+| **GAME RESET** | **Momentary.** Push it and it springs back the instant you let go |
+
+<Aside type="note" title="Modeled but not yet wired">
+	The other four switches — **TV Type**, **Left Difficulty**, **Right Difficulty** and
+	**Game Select** — are modeled and individually pivoted in the shell, but they do not do
+	anything yet.
+</Aside>
+
+Driving these with the generic button used elsewhere sank them into the shell, which is
+both the wrong motion and buries the ON/OFF legend printed beside each slot. They get
+their own slider behavior instead.
+
+## Cartridges
+
+<Turntable
+	src="/video/atari/atari_cart.mp4"
+	poster={cartPoster}
+	alt="An Atari 2600 cartridge rotating, showing its label face and ribbed shell."
+	caption="A 2600 cartridge. It goes into the slot on top and pulls straight back out."
+/>
+
+<Steps>
+
+1. Spawn a game from `SPAWN` → **Cartridges**.
+2. Push it into the slot on top of the console.
+3. Slide **POWER** on.
+
+</Steps>
+
+There is **no eject** on this machine — 2600 carts pull straight out of the top slot, so
+that is how you take them out here too.
+
+## The CX40 joystick
+
+<Turntable
+	src="/video/atari/atari_cx40.mp4"
+	poster={stickPoster}
+	alt="The Atari CX40 joystick rotating: a square black base with a single stick and one orange button in the corner."
+	caption="The CX40. One stick, one button — and the button is in the corner, where your thumb is not."
+/>
+
+Spawn one from `SPAWN` → **Controllers** and plug it into a controller port. Two ports,
+so two sticks.
+
+For a real gamepad instead, spawn a **Controller Receiver** and plug that into the port —
+see [using a real gamepad, keyboard or mouse](/guide/playing/external-devices/).
+
+## Getting a picture
+
+The 2600 predates composite sockets, so like the NES it reaches a television through an
+**RF switch** — see [plugging things in](/guide/playing/plugging-in/) and the
+[NES page](/guide/platforms/nes/), which covers the same RF chain in detail.
+
+## Cores
+
+The 2600 has more than one libretro core available. Pick the default in `CORES` →
+**Manager** — see [downloading and managing cores](/guide/cores/downloading/).
+
+:::caution[Needs an in-headset pass]
+The switch behavior above is read from the model's source and is accurate. Which cores are
+offered, and how the RF chain behaves for this specific machine, have not been checked
+against a running build.
+:::

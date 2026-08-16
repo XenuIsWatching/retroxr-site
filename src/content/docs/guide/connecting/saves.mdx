@@ -1,0 +1,98 @@
+---
+title: Game saves and backups
+description: Where your saves live, how a cartridge picks which one it uses, and backing them up to a RomM server.
+sidebar:
+  order: 5
+---
+
+import { Steps, Aside } from '@astrojs/starlight/components';
+import { Image } from 'astro:assets';
+import savesPanel from '../../../../assets/saves/saves_panel.png';
+import RommMark from '../../../../components/RommMark.astro';
+
+RetroXR keeps two different kinds of save, and it is worth knowing which one you are
+looking at.
+
+- **Battery saves** — the in-game saves a cartridge kept on its own chip. These belong to
+  the game.
+- **Memory cards** — an object you slot into the console, for the systems that used them.
+  See [the PlayStation page](/guide/platforms/playstation/).
+
+## Finding a game's saves
+
+Open `SPAWN` → **Cartridges**, find the game, and press the **list** icon on its row.
+
+<Image src={savesPanel} alt="The saves page for a game, with two tabs circled: Saves marked 1 and Achievements marked 2. Below them, a hint reading 'Spawn this cartridge to choose which save it uses' and the line 'No saves for this game yet'." />
+
+**① Saves** — every save that exists for this game.
+
+**② Achievements** — its [RetroAchievements](/guide/connecting/retroachievements/), which
+you can browse here without launching the game.
+
+If you have not played it yet, this page says so rather than showing an empty list.
+
+## Choosing which save a cartridge uses
+
+A game can have more than one save, and the **cartridge** decides which one it is using.
+That is why the page above tells you to spawn the cartridge first.
+
+Point at a spawned cartridge and press the **menu button** to get its own panel. From
+there you can pick an existing save, or start a fresh one.
+
+<Aside type="tip" title="Two saves, one game">
+	This is how you keep a second playthrough without losing the first — a new blank save
+	rather than overwriting. The cartridge remembers which one it is bound to.
+</Aside>
+
+## Deleting a save
+
+Deleting is armed on the first press and done on the second, so a stray click cannot wipe
+a playthrough.
+
+<Aside type="caution">
+	A save cannot be deleted while the console holding that game is switched **on**. Power
+	the machine down first. Memory cards follow the same rule.
+</Aside>
+
+## Where saves live on disk
+
+Battery saves are written into the `libretro/save/` folder — see
+[the libretro folder](/guide/cores/libretro-folder/).
+
+You can copy them out for safekeeping, but on a Quest **do not copy them back in from a
+PC**: files pushed from a computer land owned by the shell rather than the app, and
+RetroXR can no longer write to them. A save file it cannot update looks exactly like a
+save that was wiped.
+
+## <RommMark />Backing up to RomM
+
+If you run a [RomM](https://romm.app) server, it can hold your saves as well as your games
+— which is the answer to the paragraph above, because it does not involve copying files
+onto the headset by hand at all.
+
+<Steps>
+
+1. [Connect RomM](/guide/connecting/romm/) if you have not already.
+
+2. Saves sync back to the server as you play.
+
+3. A game you played in the headset carries on where you left off elsewhere, and a save
+   made elsewhere is there when you pick the headset up.
+
+</Steps>
+
+PlayStation memory cards are included — a card can be backed up to the server the same
+way, so a card is not something you can only lose once.
+
+<Aside type="note" title="This is the backup route worth setting up">
+	Everything else here is a file on one device. RomM is the only path that keeps your
+	saves somewhere the headset is not, and it is the same server that already holds your
+	games.
+</Aside>
+
+:::caution[Needs an in-headset pass]
+The save model above — per-game saves, cartridge binding, two-press delete, the
+powered-on rule — is read from the source and is accurate. The exact layout of the
+cartridge's own panel, and how sync progress is surfaced, have not been checked against a
+running build.
+:::

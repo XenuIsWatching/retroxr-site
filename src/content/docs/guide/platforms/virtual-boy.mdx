@@ -1,0 +1,80 @@
+---
+title: Virtual Boy
+description: The 1995 stereoscopic tabletop, in the headset it always wanted to be — real per-eye depth, and no sweet spot to hold your head in.
+sidebar:
+  order: 6
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import Turntable from '../../../../components/Turntable.astro';
+import vbPoster from '../../../../assets/vb/virtual_boy_poster.png';
+
+The Virtual Boy is the one machine in RetroXR that arguably works **better** here than it
+did in 1995.
+
+<Turntable
+	src="/video/vb/virtual_boy.mp4"
+	poster={vbPoster}
+	alt="The Virtual Boy model rotating: a red visor on a grey bipod stand."
+	caption="The Virtual Boy on its bipod. Lean in and look through the eyepiece."
+/>
+
+## The stereo actually works now
+
+The original was a tabletop visor you pressed your face into. It genuinely rendered a
+separate image per eye — real stereoscopy, not a trick — but you had to hold your head in
+one exact position to see it, which is a large part of why nobody remembers it fondly.
+
+RetroXR runs the core in **side-by-side mode**, so it outputs both eyes in one frame, then
+feeds the left half to your left eye and the right half to your right. You get the depth
+the hardware was aiming at, with **no sweet spot** — lean in, move your head, it stays
+correct.
+
+<Aside type="tip" title="This is the same mechanism as the 3DS top screen">
+	Both use per-eye sampling of a side-by-side frame. See
+	[DS and 3DS](/guide/platforms/ds-and-3ds/).
+</Aside>
+
+## It is not a handheld
+
+Despite the visor, RetroXR treats it as a console:
+
+- **One controller port** — spawn a pad and plug it in.
+- **A video-out cable that works**, so you can put it on a television as well.
+
+## On a television, still in stereo
+
+This is the detail worth knowing. A television does **not** get the raw side-by-side frame
+— that would read as two squashed copies side by side, which is useless.
+
+Instead the TV is handed the **left half**, plus the offset that makes your right eye
+sample the right half. So a connected television comes out **in stereo too**. The machine
+is stereo end to end.
+
+## On desktop
+
+Without a headset there is no second eye to feed, so the eyepiece shows the left eye's
+image flat. Everything else works normally.
+
+## Red on black
+
+The Virtual Boy's display was red LEDs on black — no other colors existed. That is the
+hardware, not a filter, and it is what you will see.
+
+<Aside type="caution" title="Two shells, neither a fallback">
+	There are two models: a detailed shell and the bipod stand-in authored in the scene
+	itself. The shipping build uses the stand-in. Neither substitutes for the other — they
+	are separate models.
+</Aside>
+
+## Cores
+
+Set the default in `CORES` → **Manager** — see [downloading and managing
+cores](/guide/cores/downloading/). The side-by-side output mode is forced for you, so
+there is nothing to configure to get the 3D working.
+
+:::caution[Needs an in-headset pass]
+The stereo path, the TV behavior and the port layout are read from the source and are
+accurate. How comfortable it is to lean into the eyepiece has not been checked against a
+running build.
+:::

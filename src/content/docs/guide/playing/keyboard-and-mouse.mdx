@@ -1,0 +1,169 @@
+---
+title: Keyboards and mice
+description: Point-and-click games and computers need a pointer and a keyboard — here is how both reach the machine.
+sidebar:
+  order: 6
+---
+
+import { Steps, Aside } from '@astrojs/starlight/components';
+import Turntable from '../../../../components/Turntable.astro';
+import monkeyPoster from '../../../../assets/input/mouse_monkey_poster.png';
+import deskPoster from '../../../../assets/input/mouse_desk_poster.png';
+import kbPoster from '../../../../assets/receivers/keyboard_receiver_poster.png';
+import mousePoster from '../../../../assets/receivers/mouse_receiver_poster.png';
+import retroMousePoster from '../../../../assets/input/retro_mouse_poster.png';
+import retroKeyboardPoster from '../../../../assets/input/retro_keyboard_poster.png';
+
+Not everything RetroXR runs is a console. Point-and-click adventures, DOS games, Amigas,
+STs and home computers all want a **pointer** and a **keyboard**, and both are first-class
+here.
+
+<Turntable
+	src="/video/input/mouse_desk.mp4"
+	poster={deskPoster}
+	alt="A desk with a CRT monitor showing The Secret of Monkey Island, a keyboard, and RetroXR's mouse sliding around on the desk surface in front of them."
+	caption="A tower running ScummVM, cabled to a CRT monitor over VGA, with RetroXR's own mouse on the desk. Sliding the mouse moves the cursor in the game."
+/>
+
+This is the room, not a screenshot: a machine, a monitor, a VGA lead between them, and a
+mouse you can pick up. Slide the mouse across the desk and the cursor moves, because the
+mouse's travel *is* the pointer input.
+
+Closer in on the screen:
+
+<Turntable
+	src="/video/input/mouse_monkey.mp4"
+	poster={monkeyPoster}
+	alt="The Secret of Monkey Island running, showing the Scumm Bar exterior at night with Guybrush and the verb interface. The mouse cursor moves around the scene."
+	caption="The same thing from the core's point of view. The cursor is the game's own — RetroXR feeds it pointer movement and the game draws the rest."
+/>
+
+## Two ways to point
+
+### The mouse already on your desk
+
+The most comfortable option, and the one in the clip above. Spawn a **mouse receiver**,
+plug it into the machine's port, and the mouse next to your keyboard drives the game —
+with nothing held in either hand.
+
+<Turntable
+	src="/video/receivers/mouse_receiver.mp4"
+	poster={mousePoster}
+	alt="The mouse receiver rotating: a blue box with mouse and Bluetooth glyphs on its top face."
+	caption="The mouse receiver. Seat it in a port and your real mouse is the game's mouse."
+/>
+
+Movement is **relative**, exactly as a real mouse is: the game gets how far you moved, not
+where you are. That is why the cursor behaves the way it always has, including in games
+that hide the pointer and read raw motion.
+
+### The virtual mouse
+
+<Turntable
+	src="/video/input/retro_mouse.mp4"
+	poster={retroMousePoster}
+	alt="RetroXR's mouse rotating: a simple two-button mouse with a cable attachment at the back."
+	caption="The mouse you can pick up. It plugs into a controller port with the same cable and plug a controller uses."
+/>
+
+There is also a mouse you can pick up and slide across a surface in VR. It is a lovely
+object, and a poor pointing device — it needs a hand, a flat surface and your attention.
+It exists because it is *right*, not because it is the fastest way to play a LucasArts
+game.
+
+Use it when you want the room to feel real. Use the receiver when you want to finish
+Monkey Island.
+
+#### It sticks to the surface
+
+The thing that makes it usable at all: when the mouse comes near a surface it **glues to
+that surface's plane**. What you see is your hand's position projected flat onto the desk,
+so small lifts and the natural wobble of holding your arm out neither show nor move the
+cursor.
+
+Pull your hand far enough away and it lets go — the mouse snaps back to where your hand
+actually is, and stops reporting motion until it lands again.
+
+That is why sliding it across a desk feels like sliding a mouse rather than waving a brick
+in the air.
+
+| What you do | What the mouse does |
+| --- | --- |
+| **Trigger** | Left button |
+| **A / X button** | Right button |
+| **B / Y button** | Middle button |
+| Slide it on a surface | Moves the cursor |
+| Lift it clear | Stops reporting until it lands again |
+
+## Typing
+
+<Turntable
+	src="/video/receivers/keyboard_receiver.mp4"
+	poster={kbPoster}
+	alt="The keyboard receiver rotating: a tan box with keyboard and Bluetooth glyphs on its top face."
+	caption="The keyboard receiver. Seat it and type — no capture key, no mode."
+/>
+
+Computers need a keyboard, and there are two of those too.
+
+**The receiver** forwards your real keyboard to the port it is plugged into. Seated is
+live; there is no capture key and no mode to remember, because plugging something in is
+not an ambiguous act.
+
+**The virtual keyboard** is a board you can pick up and hold. Because holding a keyboard
+*is* ambiguous — you might merely be carrying it — your typing does not reach the game
+until you press **Scroll Lock**. That is deliberate, and it is why the receiver is easier
+if you are going to be typing for a while.
+
+<Turntable
+	src="/video/input/retro_keyboard.mp4"
+	poster={retroKeyboardPoster}
+	alt="RetroXR's keyboard rotating: a full-size keyboard with individually modeled keys."
+	caption="The keyboard. Every key is its own modeled cap, and every one can be pressed individually."
+/>
+
+#### Every key is a real key
+
+The board is not a picture of a keyboard. **Each cap is its own object, and each one can be
+pressed on its own** — reach out and poke a key with a fingertip, or point at it and press.
+
+That means you can type on it in VR without a physical keyboard anywhere near you, which
+is the only option for a computer system if you are standing in the middle of a room with
+nothing to rest a real board on.
+
+For anything longer than a password, use the receiver and your own keyboard.
+
+## Setting it up
+
+<Steps>
+
+1. Connect your mouse and keyboard to the headset or PC as you normally would.
+
+2. Open `SPAWN` → **Controllers**. Receivers appear **only once their device is
+   connected** — if you cannot see one, that is why.
+
+3. Spawn the receiver you want and push its plug into the machine's port.
+
+4. Play. The LED on the box shows it is live.
+
+</Steps>
+
+Full detail on [using a real gamepad, keyboard or
+mouse](/guide/playing/external-devices/).
+
+## Which systems want this
+
+- **ScummVM** — the point-and-click adventures. Mouse essential, keyboard occasionally.
+- **DOS** — mouse and keyboard both.
+- **Amiga, Atari ST, C64, MSX, PC-98** — keyboard essential.
+- **Consoles with a mouse peripheral**, like the SNES mouse.
+
+For consoles, the mouse is a *peripheral* you plug into a controller port rather than a
+system input — see [controllers and peripherals](/guide/playing/controllers/).
+
+<Aside type="note" title="On desktop, they are already yours">
+	Receivers are a VR idea. Running RetroXR on a PC without a headset, your keyboard and
+	mouse are how you walk around the room — so the virtual keyboard keeps its Scroll Lock
+	capture and mouse-look is never taken away from you. See
+	[desktop controls](/guide/reference/desktop-controls/).
+</Aside>

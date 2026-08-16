@@ -1,0 +1,124 @@
+---
+title: Reporting a bug
+description: What to include, and how to capture a Quest log or a full bug report over adb.
+sidebar:
+  order: 5
+---
+
+import { Steps, Aside, Tabs, TabItem } from '@astrojs/starlight/components';
+
+Bugs go on [GitHub issues](https://github.com/XenuIsWatching/RetroXR/issues), or ask in
+[Discord](https://discord.gg/mdjdBDTdW) if you are not sure whether it is a bug.
+
+## What to include
+
+A report is far easier to act on with these:
+
+- **What you did**, in enough detail to repeat it — which system, which core, which object.
+- **What you expected**, and what happened instead.
+- **The RetroXR version**, from `OPTIONS` → ABOUT.
+- **Your device** — Quest 3, Quest 2, Windows.
+- **The core and its version**, if it involves a game running.
+- **A log**, if you can get one. This is the part that turns a guess into a fix.
+
+<Aside type="tip" title="A crash is worth a log; a wrong colour is not">
+	If the app closed, froze, or a game refused to boot, capture a log. For visual or
+	layout problems a screenshot or a short video is more use.
+</Aside>
+
+## Capturing a log on Quest
+
+Logs need **Developer Mode** and USB debugging, which you already turned on if you
+sideloaded — see [download and install](/download/).
+
+You will need `adb`, which ships with SideQuest. On Windows it is easiest to open
+SideQuest's own terminal, or install the Android platform tools.
+
+### The important part: start the log first
+
+<Aside type="danger" title="The Quest's log buffer rotates in under a minute">
+	The headset produces a constant stream of system chatter, and it will push your crash
+	out of the buffer very quickly. **If you go looking for the log after the crash, it is
+	usually already gone.**
+
+	Start the capture *before* you reproduce the problem.
+</Aside>
+
+<Steps>
+
+1. Connect the headset over USB and accept the debugging prompt if it appears.
+
+2. Clear the buffer and start capturing, filtered to RetroXR's own output:
+
+   ```bash
+   adb logcat -c
+   adb logcat -s godot:* > retroxr.log
+   ```
+
+   Leave that running.
+
+3. Put the headset on and **reproduce the bug**.
+
+4. Come back to the computer and stop the capture with `Ctrl` + `C`.
+
+5. Attach `retroxr.log` to your report.
+
+</Steps>
+
+<Aside type="note" title="If nothing appears in the file">
+	`-s godot:*` keeps only RetroXR's lines. If the file is empty, drop the filter and use
+	plain `adb logcat > retroxr.log` — you will get a much noisier file, but nothing will
+	be missed.
+</Aside>
+
+### A full bug report
+
+For a crash that takes the whole app down, or anything involving the headset's own
+behaviour, a full system report carries more:
+
+```bash
+adb bugreport retroxr-bugreport.zip
+```
+
+It takes a couple of minutes and produces a large zip. It contains a great deal about your
+device, so consider whether you would rather send it privately than attach it to a public
+issue.
+
+### Two devices connected?
+
+If `adb` complains about more than one device — for instance a headset on both USB and
+Wi-Fi — name the one you want:
+
+```bash
+adb devices -l          # list them, with serials
+adb -s <serial> logcat -s godot:*
+```
+
+## Capturing a log on Windows
+
+The desktop build writes its log alongside the app's data. Reproduce the problem, then
+attach the most recent log file from:
+
+```
+%APPDATA%\Godot\app_userdata\RetroXR\logs\
+```
+
+<Tabs>
+<TabItem label="A crash">
+Include the log, and say whether the window vanished or froze first — those are different
+failures.
+</TabItem>
+<TabItem label="A game that will not start">
+Include the system, the core, and whether `CORES` → BIOS / Extras reports anything
+missing. That accounts for most of them — see [BIOS files](/guide/cores/bios/).
+</TabItem>
+</Tabs>
+
+## Before you file
+
+Two things account for a large share of reports, and both are quick to rule out:
+
+- **A missing BIOS** — check `CORES` → BIOS / Extras for that system.
+- **A core that does not suit the game** — try another from `CORES` → Manager.
+
+Neither is a bug, and checking takes a minute. If it survives both, it is worth reporting.

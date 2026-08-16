@@ -1,0 +1,94 @@
+---
+title: Setting up your controls
+description: Rebind the VR controllers, the keyboard, and any real gamepad — globally or per system.
+sidebar:
+  order: 0
+---
+
+import { Steps, Aside } from '@astrojs/starlight/components';
+import { Image } from 'astro:assets';
+import controlsTab from '../../../../assets/screenshots/menu_controls.png';
+import controllersTab from '../../../../assets/screenshots/menu_spawn_controllers.png';
+
+Everything that presses a button in RetroXR is rebindable, and it all lives under the
+**`CONTROLS`** tab.
+
+<Image src={controlsTab} alt="The CONTROLS tab, listing gamepad buttons against their bound keys — D-pad up, down, left and right on W, S, A and D, and the face buttons on the numeric keypad." />
+
+Each row is one control on the emulated machine, with whatever currently drives it beside
+it. Change a row and it takes effect immediately.
+
+## Three kinds of input, one screen
+
+| What you are binding | Where it comes from |
+| --- | --- |
+| **VR controllers** | The Quest controllers in your hands |
+| **Keyboard** | The real keyboard, on desktop or through a receiver |
+| **A real gamepad** | Anything connected over Bluetooth or USB |
+
+They are not exclusive. A control can have a VR binding and a key at the same time, and
+whichever you press wins — pressing one never cancels the other.
+
+## Global, or per system
+
+Bindings resolve in layers:
+
+1. **Defaults** — what RetroXR ships with.
+2. **Your global bindings** — applied everywhere.
+3. **Per-system bindings** — applied only to that machine.
+
+The most specific one wins. So you can set a layout you like everywhere, and still give
+one console its own arrangement without disturbing the rest.
+
+<Aside type="tip" title="Why per-system exists">
+	Machines disagree about what their buttons are called. A layout that is comfortable on
+	a two-button NES pad is not the same as one for a six-button arcade stick, and neither
+	suits a Wii Remote. Per-system bindings are how you stop tuning one and breaking
+	another.
+</Aside>
+
+## Devices with their own layer
+
+Some hardware has bindings of its own, because it is not shaped like a joypad:
+
+- **Wii Remote** — its own map, since it has seven buttons, a d-pad and motion. See
+  [the Wii page](/guide/platforms/wii/#controls).
+- **Nunchuk** — a small map of its own, chained behind the remote.
+- **Light gun** — its own trigger and buttons.
+
+These read from the same file and follow the same global-then-per-system rule.
+
+## Using real hardware
+
+A real gamepad, keyboard or mouse reaches a machine through a **receiver** — a small box
+you plug into a controller port, rather than anything you configure in a menu.
+
+<Image src={controllersTab} alt="The Controllers tab of the spawn menu, listing a primitive controller, ray gun, mouse and keyboard." />
+
+<Aside type="caution">
+	Receivers only appear in that list once their device is actually connected. The
+	screenshot above has none, because nothing was plugged in when it was taken.
+</Aside>
+
+That has its own page: [using a real gamepad, keyboard or
+mouse](/guide/playing/external-devices/).
+
+## Desktop mode
+
+With no headset, the keyboard is both how you walk around the room *and* how you play. The
+full default map is on [desktop controls](/guide/reference/desktop-controls/).
+
+The two do not collide, because a held keyboard only hijacks your typing once **Scroll
+Lock** capture is on. Off, the keys still belong to you.
+
+## Comfort settings are elsewhere
+
+Turning style, snap angle, the movement vignette, height and world scale are not bindings
+— they are under `OPTIONS`, and covered on [graphics and
+comfort](/guide/reference/graphics-and-comfort/).
+
+:::caution[Needs an in-headset pass]
+The layering model and the per-device maps are read from the bindings source and are
+accurate. The exact controls on the `CONTROLS` tab — how a row is rebound, and whether
+per-system is a toggle or a separate page — have not been checked against a running build.
+:::

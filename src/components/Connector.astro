@@ -1,0 +1,83 @@
+---
+import { Image } from 'astro:assets';
+
+interface Props {
+	title: string;
+	plug: ImageMetadata;
+	jack: ImageMetadata;
+	plugAlt: string;
+	jackAlt: string;
+}
+
+const { title, plug, jack, plugAlt, jackAlt } = Astro.props;
+---
+
+<div class="rxr-conn">
+	<div class="rxr-conn-pair">
+		<figure>
+			<Image src={plug} alt={plugAlt} widths={[220, 440]} sizes="220px" />
+			<figcaption>plug</figcaption>
+		</figure>
+		<span class="rxr-conn-arrow" aria-hidden="true">→</span>
+		<figure>
+			<Image src={jack} alt={jackAlt} widths={[220, 440]} sizes="220px" />
+			<figcaption>socket</figcaption>
+		</figure>
+	</div>
+	<h3>{title}</h3>
+	<p><slot /></p>
+</div>
+
+<style>
+	.rxr-conn {
+		background: var(--rxr-panel);
+		border: 1px solid var(--sl-color-hairline-shade);
+		border-radius: 0.9rem;
+		padding: 0.9rem 1.1rem 1.15rem;
+	}
+	:root[data-theme='light'] .rxr-conn {
+		background: var(--sl-color-gray-7);
+	}
+	.rxr-conn-pair {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.4rem;
+	}
+	.rxr-conn-pair figure {
+		margin: 0;
+		flex: 1 1 0;
+		min-width: 0;
+	}
+	.rxr-conn-pair :global(img) {
+		display: block;
+		width: 100%;
+		height: auto;
+		aspect-ratio: 4 / 3;
+		object-fit: contain;
+		background: var(--rxr-ink);
+		border-radius: 0.5rem;
+	}
+	.rxr-conn-pair figcaption {
+		text-align: center;
+		font-size: var(--sl-text-xs);
+		color: var(--sl-color-gray-4);
+		margin-top: 0.2rem;
+	}
+	.rxr-conn-arrow {
+		color: var(--rxr-accent);
+		font-size: 1.4rem;
+		flex: 0 0 auto;
+	}
+	.rxr-conn h3 {
+		margin: 0.75rem 0 0.35rem;
+		font-size: var(--sl-text-base);
+		color: var(--sl-color-white);
+	}
+	.rxr-conn p {
+		margin: 0;
+		font-size: var(--sl-text-sm);
+		color: var(--sl-color-gray-3);
+		line-height: 1.6;
+	}
+</style>

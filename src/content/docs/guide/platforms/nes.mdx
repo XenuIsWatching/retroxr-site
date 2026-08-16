@@ -1,0 +1,167 @@
+---
+title: NES
+description: The NES has two ways to reach a television — a phono pair on its flank, or RF out through a switch box — and it can drive both at once.
+sidebar:
+  order: 2
+---
+
+import { Steps, Aside } from '@astrojs/starlight/components';
+import { Image } from 'astro:assets';
+import Turntable from '../../../../components/Turntable.astro';
+import consolePoster from '../../../../assets/nes/nes_console_poster.png';
+import cartPoster from '../../../../assets/nes/nes_cart_poster.png';
+import padPoster from '../../../../assets/nes/nes_controller_poster.png';
+import rfPoster from '../../../../assets/av/rf_switch_poster.png';
+import avPanel from '../../../../assets/av/tv_av_panel.png';
+import frontAnnotated from '../../../../assets/nes/nes_front_annotated.png';
+import openAnnotated from '../../../../assets/nes/nes_open_annotated.png';
+
+The NES is one of the few machines in RetroXR wearing a **detailed shell** rather than a
+procedural stand-in — and it is the only one that molds a working RF panel, which makes it
+the best example of how a pre-composite console reaches a television.
+
+<Turntable
+	src="/video/nes/nes_console.mp4"
+	poster={consolePoster}
+	alt="The NES console model rotating, showing the front-loading cartridge bay, the controller ports and the connectors on its back and flank."
+	caption="The NES. A phono pair on its flank, and an RF SWITCH jack with a CH3/CH4 slide switch on the back."
+/>
+
+## Two ways out, both live at once
+
+This is the part worth understanding. The NES carries **two** outputs, and they work at the
+same time:
+
+- **A phono pair on its flank** — mono composite. Video plus a single audio channel.
+- **An RF SWITCH jack on its back**, with a **CH3/CH4 slide switch** beside it.
+
+You can run a composite lead from the flank to one television and an RF switch from the
+back to another, and both sets will show the picture simultaneously. Neither output
+disables the other.
+
+## Route 1: composite
+
+The simplest path, and the one to use if your television has a spare phono row.
+
+<Steps>
+
+1. Spawn a **Mono Composite Cable** from `SPAWN` → Objects.
+2. Plug one end into the phono pair on the NES's flank.
+3. Plug the other into any **Composite** block on the back of the set.
+4. Set the TV's **Source** to that input.
+
+</Steps>
+
+<Image src={avPanel} alt="The back panel of a television: four blocks labeled Composite 1 to Composite 4 with yellow video and white and red audio sockets, and a separate Antenna block with an RF IN socket." />
+
+Note it is *mono* composite — video plus one audio plug, not the yellow-white-red trio. It
+seats in the same row; there is simply one fewer plug.
+
+## Route 2: RF, through the switch box
+
+The way most people actually had it. The chain is:
+
+```
+NES  RF SWITCH jack  →  RXR-003 switch box  →  TV  ANT / RF IN
+```
+
+<Turntable
+	src="/video/av/rf_switch.mp4"
+	poster={rfPoster}
+	alt="The RXR-003 RF switch rotating: a small white box with a coaxial lead and a phono lead coming out of it."
+	caption="The RXR-003 RF switch. Phono in from the console, coax out to the set's antenna socket."
+/>
+
+<Steps>
+
+1. Spawn an **RF Switch (RXR-003)** from `SPAWN` → Objects.
+2. Plug its phono lead into the NES's **RF SWITCH** jack.
+3. Plug its coax lead into the television's **ANT / RF IN** socket.
+4. Set the TV's **Source** to the antenna input.
+5. **Tune the set** to channel 3 or 4 — whichever the console's slide switch is set to.
+
+</Steps>
+
+<Aside type="caution" title="The channel has to match">
+	On the antenna input, the console's own CH3/CH4 switch decides whether there is a
+	picture at all. A set tuned to the other channel shows **snow** — which is correct
+	behavior, not a bug. Either move the slide switch on the console or tune the set.
+</Aside>
+
+<Aside type="note" title="The ANT IN on the switch is not wired yet">
+	The RXR-003 has an antenna passthrough input, as the real ones did, so a genuine
+	antenna and a console could share one socket. It does nothing at present.
+</Aside>
+
+## The front panel
+
+<Image src={frontAnnotated} alt="The front of the NES with three things circled: the POWER button marked 1, the RESET button marked 2, and the two controller ports marked 3." />
+
+**① POWER** · **② RESET** · **③ two controller ports**
+
+## Cartridges, and the lid
+
+<Turntable
+	src="/video/nes/nes_cart.mp4"
+	poster={cartPoster}
+	alt="An NES cartridge model rotating, showing its label face and the ridged back."
+	caption="An NES cartridge. It goes in label-up, and the bay is front-loading."
+/>
+
+The NES is front-loading, and the bay sits behind a **hinged flap**. You cannot put a
+cartridge in — or take one out — while the flap is down.
+
+<Image src={openAnnotated} alt="The NES with its front flap raised, circled and marked 1, revealing the dark cartridge bay behind it, circled and marked 2." />
+
+**① the flap**, swung up · **② the cartridge bay** behind it
+
+### Opening it
+
+Bring a controller near the flap and **squeeze the grip** to latch onto it, then swing it
+up on its hinge.
+
+<Aside type="tip" title="Grip here, unlike the Wii's battery cover">
+	The flap takes the **grip**, not the trigger — the opposite of the [Wii Remote's battery
+	cover](/guide/platforms/wii/). The reason is which object you might otherwise pick up:
+	a remote is something you lift, so a grip-latched cover would fight the pickup. A
+	console is not something you lift, so grip is free to work its lid.
+
+	While your hand is inside the flap's grab box its pickup is muted, so the squeeze works
+	the lid **instead of** taking the console, not as well as.
+</Aside>
+
+<Steps>
+
+1. Grip the flap and swing it up.
+2. Spawn a game from `SPAWN` → **Cartridges** and push it into the bay. It goes in label
+   up.
+3. Press **POWER**.
+
+</Steps>
+
+You do not have to do the flap by hand every time: **inserting or removing a cartridge
+drives it automatically**. Opening it yourself is for when you want to look, or to get a
+cart out that you did not spawn with.
+
+## The controller
+
+<Turntable
+	src="/video/nes/nes_controller.mp4"
+	poster={padPoster}
+	alt="An NES controller rotating, showing the D-pad, the red A and B buttons, and the SELECT and START buttons."
+	caption="The NES pad. Plug its lead into one of the console's controller ports and pick it up."
+/>
+
+Two controller ports, so two pads for two players. If you would rather use a real gamepad,
+spawn a **Controller Receiver** and plug that into a port instead — see
+[controllers and peripherals](/guide/playing/controllers/).
+
+There is also a **Zapper** light gun for the games that used one.
+
+## Troubleshooting
+
+| What you see | Usually means |
+| --- | --- |
+| **Snow** on the antenna input | The set is tuned to the wrong channel for the console's CH3/CH4 switch |
+| **Nothing at all** | The set is on a different source, or the plug is not seated |
+| Picture but **no sound** | Mono composite has one audio plug — check it is in, and check the set's volume |

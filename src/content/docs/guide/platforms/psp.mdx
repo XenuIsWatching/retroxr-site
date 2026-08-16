@@ -1,0 +1,96 @@
+---
+title: PSP
+description: A widescreen handheld that loads UMDs through a door in its back edge — and whose power switch has to be held, like the real one.
+sidebar:
+  order: 7
+---
+
+import { Steps, Aside } from '@astrojs/starlight/components';
+import Turntable from '../../../../components/Turntable.astro';
+import pspPoster from '../../../../assets/psp/psp_poster.png';
+import pspControls from '../../../../assets/psp/psp_controls.png';
+import { Image } from 'astro:assets';
+
+The PlayStation Portable — the PSP-1000, 480×272 widescreen.
+
+<Turntable
+	src="/video/psp/psp.mp4"
+	poster={pspPoster}
+	alt="The PSP model rotating: a wide slab handheld with a screen in the middle, a d-pad on the left and face buttons on the right."
+	caption="The PSP. Media is the UMD, and it loads through a door in the back edge rather than a slot on top."
+/>
+
+## The power switch has to be held
+
+This is the detail people trip over, and it is faithful: **the PSP's power switch is a
+slider you hold, not a button you press.**
+
+| Action | How long |
+| --- | --- |
+| **Power on** | Hold the switch at the end of its travel for about **one second** |
+| **Power off** | Hold it for **three seconds** |
+
+It **springs back** the moment you let go, exactly like the real one. A quick flick does
+nothing at all — which is correct behavior, not an unresponsive control.
+
+<Aside type="note" title="Why the two are different">
+	Sony documents no minimum for switching a PSP on, and a real one lights up after about
+	a second. For switching off, Sony's own instruction is "slide up and hold for more than
+	three seconds". RetroXR uses both numbers.
+</Aside>
+
+## UMDs
+
+Media is the **UMD**, and it does not go in a slot on top — it loads through a **door on
+the back edge**.
+
+<Steps>
+
+1. Spawn a game from `SPAWN` → **Cartridges**.
+2. Release the UMD door with the **latch** on the back edge.
+3. Put the disc in and close the door.
+4. Hold the power switch until it comes on.
+
+</Steps>
+
+The latch is a **sprung slide**, not a button — you push it along the edge, the door pops,
+and the latch springs straight back. It is the same mechanism as the power switch, but
+with no hold: it fires the moment it reaches the end of its throw. The shell prints
+`OPEN ———▷` beside it with the arrow pointing the way it slides.
+
+The latch reports intent rather than position, so the door **opens** every time. Pushing
+it shut again is the door's own job.
+
+## The controls
+
+The full shell models each control as its own part: the ✕ ○ □ △ face diamond, the d-pad,
+the analog nub, the L and R shoulders, Start, Select and Home, the volume ± and
+sound/display keys, the slide power switch, the eject latch and the UMD door.
+
+The face buttons follow the same glyph-position convention as everything else in RetroXR:
+
+| PSP | RetroPad |
+| --- | --- |
+| **✕** | B — confirm |
+| **○** | A — back |
+| **□** | Y |
+| **△** | X |
+
+<Image src={pspControls} alt="The PSP with four system controls circled: the power switch marked 1, the OPEN latch marked 2, the volume keys marked 3, and the power LED marked 4." />
+
+**① Power switch** — the slider you hold. **② OPEN** — the sprung UMD latch.
+**③ Volume − / +**. **④ Power LED**.
+
+The face buttons, d-pad and analog nub are the gameplay controls and behave as you would
+expect; the four above are the ones with behavior worth knowing about.
+
+## Cores
+
+Set the default in `CORES` → **Manager** — see [downloading and managing
+cores](/guide/cores/downloading/).
+
+:::caution[Needs an in-headset pass]
+The power-hold timings, the latch mechanism and the button mapping are read straight from
+the source and are accurate. How they feel to operate has not been checked against a
+running build.
+:::
