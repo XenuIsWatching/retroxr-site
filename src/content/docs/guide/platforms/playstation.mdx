@@ -78,6 +78,41 @@ the **menu button**.
 	[game saves and backups](/guide/connecting/saves/).
 </Aside>
 
+### Where a card lives on disk
+
+Each card is one ordinary `.mcr` image — the same 128 KB format any PlayStation memory card
+tool on your PC will open.
+
+```
+libretro/save/memcards/playstation/<card name>.mcr
+```
+
+| Platform | Full path |
+| --- | --- |
+| Windows | `%USERPROFILE%\retroxr\libretro\save\memcards\playstation\` |
+| Linux / macOS | `~/retroxr/libretro/save/memcards/playstation/` |
+| Quest | `libretro/save/memcards/playstation/` in the [web file manager](/guide/adding-games/) |
+
+Two things about that path are deliberate and worth knowing.
+
+**The card's name is its filename.** Renaming a card in the manager renames the file, so
+the folder reads as a shelf of cards rather than a pile of hashes. Which also means the
+name has to survive being a filename — the manager strips characters your operating system
+would refuse.
+
+**There is no core in the path.** Compare that with everything else under `libretro/`,
+which is filed per core — BIOS, core assets, cartridge battery saves. A card is *hardware*,
+and the raw image is identical for every PlayStation core, so a card follows you when you
+switch cores exactly as a real one follows you when you switch consoles. Cartridge saves do
+not; see [the libretro folder](/guide/cores/downloading/#where-all-of-this-actually-lives).
+
+<Aside type="caution" title="On Quest, copy cards OUT but not back IN">
+	Reading a card off the headset is fine. Copying one back is not — a file pushed from a
+	PC lands owned by the shell rather than the app, and RetroXR can no longer write your
+	saves into it. A card it cannot update looks exactly like a card that was wiped. Use
+	RomM to restore, or let the app write a fresh card.
+</Aside>
+
 ### <RommMark />Backing a card up to RomM
 
 A card you can lose is a card worth backing up, and this is the reason to connect a

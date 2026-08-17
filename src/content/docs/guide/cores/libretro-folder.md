@@ -61,7 +61,20 @@ Manager rewrites the file for you — safer than editing it.
 
 ### save
 
-Battery saves — the in-game saves a cartridge would have kept on its own chip. See
+Two different things, filed two different ways:
+
+```
+save/<core>/<game>/<save>.srm      cartridge battery saves — per core, per game
+save/memcards/<systemid>/<name>.mcr  memory cards — per console family, no core
+```
+
+A **cartridge** kept its save on its own chip, so the path is keyed by the game. A **memory
+card** is one image that every game on that console writes into — which is the entire point
+of a card — so it is keyed by the card instead.
+
+The card path carries no core name on purpose: the raw image is identical for every
+PlayStation core, so a card survives switching cores the way a real one survives switching
+consoles. Cartridge saves do not. See [the PlayStation](/guide/platforms/playstation/) and
 [game saves and backups](/guide/connecting/saves/).
 
 ### temp
@@ -69,13 +82,20 @@ Battery saves — the in-game saves a cartridge would have kept on its own chip.
 Scratch space. RetroXR copies a core here before running it, so one machine's core cannot
 tread on another's. Nothing in here is worth keeping.
 
-:::danger[Do not push files into this folder on Quest]
-On a headset, files copied in from a PC land owned by the shell rather than the app, and
-RetroXR cannot write back to them. A config file it can no longer update looks exactly
-like a config that was wiped.
+:::danger[On Quest, use the web file manager — not adb or SideQuest]
+`libretro/` is in the app's **internal** storage, not on `/sdcard` with your games. Two
+consequences:
 
-Let the app own everything in `libretro/`. If something needs replacing, delete it and let
-RetroXR fetch it again.
+- **`adb push` and SideQuest's file browser cannot reach it**, so there is nothing to find
+  there. Don't go looking.
+- The **[web file manager](/guide/adding-games/) can**, and it is safe: it is the app's own
+  server, so anything uploaded through it is owned by the app and stays writable. This is
+  the supported way to put a BIOS file in place.
+
+The rule being protected is about ownership, not the folder: a file forced in from a PC by
+other means lands owned by the shell, and RetroXR can no longer write to it. A config it
+cannot update looks exactly like a config that was wiped. If something needs replacing,
+delete it and let RetroXR fetch it again.
 :::
 
 ## When a core misbehaves

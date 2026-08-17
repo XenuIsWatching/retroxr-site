@@ -28,8 +28,8 @@ Everything lives under one folder:
 - retroxr/
   - roms/
     - nes/ one folder per system
-    - snes/
-    - psx/
+    - super_nes/
+    - playstation/
   - books/ .pdf and .cbz
   - videos/ .mp4 .mkv .avi .webm .mov
   - dvd/ a VIDEO_TS folder, or .iso / .img
@@ -46,7 +46,12 @@ Where that tree lives:
 | Quest | `/sdcard/Android/data/com.xenu.retroxr/files` |
 
 The **system folder name** under `roms/` is what tells RetroXR which console a game belongs
-to. If a game does not appear in the menu, a misspelled folder is the first thing to check.
+to, and it has to match exactly. Several are not what you would guess — the SNES folder is
+`super_nes`, not `snes`, and the PlayStation one is `playstation`, not `psx`.
+
+**Don't invent the name: use the folder that is already there.** RetroXR creates each
+system's folder itself, so copy into an existing one rather than making your own. If a game
+does not appear in the menu, a folder named by hand is the first thing to check.
 
 ## On Quest: the web file manager
 
@@ -110,8 +115,10 @@ works too. The path is:
 
 ## On Windows, Linux and macOS
 
-Copy files straight into the folder. The web file manager works here too if you would
-rather drag things from another machine — the toggle is in the same place.
+Copy files straight into the folder with your normal file manager.
+
+The web file manager is a **Quest-only** feature — it does not run on desktop, and there is
+no toggle for it there. On a PC you have a file manager already.
 
 ## Box art and manuals
 
