@@ -55,11 +55,16 @@ jobs:
       # Ship the checkout rather than pulling on the box: the server lives in a
       # subdirectory of a site repo, and a clone there would drag the whole site
       # onto a machine that has no business holding it.
+      #
+      # Into the home directory, not /tmp. OS Login gives each identity its own
+      # POSIX user, /tmp is sticky, and a file left there by a human cannot be
+      # overwritten by the deploy account - which fails as a bare "permission
+      # denied" long after the interesting part has already worked.
       - name: Copy server/ to the instance
         run: |
           tar czf /tmp/server.tgz server
           gcloud compute scp /tmp/server.tgz \
-            "${GCE_INSTANCE}:/tmp/server.tgz" \
+            "${GCE_INSTANCE}:~/server.tgz" \
             --zone="${GCE_ZONE}" --project="${GCP_PROJECT}" --tunnel-through-iap --quiet
 
       - name: Rebuild and restart
@@ -68,7 +73,7 @@ jobs:
             --zone="${GCE_ZONE}" --project="${GCP_PROJECT}" --tunnel-through-iap --quiet \
             --command='set -euo pipefail
               rm -rf ~/rendezvous && mkdir -p ~/rendezvous
-              tar xzf /tmp/server.tgz -C ~/rendezvous --strip-components=1
+              tar xzf ~/server.tgz -C ~/rendezvous --strip-components=1
               cd ~/rendezvous
               sudo docker compose up -d --build
               sudo docker compose ps'
