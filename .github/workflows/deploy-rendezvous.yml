@@ -2,10 +2,25 @@
 #
 # deploy.yml publishes the site on every push to main. If this lived there, a
 # devlog post would restart the server people are playing through.
+#
+# Authentication is keyless. GitHub mints an OIDC token, Google exchanges it for
+# a short-lived credential, and the identity is pinned to this repository by an
+# attribute condition on the provider - so there is no service-account key to
+# leak, rotate, or find in a public repo. SSH goes through IAP rather than a
+# public port 22, which is why no address appears here either.
 name: Deploy rendezvous
 
 on:
   workflow_dispatch:
+
+env:
+  GCP_PROJECT: retroxr-rendezvous
+  GCE_INSTANCE: rendezvous
+  GCE_ZONE: us-west1-b
+
+permissions:
+  contents: read
+  id-token: write   # required for the OIDC token; without it auth fails
 
 jobs:
   test:
@@ -15,25 +30,54 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-      # The registry has no dependencies, so there is nothing to install and
-      # the self-test is the whole gate.
+      # No dependencies, so there is nothing to install and the self-test is the
+      # whole gate. It runs before anything is allowed near the live box.
       - run: node server/registry.test.mjs
 
   deploy:
     needs: test
     runs-on: ubuntu-latest
-    environment: rendezvous
     steps:
-      - name: Rebuild on the VM
-        uses: appleboy/ssh-action@v1
+      - uses: actions/checkout@v4
+
+      - id: auth
+        uses: google-github-actions/auth@v2
         with:
-          host: ${{ secrets.RENDEZVOUS_HOST }}
-          username: ${{ secrets.RENDEZVOUS_USER }}
-          key: ${{ secrets.RENDEZVOUS_SSH_KEY }}
-          script: |
-            set -euo pipefail
-            cd retroxr-site
-            git pull --ff-only
-            cd server
-            docker compose up -d --build
-            docker compose ps
+          workload_identity_provider: projects/557677039441/locations/global/workloadIdentityPools/github/providers/retroxr-site
+          service_account: gh-deploy@retroxr-rendezvous.iam.gserviceaccount.com
+
+      - uses: google-github-actions/setup-gcloud@v2
+
+      # Ship the checkout rather than pulling on the box: the server lives in a
+      # subdirectory of a site repo, and a clone there would drag the whole site
+      # onto a machine that has no business holding it.
+      - name: Copy server/ to the instance
+        run: |
+          tar czf /tmp/server.tgz server
+          gcloud compute scp /tmp/server.tgz \
+            "${GCE_INSTANCE}:/tmp/server.tgz" \
+            --zone="${GCE_ZONE}" --project="${GCP_PROJECT}" --tunnel-through-iap
+
+      - name: Rebuild and restart
+        run: |
+          gcloud compute ssh "${GCE_INSTANCE}" \
+            --zone="${GCE_ZONE}" --project="${GCP_PROJECT}" --tunnel-through-iap \
+            --command='set -euo pipefail
+              rm -rf ~/rendezvous && mkdir -p ~/rendezvous
+              tar xzf /tmp/server.tgz -C ~/rendezvous --strip-components=1
+              cd ~/rendezvous
+              sudo docker compose up -d --build
+              sudo docker compose ps'
+
+      # A deploy that leaves the registry dead should fail loudly rather than
+      # report success. This is the same endpoint the client asks for first.
+      - name: Verify it came back
+        run: |
+          sleep 10
+          for i in 1 2 3 4 5; do
+            if curl -fsS --max-time 10 https://net.retroxr.app/v1/health; then
+              echo; echo "rendezvous healthy"; exit 0
+            fi
+            echo "attempt $i failed, retrying"; sleep 10
+          done
+          echo "rendezvous did not come back healthy"; exit 1

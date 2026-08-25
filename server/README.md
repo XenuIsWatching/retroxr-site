@@ -49,11 +49,33 @@ Three things about that table are load-bearing:
 ## Deploying
 
 **Give it its own workflow.** `deploy.yml` publishes the site on every push to
-`main`; a devlog post must not redeploy the rendezvous. Deploy this by hand or
-from a `workflow_dispatch`:
+`main`; a devlog post must not redeploy the rendezvous. Run
+`deploy-rendezvous.yml` by hand instead - it self-tests, ships `server/`, rebuilds,
+and fails if the registry does not answer afterwards.
+
+There is **no key anywhere**. GitHub mints an OIDC token, Google exchanges it for
+a short-lived credential, and the provider carries an attribute condition pinning
+it to this repository - so a fork, or another repo in the same account, cannot
+assume the identity. Nothing to rotate, and nothing to leak in a public repo.
+
+| | |
+|---|---|
+| Service account | `gh-deploy@retroxr-rendezvous.iam.gserviceaccount.com` |
+| Roles | `compute.osAdminLogin`, `iap.tunnelResourceAccessor`, `compute.viewer` |
+| WIF provider | `projects/557677039441/locations/global/workloadIdentityPools/github/providers/retroxr-site` |
+| Pinned to | `XenuIsWatching/retroxr-site` |
+
+**SSH is over IAP, and port 22 is shut.** `default-allow-ssh` and
+`default-allow-rdp` - both `0.0.0.0/0`, both created by the default network -
+were deleted. `allow-iap-ssh` permits 22 only from `35.235.240.0/20`, which is
+Google IAP, so a login has to pass IAM before it reaches sshd. The instance runs
+OS Login, so access is a role rather than a key sitting in metadata: revoking
+`osAdminLogin` revokes the access.
+
+The `--tunnel-through-iap` flag is therefore not optional, for CI or for a human:
 
 ```sh
-ssh <vm> 'cd retroxr-site/server && git pull && docker compose up -d --build'
+gcloud compute ssh rendezvous --zone=us-west1-b --project=retroxr-rendezvous --tunnel-through-iap
 ```
 
 ### Live
@@ -68,7 +90,7 @@ Deployed 2026-08-25. `docker compose ps` should show three containers.
 | Network tier | STANDARD |
 
 ```sh
-gcloud compute ssh rendezvous --zone=us-west1-b --project=retroxr-rendezvous
+gcloud compute ssh rendezvous --zone=us-west1-b --project=retroxr-rendezvous --tunnel-through-iap
 gcloud compute instances delete rendezvous --zone=us-west1-b --project=retroxr-rendezvous
 ```
 
