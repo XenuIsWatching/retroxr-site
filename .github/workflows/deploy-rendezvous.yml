@@ -8,6 +8,10 @@
 # attribute condition on the provider - so there is no service-account key to
 # leak, rotate, or find in a public repo. SSH goes through IAP rather than a
 # public port 22, which is why no address appears here either.
+#
+# The service account also needs iam.serviceAccountUser on the INSTANCE service
+# account, not only its own project roles: reaching a VM that runs as a service
+# account means acting as it, and without that scp fails before sshd is reached.
 name: Deploy rendezvous
 
 on:
@@ -56,12 +60,12 @@ jobs:
           tar czf /tmp/server.tgz server
           gcloud compute scp /tmp/server.tgz \
             "${GCE_INSTANCE}:/tmp/server.tgz" \
-            --zone="${GCE_ZONE}" --project="${GCP_PROJECT}" --tunnel-through-iap
+            --zone="${GCE_ZONE}" --project="${GCP_PROJECT}" --tunnel-through-iap --quiet
 
       - name: Rebuild and restart
         run: |
           gcloud compute ssh "${GCE_INSTANCE}" \
-            --zone="${GCE_ZONE}" --project="${GCP_PROJECT}" --tunnel-through-iap \
+            --zone="${GCE_ZONE}" --project="${GCP_PROJECT}" --tunnel-through-iap --quiet \
             --command='set -euo pipefail
               rm -rf ~/rendezvous && mkdir -p ~/rendezvous
               tar xzf /tmp/server.tgz -C ~/rendezvous --strip-components=1
