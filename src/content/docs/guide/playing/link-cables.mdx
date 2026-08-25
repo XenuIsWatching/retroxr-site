@@ -1,0 +1,112 @@
+---
+title: Link cables
+description: Run a cable between two machines and they talk — Game Boy to Game Boy, PlayStation to PlayStation, and a GameCube to up to four Game Boy Advances.
+sidebar:
+  order: 8
+---
+
+import { Steps, Aside } from '@astrojs/starlight/components';
+import Clip from '../../../../components/Clip.astro';
+import gcGbaLinkPoster from '../../../../assets/link/gc_gba_link_poster.png';
+
+Two machines in the same room can be **cabled together**, and the data really crosses. This
+is not a netplay session dressed up as a wire: both machines are emulated here, in your
+room, and the lead between them carries the same serial traffic the hardware did.
+
+New in v0.4.0.
+
+<Clip
+	src="/video/link/gc_gba_link.mp4"
+	poster={gcGbaLinkPoster}
+	sound
+	alt="A GameCube game running on the television while two Game Boy Advance handhelds lie on the desk in front of it, each cabled to the console and showing its own separate screen. A GameCube pad is picked up and played."
+	caption="A GameCube with two Game Boy Advances on link cables — the console on the TV, each handheld running its own screen. Recorded on PCVR."
+/>
+
+## What can be linked
+
+| Cable | Machines | What it needs |
+| --- | --- | --- |
+| **Game Boy link cable** | Two Game Boys or Game Boy Colors | Nothing extra |
+| **GBA link cable** | Up to four Game Boy Advances | A GBA BIOS for single-pak play |
+| **GBA – GameCube cable** | A GameCube and up to four GBAs | A GBA BIOS |
+| **PlayStation serial cable** | Two PlayStations | The usual PS1 BIOS |
+
+Each lead is offered on the **system's own card** in `SPAWN` → **Systems** — open the card
+for the machine you are cabling and the right cable is listed with its controllers. Push
+each end into the matching socket:
+the link port on a handheld's edge, the SERIAL I/O socket on the back of a PlayStation, or,
+for the GBA-to-GameCube cable, a **controller port** on the console.
+
+The three handheld and console leads are three different cables, not one — a Game Boy lead
+is not a GBA lead and neither is a PlayStation serial cable, exactly as on the shelf. The
+GBA lead carries a junction in the middle, which is how a third and fourth handheld chain
+on; the Game Boy's is a plain two-machine cord. The GC-GBA cable is listed on **both** the
+GameCube's card and the Game Boy Advance's, so you can find it from either end.
+
+## Multiplayer on one cartridge
+
+The GBA cable does **single-pak** as well as multi-pak, which is the mode where one
+cartridge feeds up to four handhelds:
+
+<Steps>
+
+1. Spawn as many Game Boy Advances as you want players, and enough link cables to chain
+   them.
+
+2. Put the game in **one** of them. The others stay empty.
+
+3. **Plug the purple end into the machine holding the cartridge** — that is the host, and
+   single-pak will not start if the cable is the other way round.
+
+4. Power up. The host uploads the game to the others over the wire, as the hardware did.
+
+</Steps>
+
+Single-pak boots the empty handhelds from their BIOS, so **a GBA BIOS is required** for it.
+See [BIOS files](/guide/cores/bios/).
+
+## The GameCube cable
+
+The GameCube end of that lead goes into a **controller port**, not a link socket — a
+GameCube had no link port. Four cables means four handhelds on one console.
+
+Two things worth knowing before you judge it:
+
+- **Games that use the GBA as a second screen work best with an empty handheld.** Those
+  titles upload their own program over the cable, so a GBA holding its own cartridge is a
+  legitimate way to plug it in but not the pairing the game was written for.
+- The lead costs a few percent of the frame rate, not a slice of it. Expect one hitch
+  around a second long while the program uploads, then nothing.
+
+## Mixing cores
+
+A link is between **machines**, not between copies of one core. A Game Boy running
+gambatte and a Game Boy running mGBA join the same cable and trade bytes quite happily.
+
+## This wants a PC
+
+<Aside type="caution" title="Recommended on PCVR">
+	A link is two or more cores running at once in the same room, and that is more than a
+	standalone headset comfortably carries. It runs on a Quest — try it — but PCVR is the
+	place to expect it to be smooth. Four Game Boy Advances with three of them empty is
+	known to stutter at first while the program upload happens.
+</Aside>
+
+## Where the support comes from
+
+Serial link is not something libretro offered. RetroXR added a core-agnostic serial link
+API [upstream to
+RetroArch](https://github.com/libretro/RetroArch/pull/19454), and the cores it runs are
+forks carrying the other half:
+[mGBA](https://github.com/XenuIsWatching/mgba),
+[Dolphin](https://github.com/XenuIsWatching/dolphin),
+[pcsx_rearmed](https://github.com/XenuIsWatching/pcsx_rearmed) and
+[gambatte](https://github.com/XenuIsWatching/gambatte-libretro). The core manager downloads
+them for you; there is nothing to build.
+
+:::caution[Needs an in-headset pass]
+The cable rules above are read from the source and from probe runs against real cores. The
+exact spawn-menu wording and the feel of seating each plug have not been checked against a
+running build.
+:::

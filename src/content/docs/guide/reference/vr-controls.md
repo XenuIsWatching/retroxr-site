@@ -40,6 +40,20 @@ Locomotion is configurable in **`OPTIONS`**:
 You can play with controller models shown, or with hands. The finger poses follow what you
 are doing — a pointing finger when you point, a fist on grip.
 
+On **Meta Quest Touch controllers**, v0.4.0 reads the controllers' **capacitive sensors**,
+so your fingers sit where they actually are on the controller rather than snapping between
+a few canned poses. A finger lifted off a button is a finger lifted off a button.
+
+:::note[Capsense wants SteamVR on PCVR]
+On a PC, use **SteamVR** as the OpenXR runtime if you want this. The Horizon link does not
+pass capacitive-sensor data through, so on that route the poses fall back to the canned
+ones. Standalone on the headset is unaffected.
+:::
+
+**Poking now happens at your index fingertip**, not from a cone off the front of the
+controller. Everything you press with a finger — the NES flap, the Wii Remote's SYNC
+button, the DualShock's ANALOG button — is reached from where the finger really is.
+
 Haptics fire on the things you would expect: seating a plug, pressing a button on a deck,
 completing a page turn.
 

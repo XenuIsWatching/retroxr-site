@@ -51,6 +51,23 @@ it, so the room assembles itself rather than raining onto the floor. Cables re-l
 themselves to follow their plugs.
 :::
 
+A restored layout also brings back **which input each TV was showing**, so a set you left
+on the console's input comes back on it rather than on a blank channel.
+
+:::caution[Crashes between rooms]
+Changing rooms can still crash the app in v0.4.0. Saving your layout before you switch is
+worth the ten seconds.
+:::
+
+## Posters
+
+Anything you drop into your `posters/` folder becomes a **poster you can stick to things**
+— walls, the side of a console, the front of the TV stand. Pick one up, hold it against a
+surface and let go, and it stays; peel it off to move it. Posters are saved with the room.
+
+New in v0.4.0, and deliberately basic — see [adding your games](/guide/adding-games/) for
+where the folder lives.
+
 ## Autosave
 
 Layouts can be kept automatically, so quitting and coming back puts you where you left

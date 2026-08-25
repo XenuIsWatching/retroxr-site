@@ -40,6 +40,16 @@ Bindings resolve in layers:
 The most specific one wins. So you can set a layout you like everywhere, and still give
 one console its own arrangement without disturbing the rest.
 
+As of v0.4.0 this applies to **both** the XR controllers and any external gamepad — each
+platform can carry its own map for either, set from the `CONTROLS` menu.
+
+<Aside type="note" title="A per-system map is a whole map">
+	Giving a platform its own layout takes a complete copy of your bindings at that moment,
+	not a patch over the global ones. Change a global binding afterwards and that platform
+	keeps what it had — which is the point, but it does mean a platform you have customised
+	will not pick up later global edits. Clear its map and it goes back to following global.
+</Aside>
+
 <Aside type="tip" title="Why per-system exists">
 	Machines disagree about what their buttons are called. A layout that is comfortable on
 	a two-button NES pad is not the same as one for a six-button arcade stick, and neither
@@ -53,7 +63,7 @@ Some hardware has bindings of its own, because it is not shaped like a joypad:
 
 - **Wii Remote** — its own map, since it has seven buttons, a d-pad and motion. See
   [the Wii page](/guide/platforms/wii/#controls).
-- **Nunchuk** — a small map of its own, chained behind the remote.
+- **Nunchuk** — a small map of its own, chained behind the remote, motion included.
 - **Light gun** — its own trigger and buttons.
 
 These read from the same file and follow the same global-then-per-system rule.

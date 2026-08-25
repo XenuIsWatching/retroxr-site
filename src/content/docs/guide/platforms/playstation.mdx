@@ -8,6 +8,9 @@ sidebar:
 import { Steps, Aside } from '@astrojs/starlight/components';
 import { Image } from 'astro:assets';
 import Turntable from '../../../../components/Turntable.astro';
+import consolePoster from '../../../../assets/ps1/console_poster.png';
+import controllerPoster from '../../../../assets/ps1/controller_poster.png';
+import dualshockPoster from '../../../../assets/ps1/dualshock_poster.png';
 import cardPoster from '../../../../assets/ps1/memory_card_poster.png';
 import cardAnnotated from '../../../../assets/ps1/memory_card_annotated.png';
 import biosPsx from '../../../../assets/screenshots/cores_bios_psx.png';
@@ -16,6 +19,13 @@ import RommMark from '../../../../components/RommMark.astro';
 The PlayStation is the platform that best shows what RetroXR does with saves. Your save is
 not a hidden file in a folder — it is on a **memory card**, and the card is an object you
 hold, slot in, and can lose.
+
+<Turntable
+	src="/video/ps1/console.mp4"
+	poster={consolePoster}
+	alt="The grey PlayStation console rotating, showing the sprung disc lid on top, the POWER, RESET and OPEN buttons, the two controller ports and the two memory card slots along the front."
+	caption="The PlayStation — a modelled shell as of v0.4.0, replacing the procedural box. The lid springs, the buttons press, and both card slots and both controller ports take real objects."
+/>
 
 ## Before anything: the BIOS
 
@@ -67,6 +77,9 @@ one work here:
 
 There is a manager for all of this, reachable from the card itself: point at it and press
 the **menu button**.
+
+As of v0.4.0 the running game notices when **card slot 1 is emptied**, the way the console
+did — pull the card mid-game and the machine sees it go.
 
 <Aside type="tip" title="If a game cannot find your save">
 	Saves are per card, and per slot. The usual cause is a different card in the slot, or
@@ -137,24 +150,53 @@ Full detail on [game saves and backups](/guide/connecting/saves/).
 
 ## Discs
 
-Spawn a game from `SPAWN` → **Cartridges** and it arrives as a disc rather than a
+Spawn a game from `SPAWN` → **Games** and it arrives as a disc rather than a
 cartridge. Open the console's lid, set the disc in the tray, close it, and power on.
 
 Multi-disc games work — RetroXR retrieves the right image for each disc rather than
 handing every disc the first one, which was a real bug fixed in
 [v0.3.0](/blog/).
 
-<Aside type="note" title="A procedural stand-in">
-	The PlayStation is one of the machines wearing a clean procedural stand-in rather than
-	a detailed replica — fully playable, deliberately minimalist, like most of the hardware
-	in the room. The memory cards above are the exception, and they are in.
-</Aside>
+Multi-disc games can also be **swapped mid-game** on cores that support disc control: take
+disc 1 out and put disc 2 in, and the game carries on. Pulling a disc no longer switches
+the machine off either — see [cartridges and discs](/guide/playing/cartridges-and-discs/).
 
 ## Controllers
 
-Plug a pad into one of the two controller ports. For a real gamepad, spawn a **Controller
-Receiver** and plug that in instead — see
+Both PlayStation pads are modelled, and which one you plug in is what decides how the
+console reads it — there is no controller-type setting to find.
+
+<Turntable
+	src="/video/ps1/controller.mp4"
+	poster={controllerPoster}
+	alt="The original PlayStation controller rotating, showing the D-pad, the four face buttons, the shoulder buttons and the two grips."
+	caption="The original digital pad. Plug it in and the core switches to the standard controller."
+/>
+
+<Turntable
+	src="/video/ps1/dualshock.mp4"
+	poster={dualshockPoster}
+	alt="The DualShock controller rotating, showing its two analogue sticks, the ANALOG button between them, the D-pad and the four face buttons."
+	caption="The DualShock. Plug it in and the core switches to the dual-shock controller — sticks and all."
+/>
+
+Push either into one of the two controller ports on the front:
+
+- **The original pad** selects the standard controller.
+- **The DualShock** selects the dual-shock controller.
+
+**The ANALOG button works.** Put a fingertip on it and press, and the DualShock drops back
+to behaving as a standard controller, exactly as the real one toggled — which is the fix
+for games that predate the sticks and get confused by them.
+
+For a real gamepad, spawn a **Controller Receiver** and plug that in instead — see
 [controllers and peripherals](/guide/playing/controllers/).
+
+## The serial link
+
+The PlayStation's **SERIAL I/O** socket on the back is wired. Run a link cable between two
+consoles and games that supported it will see each other — see [link
+cables](/guide/playing/link-cables/).
 
 ## Cores
 

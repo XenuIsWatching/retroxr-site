@@ -99,6 +99,16 @@ NES  RF SWITCH jack  →  RXR-003 switch box  →  TV  ANT / RF IN
 
 **① POWER** · **② RESET** · **③ two controller ports**
 
+The **POWER button gives off its own red light** when the machine is on, rather than being
+painted red — so a console that is on reads as on from across the room.
+
+### It sounds like one
+
+v0.4.0 added recorded hardware sounds to this machine, taken from a real NES-001: the
+power and reset buttons, the controller buttons, a controller plug going into a port, the
+CH3/CH4 switch, a cartridge going in and coming out, and the cradle latching and
+unlatching.
+
 ## Cartridges, and the lid
 
 <Turntable
@@ -117,25 +127,25 @@ cartridge in — or take one out — while the flap is down.
 
 ### Opening it
 
-Bring a controller near the flap and **squeeze the grip** to latch onto it, then swing it
-up on its hinge.
+As of v0.4.0 the flap is a **poke**: put a fingertip under it and lift. No grip, no
+trigger.
 
-<Aside type="tip" title="Grip here, unlike the Wii's battery cover">
-	The flap takes the **grip**, not the trigger — the opposite of the [Wii Remote's battery
-	cover](/guide/platforms/wii/). The reason is which object you might otherwise pick up:
-	a remote is something you lift, so a grip-latched cover would fight the pickup. A
-	console is not something you lift, so grip is free to work its lid.
-
-	While your hand is inside the flap's grab box its pickup is muted, so the squeeze works
-	the lid **instead of** taking the console, not as well as.
+<Aside type="caution" title="A leftover trigger glyph">
+	The flap still shows a trigger hint from when it took the trigger. Ignore it — poking
+	is what works. It is a [known issue](https://github.com/XenuIsWatching/RetroXR/releases)
+	in v0.4.0.
 </Aside>
 
 <Steps>
 
-1. Grip the flap and swing it up.
-2. Spawn a game from `SPAWN` → **Cartridges** and push it into the bay. It goes in label
+1. Poke the flap up.
+2. Spawn a game from `SPAWN` → **Games** and push it into the bay. It goes in label
    up.
-3. Press **POWER**.
+3. **Press the cradle down.** The NES's bay is sprung: a cartridge sitting in it is not
+   yet connected, and the console cannot see the game until you push the cradle down and
+   it latches — the clunk everyone remembers. Press it again to unlatch and pop the
+   cartridge back up.
+4. Press **POWER**.
 
 </Steps>
 

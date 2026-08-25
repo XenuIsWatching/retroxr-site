@@ -10,10 +10,10 @@ go into the machine.
 
 ## Cartridges
 
-Open **`SPAWN`** → **Cartridges** and click a game. The cartridge spawns into the hand
+Open **`SPAWN`** → **Games** and click a game. The cartridge spawns into the hand
 that clicked, already carrying that ROM.
 
-![The Cartridges tab: a grid of systems with box art, each showing how many games it holds.](../../../../assets/screenshots/menu_spawn_cartridges.png)
+![The Games tab: a grid of systems with box art, each showing how many games it holds.](../../../../assets/screenshots/menu_spawn_cartridges.png)
 
 Push it into the console's slot. **It has to go in the right way up** — a cartridge held
 upside down will not seat, exactly as it would not have then.
@@ -26,6 +26,16 @@ powered on does what you would expect it to do.
 Disc-based systems take a disc into a tray or a slot. Open the lid or eject the tray,
 place the disc in, close it, and power on.
 
+### Swapping discs mid-game
+
+Multi-disc games work the way they did. On cores that support disc control you can take
+disc 1 out and put disc 2 in while the game is running, and it carries on — which is the
+only way to finish a game that asks for the next disc.
+
+Since v0.4.0, **pulling a disc out no longer switches the machine off** on those cores.
+The console keeps running with an empty tray, waiting for the next disc, exactly as it
+should.
+
 ## UMDs
 
 PSP titles come as UMDs, which slot into the back of the handheld.
@@ -36,7 +46,11 @@ Systems that used memory cards have them as separate objects you plug into the c
 card slots. Your saves live on the card, not in a hidden folder.
 
 The PlayStation's card can be browsed from inside the room — you can see the blocks used,
-and manage what is on it.
+and manage what is on it. A running PlayStation also notices when card slot 1 is emptied,
+so pulling a card mid-game is something the game sees.
+
+The GameCube takes **raw memory card files** as of v0.4.0, so a card image from elsewhere
+is one you can use here.
 
 :::note
 Saves are per card, so if a game is not finding your save, check that the same card is in

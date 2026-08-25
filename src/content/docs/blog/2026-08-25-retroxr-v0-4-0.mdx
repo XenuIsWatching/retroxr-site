@@ -1,0 +1,192 @@
+---
+title: 'RetroXR v0.4.0: link cables that carry real data'
+date: 2026-08-25T16:00:00Z
+authors: ryan
+excerpt: A serial link API for libretro — Game Boys, GBAs, a GameCube and two PlayStations cabled together — plus save states, a modelled PlayStation, a remodelled Wiimote and Nunchuk with working motion, and capacitive finger tracking.
+tags:
+  - release
+---
+
+import Clip from '../../../components/Clip.astro';
+import Turntable from '../../../components/Turntable.astro';
+import gcGbaLinkPoster from '../../../assets/link/gc_gba_link_poster.png';
+import ps1ConsolePoster from '../../../assets/ps1/console_poster.png';
+import ps1DualshockPoster from '../../../assets/ps1/dualshock_poster.png';
+import wiimotePoster from '../../../assets/wii/wiimote_poster.png';
+import nunchukPoster from '../../../assets/wii/nunchuk_poster.png';
+
+**[Full changelog](https://github.com/XenuIsWatching/RetroXR/compare/v0.3.1...v0.4.0)** ·
+[Download](/download/) ·
+[SideQuest](https://sidequestvr.com/app/61366/retroxr) ·
+[Discord](https://discord.gg/mdjdBDTdW)
+
+## Major new features
+
+### 🔌 Serial link
+
+Two machines in the room can now be **cabled together**, and the data really crosses the
+wire. This needed a piece that did not exist: a core-agnostic **serial link API**, which
+went [upstream to RetroArch](https://github.com/libretro/RetroArch/pull/19454). The cores
+carrying the other half are forks the core manager downloads for you.
+
+<Clip
+	src="/video/link/gc_gba_link.mp4"
+	poster={gcGbaLinkPoster}
+	sound
+	alt="A GameCube game running on the television while two Game Boy Advance handhelds lie on the desk in front of it, each cabled to the console and showing its own separate screen. A GameCube pad is picked up and played."
+	caption="A GameCube with two Game Boy Advances on link cables — each handheld running its own screen, every machine emulated at once in the same room. Recorded on PCVR."
+/>
+
+What each fork brings:
+
+- **[mGBA](https://github.com/XenuIsWatching/mgba)** — GameCube link with Dolphin (up to
+  four GBAs on GC-GBA cables, BIOS required), up to four players single-pak *and*
+  multi-pak over three link cables, and the 1st/2nd gen link protocol for Game Boy and
+  Game Boy Color. For single-pak, the **purple end goes into the host** — the machine
+  holding the cartridge.
+- **[Dolphin](https://github.com/XenuIsWatching/dolphin)** — the GameCube side of that
+  cable, plus raw memory card files and Nunchuk accelerometer support.
+- **[pcsx_rearmed](https://github.com/XenuIsWatching/pcsx_rearmed)** — a serial cable
+  between two PlayStations, and it now notices when memory card 1 is pulled while a game
+  is running.
+- **[gambatte](https://github.com/XenuIsWatching/gambatte-libretro)** — a Game Boy link
+  cable between cores. It will happily link a gambatte Game Boy to an mGBA one.
+
+**Use this on PCVR if you can.** A link is several cores running at once, which is more
+than a standalone headset comfortably carries. It runs on a Quest — but the recording
+above is PCVR for a reason.
+
+Full detail on the new [link cables](/guide/playing/link-cables/) page.
+
+### 💾 Save states
+
+Save and load state, at any moment, on any core that supports it. Each state is stored
+**with a screenshot** of what was on screen when you took it, so the list reads as
+pictures rather than timestamps — and states back up to RomM with those screenshots
+intact. See [game saves and backups](/guide/connecting/saves/).
+
+### 🎮 A PlayStation you can look at
+
+The PlayStation has stopped being a grey box.
+
+<Turntable
+	src="/video/ps1/console.mp4"
+	poster={ps1ConsolePoster}
+	alt="The grey PlayStation console rotating, showing the sprung disc lid, the POWER, RESET and OPEN buttons, the two controller ports and the two memory card slots."
+	caption="The PlayStation. The lid springs, the buttons press, and both card slots and controller ports take real objects."
+/>
+
+Both pads are modelled too, and **which one you plug in is what selects the controller
+type** — the original pad picks the standard controller, the DualShock picks dual-shock.
+No menu involved.
+
+<Turntable
+	src="/video/ps1/dualshock.mp4"
+	poster={ps1DualshockPoster}
+	alt="The DualShock controller rotating, showing its two analogue sticks, the ANALOG button between them, the D-pad and the four face buttons."
+	caption="The DualShock. Its ANALOG button works — press it with a fingertip and the pad drops back to behaving as a standard controller."
+/>
+
+### 🕹️ Wii: a remodel, and Nunchuk motion at last
+
+The Nunchuk's own accelerometer works. That had been blocked upstream rather than here —
+libretro had no way to express a *second* motion sensor on one controller port — so it
+took [a sensor sub-index added to
+libretro](https://github.com/libretro/RetroArch/pull/19453) before RetroXR's Dolphin fork
+could report it.
+
+Both accessories were remodelled while that was in flight. The Nunchuk is based on **a
+laser scan of the real thing** (everything but the stick) — thanks to **Wesk of the
+BitBuilt forums** for it.
+
+<Turntable
+	src="/video/wii/nunchuk.mp4"
+	poster={nunchukPoster}
+	alt="The remodelled Nunchuk rotating, showing its analogue stick, the C and Z buttons on its underside, and the cable coming out of its base."
+	caption="The remodelled Nunchuk — and it now reports its own motion."
+/>
+
+<Turntable
+	src="/video/wii/wiimote.mp4"
+	poster={wiimotePoster}
+	alt="The remodelled Wii Remote rotating, showing the D-pad, A button, the 1 and 2 buttons, the player LEDs, and the expansion port on its base."
+	caption="The remodelled Wii Remote. The POWER button works now — one second on, four seconds off."
+/>
+
+The remote also picked up three things:
+
+- **SYNC**, under the battery tray, is now an ordinary **poke** rather than a trigger
+  press. The cover is the safety.
+- **POWER works** — hold one second to turn the console on, four to turn it off.
+- It can be **held sideways in two hands**, the NES-pad grip a lot of Wii games assumed.
+
+### 👐 Capacitive finger tracking
+
+On Meta Quest Touch controllers, RetroXR now reads the **capacitive sensors**, so your
+fingers sit where they really are on the controller instead of snapping between canned
+poses. On PCVR use **SteamVR** as the runtime for this — the Horizon link does not pass
+capsense through.
+
+The **poke interactor moved to your index fingertip**, off the cone that used to stick out
+of the controller. Everything you press with a finger is now reached from where the finger
+actually is.
+
+### 🎛️ Per-platform rebinding
+
+Both the XR controllers and any external gamepad can carry **a different map per
+platform**, set from the `CONTROLS` menu. A per-platform map is a whole map rather than a
+patch, so a platform you have customised keeps what it had and does not pick up later
+global edits. See [setting up your controls](/guide/reference/setting-controls/).
+
+### 💿 Disc control
+
+Cores that support disc control **no longer switch off when the disc is pulled**, and
+multi-disc games can be swapped from disc 1 to disc 2 mid-game.
+
+### 🔴 NES: a machine that sounds like one
+
+The NES got recorded hardware sounds from a real NES-001 — the power and reset buttons,
+the controller buttons, a controller plug seating, the CH3/CH4 switch, a cartridge going
+in and out, and the cradle latching.
+
+Its interactions changed with it: the **lid is now a poke**, the **power button gives off
+its own light**, and **the cartridge cradle has to be pressed down** before the console
+can see the game, exactly as the sprung bay demanded.
+
+### 🪢 Verlet rope
+
+The cable simulator was rewritten to be **more stable** — far less jitter in the leads
+hanging off everything.
+
+## Minor new features
+
+- If a BIOS is on the device, the core's **show BIOS startup** option is turned on for
+  you, so a machine with no game boots to its own firmware screen.
+- **Posters**: drop an image into `posters/` and stick it on things.
+- `Cartridges` in the spawn menu is now **`Games`**.
+- Default **world scale is 0.85×**, up from 0.8×.
+- A TV's **source is recalled** when a saved room is loaded.
+- **Cores and BIOS files can be deleted in-headset**, and orphaned metadata cleared from
+  the storage screen.
+
+## Netplay
+
+Still **experimental — only use it if you want to help test it.** Many object-sync fixes
+and under-the-hood netcode changes went in this release, but the warning stands.
+
+## Bug fixes
+
+Collision on handheld cartridges, the scraper picking the wrong region for images with no
+disc number, frame stuttering from Godot over-allocating frame culling threads, a row of
+pixels blowing across the seam on dual-screen handhelds, BIOS files inside folders on
+RomM, object position recall when loading a scene, and the cd/cassette player's menu
+failing to appear — plus a great many more.
+
+## Known issues
+
+- Desktop interaction struggles to select socketed objects — controller plugs and memory
+  cards — when they sit near each other.
+- Pressing the NES cradle with no cartridge in presses a phantom cartridge.
+- The NES lid still shows a trigger glyph, though it is a poke now.
+- Crashes can happen between loading scenes.
+- Four GBAs with three of them empty can stutter at first.

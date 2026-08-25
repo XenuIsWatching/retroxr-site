@@ -32,7 +32,8 @@ Under **`OPTIONS`**:
 - **Slide or teleport** movement.
 - **Snap or smooth** turning, with an adjustable snap angle.
 - A **field-of-view vignette** while moving.
-- **Height offset** and **world scale**.
+- **Height offset** and **world scale**. The default world scale is **0.85×** as of
+  v0.4.0, up from 0.8× — the room reads a little larger around you.
 
 If VR movement bothers you, teleport plus snap turning plus the vignette is the
 combination to start from.

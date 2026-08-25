@@ -28,6 +28,7 @@ import FeatureGrid from '../../components/FeatureGrid.astro';
 import Feature from '../../components/Feature.astro';
 import Clip from '../../components/Clip.astro';
 import duckHuntPoster from '../../assets/lightgun/duck_hunt_poster.png';
+import gcGbaLinkPoster from '../../assets/link/gc_gba_link_poster.png';
 import spawnAndPlayPoster from '../../assets/spawn_and_play_poster.png';
 import gamecubePoster from '../../assets/gamecube_quest_poster.png';
 import wiiQuestPoster from '../../assets/wii_quest_poster.png';
@@ -75,6 +76,14 @@ swing, lids hinge open, discs sit in trays, and a cartridge has to go in the rig
 	caption="Duck Hunt, played with a light gun you point at the television — recorded in-headset on a Quest 3. More on how that works in the guide to light guns."
 />
 
+<Clip
+	src="/video/link/gc_gba_link.mp4"
+	poster={gcGbaLinkPoster}
+	sound
+	alt="A GameCube game running on the television while two Game Boy Advance handhelds lie on the desk in front of it, each cabled to the console and showing its own separate screen. A GameCube pad is picked up and played."
+	caption="A GameCube and two Game Boy Advances on one link cable — the console on the TV, each handheld running its own screen, all four machines emulated at once in the same room. Recorded on PCVR: several cores at once is more than a standalone headset comfortably carries."
+/>
+
 ## What's in the room
 
 <FeatureGrid>
@@ -98,6 +107,9 @@ swing, lids hinge open, discs sit in trays, and a cartridge has to go in the rig
 	</Feature>
 	<Feature title="Books you actually turn" video="/video/book_flip.mp4" poster={bookPoster} alt="A hand grabs the outer edge of a page and drags it across, folding it over to reveal the next spread." wide>
 		PDFs and CBZs are physical books. Grab a page by its outer edge and drag it across; release past halfway and the turn completes, short of it and it springs back.
+	</Feature>
+	<Feature title="Link cables that carry real data" img={gcGbaLinkPoster} alt="A GameCube game on the television with two Game Boy Advance handhelds cabled to it on the desk, each showing its own screen." wide>
+		Run a lead between two machines and they talk — Game Boy to Game Boy, PlayStation to PlayStation, and a GameCube to up to four Game Boy Advances, cartridge or single-pak. Two consoles, two cores, one wire.
 	</Feature>
 	<Feature title="One remote for all of it" img={objRemote} alt="The TV remote, held in a hand, with a floating command menu above it: eject, a D-pad with a center OK, transport buttons, and audio and subtitle cells.">
 		Point it at a TV, VCR, DVD player or tape deck and the right controls appear above it — including the disc's own menus.
@@ -171,8 +183,9 @@ page through.
 RetroXR is **in active development**, and it is honest to say so up front:
 
 - Most consoles and controllers are clean **procedural stand-ins** rather than detailed
-  replicas — fully playable, deliberately minimalist. Only a handful, like the NES and the
-  Atari 2600, wear a real shell.
+  replicas — fully playable, deliberately minimalist. A growing handful — the NES, the
+  Atari 2600, the PlayStation and its two pads, the Wii Remote and Nunchuk — wear a real
+  shell.
 - **Every room is a placeholder** — somewhere to put your hardware, not a finished space.
 - Tested on **Quest 3**. There is also a Windows desktop build with mouse and keyboard.
 - **Netplay is in, but it is very early.** Treat it as a prototype rather than a feature.

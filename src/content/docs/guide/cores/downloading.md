@@ -91,6 +91,11 @@ Cores can be re-downloaded to pick up a newer build, and removed when you no lon
 them. A system with no core installed simply cannot be spawned — that is the constraint
 you are managing.
 
+Since v0.4.0 you can **delete cores and BIOS files from inside the headset**, from the
+same screens you installed them on, rather than going back to a PC to reclaim the space.
+The storage screen will also clear out **orphaned metadata** — box art and scraped details
+left behind by games that are no longer there.
+
 :::note
 Changing the default core for a system does not migrate saves between cores. Different
 cores can use different save formats, so a game saved under one may not be seen by

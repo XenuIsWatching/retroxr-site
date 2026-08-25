@@ -20,6 +20,10 @@ Beyond the game itself, the room is shared: player poses are broadcast, so you c
 each other as avatars, and objects stay in sync. The core and the ROM can be transferred
 to whoever does not have them.
 
+v0.4.0 reworked the netcode strategy under the hood and fixed a long list of object-sync
+bugs, so the shared room holds together better than it did — but the warning above still
+stands unchanged.
+
 ## Using it
 
 Open the **`NET`** tab. One person hosts; the others enter that machine's address to join.

@@ -33,10 +33,10 @@ Across the top are the sections of the menu:
 
 ## What you can spawn
 
-Under `SPAWN` there are ten tabs — Systems, Cartridges, TVs, Books, Videos, DVDs, CDs,
+Under `SPAWN` there are ten tabs — Systems, Games, TVs, Books, Videos, DVDs, CDs,
 Tapes, Objects and Controllers:
 
-**Cartridges** — your ROMs. Clicking one spawns a cartridge carrying that game, straight
+**Games** — your ROMs. Clicking one spawns a cartridge carrying that game, straight
 into the hand that clicked. If a game has been scraped, its row also has a 📖 button that
 spawns the scanned manual as a book.
 

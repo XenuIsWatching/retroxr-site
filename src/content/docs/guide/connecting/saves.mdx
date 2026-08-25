@@ -10,17 +10,37 @@ import { Image } from 'astro:assets';
 import savesPanel from '../../../../assets/saves/saves_panel.png';
 import RommMark from '../../../../components/RommMark.astro';
 
-RetroXR keeps two different kinds of save, and it is worth knowing which one you are
+RetroXR keeps three different kinds of save, and it is worth knowing which one you are
 looking at.
 
 - **Battery saves** — the in-game saves a cartridge kept on its own chip. These belong to
   the game.
 - **Memory cards** — an object you slot into the console, for the systems that used them.
   See [the PlayStation page](/guide/platforms/playstation/).
+- **Save states** — a snapshot of the whole machine, taken and restored at any moment.
+  New in v0.4.0.
+
+## Save states
+
+A save state freezes the console exactly as it is — mid-jump, mid-cutscene, mid-anything —
+and puts it back later. It is not something the hardware could do, and it does not touch
+the game's own save.
+
+**Each state is stored with a screenshot** of what was on screen when you took it, so the
+list reads as pictures of moments rather than a column of timestamps.
+
+If you run a [RomM](https://romm.app) server, states back up to it **with their
+screenshots**, the same way the rest of your saves do.
+
+<Aside type="note" title="A state belongs to its core">
+	A save state is a dump of a running emulator, not a portable file. One taken with one
+	core is not guaranteed to load in another, so if a state will not restore, check you
+	have not switched the system's core since taking it.
+</Aside>
 
 ## Finding a game's saves
 
-Open `SPAWN` → **Cartridges**, find the game, and press the **list** icon on its row.
+Open `SPAWN` → **Games**, find the game, and press the **list** icon on its row.
 
 <Image src={savesPanel} alt="The saves page for a game, with two tabs circled: Saves marked 1 and Achievements marked 2. Below them, a hint reading 'Spawn this cartridge to choose which save it uses' and the line 'No saves for this game yet'." />
 

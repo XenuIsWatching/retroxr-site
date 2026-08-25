@@ -61,7 +61,7 @@ do all of it.
 	caption="The battery cover opening. SYNC does not exist until the cover passes about 45° — the button here is tinted green so it reads against the white shell."
 />
 
-**Both halves of this are the trigger, not the grip.**
+**The cover is the trigger. The button is your finger.**
 
 <Steps>
 
@@ -70,8 +70,8 @@ do all of it.
    swings with your hand. Once latched your hand can leave; the latch holds until you
    release the trigger.
 
-2. **Press SYNC.** Put your fingertip on the button and it only *arms*, outlining
-   **green**. **Pull the trigger** to actually press it, and the outline turns **amber**.
+2. **Press SYNC.** Reach in and **push the button with your fingertip**. As of v0.4.0 this
+   is an ordinary poke — no arming, no trigger pull. The cover is what keeps it safe.
 
 </Steps>
 
@@ -80,9 +80,9 @@ do all of it.
 	would mean one squeeze both swung the cover and lifted the whole remote off the table.
 	On the trigger the two never compete: **grip takes the remote, trigger works its cover.**
 
-	SYNC uses the trigger for a different reason: a fingertip alone fires a button the
-	moment it drifts into it, and an accidental SYNC unpairs your remote. Arming first
-	means you have to mean it.
+	SYNC itself is now a plain poke. It was a two-stage trigger press to stop a drifting
+	fingertip unpairing your remote, but a button that only exists once you have swung a
+	battery cover open is already hard to hit by accident — the cover is the safety.
 </Aside>
 
 <Aside type="caution" title="The cover really covers it">
@@ -155,12 +155,27 @@ Controllers. It plugs into the Wii and stands on the set.
 <Turntable
 	src="/video/wii/wiimote.mp4"
 	poster={wiimotePoster}
-	alt="The Wii Remote model rotating, showing its D-pad, A button, 1 and 2 buttons, player LEDs and the expansion port on its base."
-	caption="The Wii Remote, with the expansion port on its base that MotionPlus and the Nunchuk plug into."
+	alt="The remodelled Wii Remote rotating, showing the D-pad, A button, the 1 and 2 buttons, the player LEDs, the minus, Home and plus row, and the expansion port on its base."
+	caption="The Wii Remote, remodelled in v0.4.0. The expansion port on its base is what MotionPlus and the Nunchuk plug into."
 />
 
 Pick it up and swing it. Pointing works off the sensor bar you placed, so if the pointer is
 wrong, the bar's position is the first thing to check.
+
+### The POWER button
+
+The **POWER** button on the remote does what it did on the hardware, and it is held rather
+than tapped:
+
+| Hold it for | What happens |
+| --- | --- |
+| **1 second** | The console turns **on** |
+| **4 seconds** | The console turns **off** |
+
+### Holding it sideways
+
+A remote can be held **sideways in two hands**, the NES-pad grip a lot of Wii games were
+designed around. Grab it with both, turn it across you, and it plays as a horizontal pad.
 
 ## Controls
 
@@ -255,8 +270,8 @@ fetches it for you — you do not need to build anything.
 <Turntable
 	src="/video/wii/nunchuk.mp4"
 	poster={nunchukPoster}
-	alt="The Nunchuk model rotating, showing its analogue stick and the C and Z buttons."
-	caption="The Nunchuk. Present as an object, but its motion sensing is not yet wired up."
+	alt="The remodelled Nunchuk rotating, showing its analogue stick, the C and Z buttons on its underside, and the cable coming out of its base."
+	caption="The Nunchuk, remodelled in v0.4.0 from a laser scan of the real accessory — everything but the stick. Thanks to Wesk of the BitBuilt forums for the scan."
 />
 
 Plug it into the **expansion port** on the base of the remote. Its stick and buttons work:
@@ -267,15 +282,15 @@ Plug it into the **expansion port** on the base of the remote. Its stick and but
 | **A / X button** | **C** |
 | **Trigger** | **Z** |
 
-:::caution[Nunchuk *motion* is not supported yet]
-The stick, C and Z are fine. What is missing is the Nunchuk's **own accelerometer** —
-**libretro has no standard way to expose a second motion sensor on a single controller
-port**. That is a limitation of the libretro API rather than of RetroXR, so it cannot
-simply be fixed here.
+Swing it, too: **the Nunchuk's own accelerometer works as of v0.4.0**, so games that ask
+you to jerk the Nunchuk read that motion rather than ignoring it.
 
-A proposal upstream to RetroArch is the route that would make it work. Until then, games
-that ask you to swing the Nunchuk will not read that swing.
-:::
+<Aside type="note" title="What that took">
+	Until v0.4.0 this was impossible rather than merely missing: libretro had no way to
+	express a *second* motion sensor on one controller port, so the Nunchuk's accelerometer
+	had nowhere to go. It works now because a sensor sub-index was added to libretro
+	upstream, and RetroXR's Dolphin fork reads it.
+</Aside>
 
 <Aside type="note" title="MotionPlus and the Nunchuk together">
 	The MotionPlus dongle passes the expansion port through, so the Nunchuk still plugs in
@@ -293,9 +308,9 @@ cores](/guide/cores/downloading/).
 
 ## Still to come
 
-The Wii is new in [v0.3.0](/blog/), and it is one of the more involved platforms in the
-project. Nunchuk motion is the big missing piece, and it is blocked upstream rather than
-here.
+The Wii arrived in [v0.3.0](/blog/) and got most of its second pass in v0.4.0 — a
+remodelled remote and Nunchuk, a working power button, the sideways grip and Nunchuk
+motion, which had been the big missing piece.
 
 :::note[Help wanted]
 Every model above is a procedural stand-in. If you model, replacing them with something

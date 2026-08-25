@@ -54,7 +54,7 @@ Point at the book and press the **menu button** for a small panel with two contr
 
 ## Game manuals
 
-If a game has been scraped, its row in the **Cartridges** tab has a 📖 button that spawns
+If a game has been scraped, its row in the **Games** tab has a 📖 button that spawns
 the manual as a book. Leave it open on the desk next to the TV while you play, which is
 what manuals were for.
 

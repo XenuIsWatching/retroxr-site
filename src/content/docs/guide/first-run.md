@@ -79,7 +79,7 @@ Full detail, including RF switches and VGA monitors, is on
 
 ## Step 5 — Insert a cartridge and hit power
 
-1. Open **`SPAWN`** → **Cartridges** and click your game. It spawns straight into your
+1. Open **`SPAWN`** → **Games** and click your game. It spawns straight into your
    hand.
 2. Push it into the console's slot. It has to go in the right way up.
 3. Press the console's **power** button.

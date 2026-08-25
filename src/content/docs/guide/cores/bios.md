@@ -160,6 +160,12 @@ required files missing — that is correct behavior, not a failed download.
 So a system can read "extras installed" and "required files missing" at the same time.
 :::
 
+## Booting to the BIOS
+
+Since v0.4.0, if a system's BIOS is on the device, RetroXR turns on that core's **show the
+BIOS startup** option for you — so a console you power on with no game in it comes up on
+its own firmware screen, the way it did on the shelf, instead of straight into nothing.
+
 ## Optional files
 
 "Optional" means the core runs without it but something is reduced — a region that will
