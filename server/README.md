@@ -56,6 +56,28 @@ from a `workflow_dispatch`:
 ssh <vm> 'cd retroxr-site/server && git pull && docker compose up -d --build'
 ```
 
+### Live
+
+Deployed 2026-08-25. `docker compose ps` should show three containers.
+
+| | |
+|---|---|
+| Project | `retroxr-rendezvous` |
+| Instance | `rendezvous`, `us-west1-b`, `e2-micro`, Debian 12 |
+| Address | `35.212.202.202` (ephemeral - see below) |
+| Network tier | STANDARD |
+
+```sh
+gcloud compute ssh rendezvous --zone=us-west1-b --project=retroxr-rendezvous
+gcloud compute instances delete rendezvous --zone=us-west1-b --project=retroxr-rendezvous
+```
+
+**The external address is ephemeral.** It survives a reboot but not a stop, and
+both DNS records point at it by literal IP. If the instance is ever stopped,
+either promote the address to static before starting it again or update `net`
+and `punch` afterwards - a stale `punch` record is the worse of the two, because
+the registry keeps handing out an endpoint that answers nothing.
+
 ### The VM
 
 A Google Cloud `e2-micro` in `us-west1`, `us-central1` or `us-east1` is free
