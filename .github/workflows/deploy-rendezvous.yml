@@ -1,0 +1,39 @@
+# The rendezvous is deployed on request, never on a push.
+#
+# deploy.yml publishes the site on every push to main. If this lived there, a
+# devlog post would restart the server people are playing through.
+name: Deploy rendezvous
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      # The registry has no dependencies, so there is nothing to install and
+      # the self-test is the whole gate.
+      - run: node server/registry.test.mjs
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    environment: rendezvous
+    steps:
+      - name: Rebuild on the VM
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.RENDEZVOUS_HOST }}
+          username: ${{ secrets.RENDEZVOUS_USER }}
+          key: ${{ secrets.RENDEZVOUS_SSH_KEY }}
+          script: |
+            set -euo pipefail
+            cd retroxr-site
+            git pull --ff-only
+            cd server
+            docker compose up -d --build
+            docker compose ps

@@ -1,0 +1,44 @@
+# The whole rendezvous: a registry that hands out room codes, noray to punch
+# with, and Caddy for the certificate.
+#
+# Bring it up with `docker compose up -d`. Nothing here holds state worth
+# keeping except the certificate.
+
+services:
+  registry:
+    build: .
+    restart: unless-stopped
+    environment:
+      # What the client is told, not where noray listens locally. This is the
+      # single reason the punch endpoint can move without shipping a build.
+      PUNCH_HOST: punch.retroxr.app
+      PUNCH_PORT: "8890"
+      ROOM_TTL: "90"
+    expose:
+      - "8080"
+
+  noray:
+    image: ghcr.io/foxssake/noray:main
+    restart: unless-stopped
+    # Host networking on purpose. noray has to see the real source address of
+    # each UDP registration - that IS the thing it is learning - and a bridge
+    # network would rewrite every one of them to the docker gateway.
+    network_mode: host
+    # Configured by .env if it needs to be; the defaults are TCP 8890 for
+    # registration, UDP 8809 for the port registrar, TCP 8891 for metrics.
+    # The relay port range it also opens is unused here on purpose.
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  caddy_data:
+  caddy_config:

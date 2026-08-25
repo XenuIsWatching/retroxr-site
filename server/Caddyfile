@@ -1,0 +1,11 @@
+# TLS for the registry. Caddy gets the certificate itself over HTTP-01, which is
+# why net.retroxr.app has to stay grey-clouded in Cloudflare until it succeeds -
+# a proxied record answers the challenge itself and the certificate never comes.
+#
+# Only the registry is here. punch.retroxr.app is raw UDP and TCP straight to
+# noray, and cannot be proxied by anything.
+
+net.retroxr.app {
+	encode gzip
+	reverse_proxy registry:8080
+}
