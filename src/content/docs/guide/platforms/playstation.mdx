@@ -27,15 +27,26 @@ hold, slot in, and can lose.
 	caption="The PlayStation — a modelled shell as of v0.4.0, replacing the procedural box. The lid springs, the buttons press, and both card slots and both controller ports take real objects."
 />
 
-## Before anything: the BIOS
+## The BIOS is optional
 
-The PlayStation will not boot without its BIOS, and RetroXR cannot ship it. Open `CORES` →
-**BIOS / Extras** and pick PlayStation to see exactly which files it wants.
+You do **not** need a PlayStation BIOS to play. pcsx_rearmed declares all three region
+BIOSes as optional and emulates the firmware itself, so a game will boot without one.
+
+A real BIOS is still worth having. It is more accurate than the built-in stand-in, it is
+what a few awkward titles want, and it is the only way to get the console's own startup
+screen — the one that boots to the CD player and memory card manager when you power the
+machine on with no disc in it.
+
+RetroXR cannot ship those files. Open `CORES` → **BIOS / Extras** and pick PlayStation to
+see which ones it knows about, and which of them your chosen core marks as required.
 
 <Image src={biosPsx} alt="The BIOS / Extras view for PlayStation, listing scph5500.bin, scph5501.bin, scph5502.bin and psxonpsp660.bin with their required or optional status and per-file download buttons." />
 
 The filenames have to match exactly — `scph5500.bin`, `scph5501.bin`, `scph5502.bin` and
 `psxonpsp660.bin`. A file that is right in every way except its name will not be found.
+
+Required-or-optional is not RetroXR's judgement: it is read out of each core's own
+metadata, so a different PlayStation core can be stricter than pcsx_rearmed is.
 
 If you run a [RomM](https://romm.app) server holding your firmware, RetroXR can pull these
 down directly. Otherwise copy them in the usual way — see

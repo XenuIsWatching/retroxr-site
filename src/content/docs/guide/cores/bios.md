@@ -6,8 +6,13 @@ sidebar:
 ---
 
 Some systems cannot boot without a copy of their original **BIOS** — the small program
-that was burned into the console itself. The PlayStation is the best-known example;
-Saturn, Dreamcast, 3DO, CD-i, Amiga and several others are the same.
+that was burned into the console itself. Saturn, Dreamcast, 3DO, CD-i and Amiga are the
+usual examples.
+
+The PlayStation is the famous case and is **not** one of them: pcsx_rearmed emulates the
+firmware itself, so PS1 games run without a BIOS file. Supplying the real one is an
+accuracy and startup-screen upgrade rather than a requirement — see [the PlayStation
+page](/guide/platforms/playstation/).
 
 RetroXR does not and cannot ship these files. They are copyrighted, and they belong to the
 hardware you own.
