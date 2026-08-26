@@ -134,6 +134,40 @@ Two records, and the difference between them matters:
 
 `tcp:80,443` for Caddy, `tcp:8890` and `udp:8809` for noray.
 
+## When it breaks
+
+**noray can come back from a restart accepting connections and answering
+nothing.** Seen 2026-08-25, an hour after a deploy recreated the container. The
+symptoms are specific and misleading:
+
+- `punch.retroxr.app:8890` accepts TCP, then never replies to `register-host`.
+- The client reports `Punchthrough.Result.PROTOCOL_ERROR`, not `UNREACHABLE`.
+- The registry is completely healthy throughout, so every HTTP check passes.
+- noray logs a clean startup and then **nothing at all** - no line when a
+  connection is accepted.
+- `docker compose ps` says running, and the right process really does hold both
+  TCP 8890 and UDP 8809. There is no orphan and no OOM kill to find.
+
+The fix is `down` and `up`, not `restart`:
+
+```sh
+cd ~/rendezvous && sudo docker compose down && sudo docker compose up -d
+printf 'register-host\n' | nc localhost 8890     # must answer set-oid / set-pid
+```
+
+`down` releases the 2049 relay ports noray binds; a restart may leave them in a
+state it cannot cleanly re-acquire.
+
+If it recurs, pin the image. `ghcr.io/foxssake/noray:main` is a moving tag, so a
+recreate is not guaranteed to bring back the binary that worked - replace it with
+an `@sha256:` digest here and in `docker-compose.yml`.
+
+**The deploy checks both halves now, and that is not optional.** The version of
+`deploy-rendezvous.yml` that shipped this outage verified only the registry, so
+it went green while the punch server was dead. A port knock is not enough either:
+noray accepted connections the whole time. The check speaks the protocol and
+requires a `set-oid` reply.
+
 ## What is deliberately not here
 
 **Relay.** noray implements it and it is one command away, but a relayed session

@@ -80,13 +80,31 @@ jobs:
 
       # A deploy that leaves the registry dead should fail loudly rather than
       # report success. This is the same endpoint the client asks for first.
-      - name: Verify it came back
+      # Both halves, because they fail independently. An outage on 2026-08-25
+      # had noray silently ignoring every command while the registry answered
+      # perfectly - and this step, which then checked only the registry, went
+      # green straight through it.
+      - name: Verify the registry came back
         run: |
           sleep 10
           for i in 1 2 3 4 5; do
             if curl -fsS --max-time 10 https://net.retroxr.app/v1/health; then
-              echo; echo "rendezvous healthy"; exit 0
+              echo; echo "registry healthy"; exit 0
             fi
             echo "attempt $i failed, retrying"; sleep 10
           done
-          echo "rendezvous did not come back healthy"; exit 1
+          echo "registry did not come back healthy"; exit 1
+
+      # Speak the protocol. A port knock is not a check: noray accepted TCP
+      # connections throughout that outage and simply never replied.
+      - name: Verify noray answers the protocol
+        run: |
+          for i in 1 2 3 4 5; do
+            reply=$(printf 'register-host\n' | timeout 10 nc punch.retroxr.app 8890 | head -c 200 || true)
+            case "$reply" in
+              set-oid*) echo "noray healthy: $(echo "$reply" | head -1)"; exit 0 ;;
+            esac
+            echo "attempt $i: no set-oid yet, retrying"; sleep 10
+          done
+          echo "noray did not answer register-host - the punch server is down"
+          exit 1
