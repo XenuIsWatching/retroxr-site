@@ -1,3 +1,9 @@
 *.mp4 filter=lfs diff=lfs merge=lfs -text
 *.webm filter=lfs diff=lfs merge=lfs -text
 *.mov filter=lfs diff=lfs merge=lfs -text
+
+# Shipped to a Linux box and executed there. A CRLF checkout puts a carriage
+# return on the shebang and the script dies as "bad interpreter".
+*.sh text eol=lf
+*.service text eol=lf
+*.timer text eol=lf
