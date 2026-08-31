@@ -18,8 +18,28 @@ services:
       - "8080"
 
   noray:
-    image: ghcr.io/foxssake/noray:main
+    # Pinned to a digest, not the moving :main tag. noray's Bun runtime has
+    # segfaulted three times in a week (Aug 25/26/28 2026), and a moving tag
+    # means the binary that crashed is not necessarily the binary that comes
+    # back - which makes every recurrence a new investigation. This digest is
+    # the one verified working on 2026-08-31.
+    image: ghcr.io/foxssake/noray@sha256:6b948c584c46f9b1bf60bb76f2c20bf397733505105730b91af006da3118f6b2
     restart: unless-stopped
+    # Speak the protocol. noray fails by accepting TCP, parsing register-host,
+    # logging the registration, and never writing set-oid back - so a port
+    # knock, a process check and `docker compose ps` all report a healthy
+    # container throughout. This is the only check that can go red. bun is used
+    # because the image carries no nc.
+    healthcheck:
+      # The newline is String.fromCharCode(10), not an escape: this is a YAML
+      # double-quoted scalar, so a backslash-n would become a real line break
+      # inside a JavaScript string literal, and the check would fail to parse -
+      # reporting the container unhealthy for a reason that is not noray.
+      test: ["CMD", "bun", "-e", "const s=require('node:net').connect(8890,'127.0.0.1');s.setTimeout(5000);let b='';s.on('connect',()=>s.write('register-host'+String.fromCharCode(10)));s.on('data',d=>{b+=d;if(b.includes('set-oid')){s.destroy();process.exit(0)}});s.on('timeout',()=>process.exit(1));s.on('error',()=>process.exit(1));s.on('close',()=>process.exit(1))"]
+      interval: 60s
+      timeout: 15s
+      retries: 3
+      start_period: 30s
     # Host networking on purpose. noray has to see the real source address of
     # each UDP registration - that IS the thing it is learning - and a bridge
     # network would rewrite every one of them to the docker gateway.

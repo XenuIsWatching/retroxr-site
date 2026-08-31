@@ -1,0 +1,11 @@
+[Unit]
+Description=Put the punch server back when noray wedges
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/rendezvous-watchdog.sh
+# A repair is down + up of the whole stack; nothing here should be killed
+# half-way through that.
+TimeoutStartSec=180

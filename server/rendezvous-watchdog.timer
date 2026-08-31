@@ -1,0 +1,12 @@
+[Unit]
+Description=Check the punch server every minute
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=1min
+# The check costs one TCP connection and one line. A minute is short enough that
+# a crash costs a player one failed press rather than three days.
+AccuracySec=15s
+
+[Install]
+WantedBy=timers.target

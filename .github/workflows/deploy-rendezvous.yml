@@ -75,8 +75,37 @@ jobs:
               rm -rf ~/rendezvous && mkdir -p ~/rendezvous
               tar xzf ~/server.tgz -C ~/rendezvous --strip-components=1
               cd ~/rendezvous
-              sudo docker compose up -d --build
-              sudo docker compose ps'
+              # The e2-micro has 969 MB and shipped with no swap at all, while
+              # noray holds 2049 relay sockets. No OOM kill has been seen, so
+              # this is not the known cause of the crashes - it is here to take
+              # memory pressure off the list of suspects for the next one.
+              if [ ! -f /swapfile ]; then
+                sudo fallocate -l 1G /swapfile
+                sudo chmod 600 /swapfile
+                sudo mkswap /swapfile
+                sudo swapon /swapfile
+                echo "/swapfile none swap sw 0 0" | sudo tee -a /etc/fstab
+              fi
+              sudo install -m 0755 watchdog.sh /usr/local/bin/rendezvous-watchdog.sh
+              sudo install -m 0644 rendezvous-watchdog.service rendezvous-watchdog.timer \
+                /etc/systemd/system/
+              sudo systemctl daemon-reload
+              sudo systemctl enable --now rendezvous-watchdog.timer
+              # Under the same lock the watchdog takes. A deploy takes the
+              # server down for a few seconds, which the watchdog would
+              # otherwise read as the outage it exists to repair - and the two
+              # then collide on a container-name conflict, mid-deploy.
+              #
+              # down, not a bare `up -d --build`. Recreating noray in place is
+              # how it comes back accepting connections and answering nothing:
+              # it binds 2049 relay ports, and a recreate does not reliably
+              # release them. This is the same fix the watchdog applies.
+              # No cd inside: the shell is already in ~/rendezvous, and under
+              # sudo a fresh ~ would resolve to root'"'"'s home instead.
+              sudo flock /var/lock/rendezvous-deploy.lock -c "
+                docker compose down
+                docker compose up -d --build
+                docker compose ps"'
 
       # A deploy that leaves the registry dead should fail loudly rather than
       # report success. This is the same endpoint the client asks for first.

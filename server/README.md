@@ -17,6 +17,8 @@ GPL-3.0 and this is not, so nothing may be pasted across; and Astro only reads
 | `registry.test.mjs` | Self-test over a real loopback server. Exits non-zero. |
 | `docker-compose.yml` | registry + noray + Caddy. |
 | `Caddyfile` | TLS for the registry only. |
+| `watchdog.sh` | Speaks the protocol every minute; repairs a wedged noray with `down`/`up`. |
+| `rendezvous-watchdog.{service,timer}` | What runs it. Installed on the box by the deploy. |
 
 ```sh
 node server/registry.test.mjs     # 25 cases, no network beyond loopback
@@ -143,8 +145,11 @@ symptoms are specific and misleading:
 - `punch.retroxr.app:8890` accepts TCP, then never replies to `register-host`.
 - The client reports `Punchthrough.Result.PROTOCOL_ERROR`, not `UNREACHABLE`.
 - The registry is completely healthy throughout, so every HTTP check passes.
-- noray logs a clean startup and then **nothing at all** - no line when a
-  connection is accepted.
+- noray's own log is **not** a reliable tell, and this is the trap. On
+  2026-08-25 it logged a clean startup and then nothing at all. On 2026-08-28 it
+  logged `Registered host from address ...` for every single attempt, minted an
+  oid and a pid, and simply never wrote them back. A log that looks like it is
+  working is the more common of the two.
 - `docker compose ps` says running, and the right process really does hold both
   TCP 8890 and UDP 8809. There is no orphan and no OOM kill to find.
 
@@ -158,9 +163,50 @@ printf 'register-host\n' | nc localhost 8890     # must answer set-oid / set-pid
 `down` releases the 2049 relay ports noray binds; a restart may leave them in a
 state it cannot cleanly re-acquire.
 
-If it recurs, pin the image. `ghcr.io/foxssake/noray:main` is a moving tag, so a
-recreate is not guaranteed to bring back the binary that worked - replace it with
-an `@sha256:` digest here and in `docker-compose.yml`.
+### Why it keeps happening
+
+**The Bun runtime noray ships on crashes**, and `restart: unless-stopped` brings
+it back in seconds in the half-alive state above. That auto-restart is what turns
+a two-second crash into a multi-day outage: the container reads as `Up N days`,
+the registry half stays perfectly healthy, and nobody learns anything until a
+player presses Host Online. The Aug 28 crash was found on Aug 31.
+
+The kernel is where the evidence is, because the container log will not have it:
+
+```
+Aug 28 05:51:41 rendezvous kernel: traps: bun[8772] general protection fault
+                                   ip:7f2c09263507 in libc.so.6[...]
+```
+
+```sh
+sudo journalctl --since '10 days ago' | grep -iE 'traps:|general protection|exitCode'
+```
+
+Three in one week - 2026-08-25, 2026-08-26 (`exitCode=1`), 2026-08-28 (the
+segfault above). The crash itself is upstream and unexplained. What is fixed here
+is the outage outliving it:
+
+- **The image is pinned to a digest**, so a recurrence is not also a new binary.
+  `ghcr.io/foxssake/noray:main` is a moving tag and made every incident a fresh
+  investigation.
+- **noray has a healthcheck that speaks the protocol**, so `docker compose ps`
+  stops lying. It reports `(healthy)` only on a `set-oid` reply.
+- **`rendezvous-watchdog.timer` runs the same check every minute** and repairs
+  with `down`/`up`. Both it and the deploy take `/var/lock/rendezvous-deploy.lock`:
+  without that they race, because a deploy's `down` looks exactly like the outage
+  the watchdog exists to repair.
+- **The box has 1 GB of swap.** It shipped with none, on 969 MB of RAM, while
+  noray holds 2049 relay sockets. No OOM kill has ever been seen, so this is not
+  a known cause - it is here to take memory off the list of suspects.
+
+```sh
+systemctl list-timers rendezvous-watchdog.timer
+journalctl -t rendezvous-watchdog --since today
+```
+
+The watchdog logs and gives up rather than looping when a repair does not take,
+so `noray did NOT come back after down/up` in that journal means the crash has
+changed shape and wants a human.
 
 **The deploy checks both halves now, and that is not optional.** The version of
 `deploy-rendezvous.yml` that shipped this outage verified only the registry, so
