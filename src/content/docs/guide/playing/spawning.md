@@ -48,11 +48,21 @@ spawns the scanned manual as a book.
 
 **Objects** — the hardware itself: the VCR, the DVD player, the CD player and cassette
 deck, speakers, the TV remote, every kind of A/V cable, the RF switch, the Wii sensor bar,
-and the room's own props like the bin.
+a table to stand things on, and the room's own props like the storage box.
+
+:::note[New in v0.5.0]
+The **table** is spawnable, and is no longer part of the arcade room by default — the room
+starts empty and you furnish it. The bin became a **storage box**: things dropped into it
+are animated away rather than simply disappearing.
+:::
 
 ![The Objects tab, listing spawnable hardware: trash can, VCR, DVD player, CD player, cassette player and more.](../../../../assets/screenshots/menu_spawn_objects.png)
 
 **Controllers** — pads, peripherals and the receivers they plug into.
+
+Consoles that grew add-ons — a Mega-CD, a 32X, a 64DD, a Super Game Boy — spawn their
+expansion from the **Systems** grid, filed under the system whose media it takes. See
+[expansion hardware](/guide/playing/expansion-hardware/).
 
 ![The Controllers tab, listing a primitive controller, ray gun, mouse and keyboard.](../../../../assets/screenshots/menu_spawn_controllers.png)
 

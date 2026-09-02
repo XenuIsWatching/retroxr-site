@@ -171,6 +171,21 @@ Since v0.4.0, if a system's BIOS is on the device, RetroXR turns on that core's 
 BIOS startup** option for you — so a console you power on with no game in it comes up on
 its own firmware screen, the way it did on the shelf, instead of straight into nothing.
 
+## Firmware that unlocks hardware
+
+Four of the [expansion units](/guide/playing/expansion-hardware/) are cartridges carrying a
+program, and that program is firmware you supply. Until the file is present the unit is not
+offered in the spawn menu at all, because without it there would be nothing to run.
+
+| Unit | File | Folder |
+| --- | --- | --- |
+| Super Game Boy | `SGB1.sfc` | `system/bsnes/` |
+| Super Game Boy 2 | `SGB2.sfc` | `system/bsnes/` |
+| Sufami Turbo | `STBIOS.bin` | `system/snes9x/` |
+| BS-X | `BS-X.bin` | `system/snes9x/` |
+
+New in v0.5.0.
+
 ## Optional files
 
 "Optional" means the core runs without it but something is reduced — a region that will

@@ -13,7 +13,10 @@ Two machines in the same room can be **cabled together**, and the data really cr
 is not a netplay session dressed up as a wire: both machines are emulated here, in your
 room, and the lead between them carries the same serial traffic the hardware did.
 
-New in v0.4.0.
+New in v0.4.0. **In v0.5.0 the link became event-driven** rather than polled: the cores
+wake each other when there is something to send instead of checking a shared lock on every
+step, which cuts the contention three to fourfold and is felt as a smoother run with up to
+**four cores** cabled together.
 
 <Clip
 	src="/video/link/gc_gba_link.mp4"

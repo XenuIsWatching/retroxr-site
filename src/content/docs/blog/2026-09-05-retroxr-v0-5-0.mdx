@@ -1,0 +1,89 @@
+---
+title: 'RetroXR v0.5.0: consoles you can stack'
+date: 2026-09-05T16:00:00Z
+authors: ryan
+excerpt: Expansion hardware as real objects — a Mega-CD under a Mega Drive, a 32X in its slot, a 64DD, a Super Game Boy, a Sufami Turbo — plus live Satellaview broadcasts on PCVR, an event-driven serial link, and a room that loads with a loading screen instead of a freeze.
+tags:
+  - release
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+**[Full changelog](https://github.com/XenuIsWatching/RetroXR/compare/v0.4.0...v0.5.0)** ·
+[Download](/download/) ·
+[SideQuest](https://sidequestvr.com/app/61366/retroxr) ·
+[Discord](https://discord.gg/mdjdBDTdW)
+
+## Major new features
+
+### 🧱 Expansion hardware
+
+Half the consoles in this room were never one box. v0.5.0 makes the add-ons real objects
+you assemble by hand: **Satellaview, Mega-CD, 32X, Nintendo 64DD, Jaguar CD, Super Game
+Boy and Super Game Boy 2, Sufami Turbo, and the CD-ROM²**.
+
+Spawn the expansion, then set the console **on top of it** — or push the unit **into** the
+console's cartridge slot, depending on which one it is. The stack snaps together into one
+machine, and each half takes its own media: a disc into the Mega-CD's tray, a disk into the
+64DD, a Game Boy cartridge into the roof of a Super Game Boy, two cartridges into a Sufami
+Turbo.
+
+**The core follows the hardware.** An expansion usually needs a different emulator from the
+console's own default — a Mega Drive with a 32X on it is a different machine. You do not
+have to know which: build the stack and RetroXR switches to the core that supports the
+combination, downloading it if you do not have it yet.
+
+Full detail on the new [expansion hardware](/guide/playing/expansion-hardware/) page,
+including the four units that need a firmware file before the menu will offer them.
+
+### 📡 Satellaview+ — a broadcast that is still running
+
+The Satellaview's real broadcasts ended in 2000. **[Satellaview+](/guide/playing/expansion-hardware/#satellaview)**
+is a community client that puts a scheduled one back on the air, and v0.5.0 can receive it:
+point the sat folder at the client's `roms/satellaview` folder, spawn an **8M Memory Pack**,
+and save the transmissions you catch to it.
+
+<Aside type="caution" title="PCVR only, for now">
+	This needs the Satellaview+ client running alongside RetroXR, and there is no in-app
+	client on Quest yet.
+</Aside>
+
+## Minor new features
+
+- **The serial link is event-based**, not polled. Cabling cores together now grabs the
+  mutex three to four times less often, which is felt as a smoother run with **up to four
+  cores** on one wire. See [link cables](/guide/playing/link-cables/).
+- **The trash can is a storage box.** Things dropped into it are animated away rather than
+  simply vanishing.
+- **The TV screen feels better** to interact with.
+- **The table is spawnable**, from the `Objects` tab — and it is no longer part of the
+  arcade room by default, so the room starts as an empty space you furnish.
+- **A loading screen** now covers a room change, instead of the app appearing to freeze.
+
+## Vendored cores
+
+- **Dolphin**, **mGBA**, **PCSX-ReARMed** and **gambatte** all updated for the event-based
+  serial link.
+- **snes9x** — 8M ROM flash pack saving for BS-X, a new libretro API for the Satellaview
+  access LED, and a fix for FLASH memory being initialised to the wrong values.
+- **mupen64plus-next** — single disk drive games now work from libretro, which is what
+  makes the 64DD usable.
+
+## Bug fixes
+
+A GBA cabled to a GameCube no longer has to be reseated if the GameCube was switched off
+when the cable went in.
+
+## In progress — leave these alone
+
+These are in the build because it was easier to leave them in than take them out. They are
+half-finished and **not meant to be used yet**:
+
+- Power outlets and power cables.
+- Netplay room codes with a punch-through server.
+- Netplay file sharing between players (ROMs excluded).
+- `.pck` file support for models.
+
+## Known issues
+
+- Crashes can still happen when changing scenes. Save your layout before you switch.

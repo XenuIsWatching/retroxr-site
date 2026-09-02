@@ -11,7 +11,8 @@ RetroXR gives you somewhere to put all this. Switch rooms from the **`SCENE`** t
 
 ![The SCENE tab, showing the selectable rooms: Arcade Room, Cozy Den, 90s Bedroom and Test Hallway.](../../../../assets/screenshots/menu_scene.png)
 
-- **Arcade room** — the default space.
+- **Arcade room** — the default space. Since v0.5.0 it no longer comes with a table; spawn
+  one from `SPAWN` → `Objects` and put it where you want it.
 - **Cozy den** — a lounge, with a corner TV stand and somewhere to sit.
 - **Bedroom** — a bedroom with a desk, a bed, bookcases and a wardrobe.
 - **Test hallway** — a long hall of pre-cabled stations, one per generation. Useful for
@@ -54,8 +55,13 @@ themselves to follow their plugs.
 A restored layout also brings back **which input each TV was showing**, so a set you left
 on the console's input comes back on it rather than on a blank channel.
 
+:::note[A loading screen, since v0.5.0]
+A room change now shows a loading screen while the new space is built, rather than the app
+appearing to hang.
+:::
+
 :::caution[Crashes between rooms]
-Changing rooms can still crash the app in v0.4.0. Saving your layout before you switch is
+Changing rooms can still crash the app in v0.5.0. Saving your layout before you switch is
 worth the ten seconds.
 :::
 
