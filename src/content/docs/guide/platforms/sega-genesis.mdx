@@ -1,0 +1,78 @@
+---
+title: Sega Genesis
+description: The Genesis and Mega Drive in RetroXR, the 32X in its cartridge slot, the Sega CD underneath it, and the Tower of Power with all three stacked at once.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The Genesis — the Mega Drive outside North America — takes cartridges from your
+`roms/mega_drive` folder. It is also the console Sega bolted the most hardware onto, and
+both of its add-ons are real objects here.
+
+They stack in **opposite directions**, which is what makes the full tower possible:
+
+| Unit | Where it goes | Its media |
+| --- | --- | --- |
+| **32X** | **Into** the cartridge slot, with its own slot on top | `roms/sega_32x` |
+| **Sega CD** | **Underneath** — the console stands on it | `roms/sega_cd` |
+
+See [expansion hardware](/guide/playing/expansion-hardware/) for how a stack goes together.
+
+<Aside type="note" title="The console wears a stand-in">
+	The Genesis has no modelled shell yet, so it spawns as the procedural box. The add-ons,
+	their slots and the CD tray are all real.
+</Aside>
+
+## The 32X
+
+The 32X goes into the cartridge slot like a game, and has **a cartridge slot of its own on
+top** — it is the only Sega expansion here that a game cartridge goes *into* rather than
+past. Put a 32X cartridge in that upper slot.
+
+A Genesis with a 32X on it is a different machine, and RetroXR switches to **picodrive**,
+which is both halves at once. Take the 32X off and the console goes back to its usual core.
+
+## The Sega CD
+
+The Sega CD is a base the console **stands on**, and it loads from a **tray** — press the
+unit's own eject button, put a disc in, close it.
+
+On a Sega CD title the disc is the game and the console's cartridge slot stays empty. The
+core is **genesis_plus_gx**.
+
+<Aside type="caution" title="It needs a region BIOS">
+	The Sega CD will not boot without the BIOS for its region, which you supply:
+
+	| Region | File |
+	| --- | --- |
+	| Europe | `bios_CD_E.bin` |
+	| USA | `bios_CD_U.bin` |
+	| Japan | `bios_CD_J.bin` |
+
+	They go in genesis_plus_gx's system folder — the `BIOS / Extras` view in `CORES` shows
+	which you have. Note the core declares all of them **optional**, which they are for a
+	plain cartridge and are not for a disc.
+</Aside>
+
+## The Tower of Power
+
+Both at once: the Sega CD on the bottom, the Genesis standing on it, the 32X in the
+console's slot. Sega never sold it as one product and it was famously precarious in real
+life — here it simply stacks.
+
+RetroXR treats the full tower as its own machine rather than as two add-ons that happen to
+be present. It runs on **picodrive**, and **the disc is still what boots** — the tower
+exists so that a Sega CD game can use the 32X's extra hardware, so the CD remains the thing
+being played.
+
+<Aside type="caution" title="Not yet verified against real games">
+	Every Genesis combination here — 32X alone, Sega CD alone, and the full tower — is
+	written from each core's documented behaviour and is marked **unverified** in RetroXR's
+	own expansion catalog. The stacking, the media routing and the core switch are
+	implemented; what has not been done is sitting down with real discs and cartridges and
+	confirming each one boots and plays.
+
+	If you try one, working or broken, that is genuinely useful to hear about on
+	[Discord](https://discord.gg/mdjdBDTdW) or in an
+	[issue](https://github.com/XenuIsWatching/RetroXR/issues).
+</Aside>

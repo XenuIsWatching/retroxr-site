@@ -87,6 +87,8 @@ export default defineConfig({
 								'guide/platforms/sufami-turbo',
 							],
 						},
+						'guide/platforms/sega-genesis',
+						'guide/platforms/nintendo-64',
 						'guide/platforms/playstation',
 						'guide/platforms/atari-2600',
 						'guide/platforms/ds-and-3ds',
