@@ -1,8 +1,8 @@
 ---
 title: 'RetroXR v0.5.0: consoles you can stack'
-date: 2026-09-05T16:00:00Z
+date: 2026-09-03T16:00:00Z
 authors: ryan
-excerpt: Expansion hardware as real objects — a Sega CD under a Mega Drive, a 32X in its slot, a 64DD, a Super Game Boy, a Sufami Turbo — plus live Satellaview broadcasts on PCVR, an event-driven serial link, and a room that loads with a loading screen instead of a freeze.
+excerpt: Expansion hardware as real objects — a Sega CD under a Mega Drive, a 32X in its slot, a 64DD, a Super Game Boy, a Sufami Turbo — plus live Satellaview broadcasts on PCVR, an event-driven serial link, a record player you cue by hand, and foveated rendering working on Quest at last.
 tags:
   - release
 ---
@@ -50,6 +50,22 @@ and save the transmissions you catch to it. The new
 	client on Quest yet.
 </Aside>
 
+### 🎧 A record player
+
+The third audio deck, and the first one with no transport row to press. Drop an LP on the
+platter and **swing the tonearm over by hand** — where you set the needle down is where in
+the album you start. The **33/45 switch** is real, and playing a 33⅓ record at 45 sounds
+exactly as wrong as it should. Put a finger on the spinning record and the pitch follows
+the platter: drag it slow and the note bends down, let go and it glides back up.
+
+See [CD player, tape deck and turntable](/guide/room/music/).
+
+### 👁️ Foveation works
+
+Foveated rendering is finally on for Quest — pixels spent where you are looking, saved at
+the edge of the lens. It needed the **fragment shaders rewritten** to survive variable-rate
+shading on a mobile GPU, which is why it took this long.
+
 ## Minor new features
 
 - **The serial link is event-based**, not polled. Cabling cores together now grabs the
@@ -89,3 +105,4 @@ half-finished and **not meant to be used yet**:
 ## Known issues
 
 - Crashes can still happen when changing scenes. Save your layout before you switch.
+- On Quest, changing a setting in `GRAPHICS` turns foveation off until you restart the app.

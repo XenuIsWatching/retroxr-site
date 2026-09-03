@@ -17,6 +17,18 @@ Under **`GRAPHICS`**:
 - **CPU and GPU levels** — how hard the headset is allowed to work.
 - **Anti-aliasing**, **shadows** and **ambient occlusion**.
 
+### Foveation, on Quest
+
+As of v0.5.0, **foveated rendering works** — the headset spends its pixels where you are
+looking and saves them at the edges of the lens, which is free frame time. Getting there
+meant rewriting fragment shaders that the mobile GPU would not accept under variable-rate
+shading.
+
+:::caution[Changing a graphics setting turns it off until you restart]
+On Quest, altering settings in `GRAPHICS` drops foveation for the rest of the session.
+Restart the app to get it back.
+:::
+
 ### The performance HUD
 
 There is a HUD showing frame timing, memory, scene load and emulation cost. You can mount
