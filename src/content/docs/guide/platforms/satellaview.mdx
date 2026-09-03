@@ -1,0 +1,111 @@
+---
+title: Satellaview
+description: Nintendo's satellite modem for the Super Famicom, the 8M Memory Packs its broadcasts were downloaded onto, and the community service that is still transmitting.
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+In 1995 Nintendo bolted a **satellite modem** to the underside of the Super Famicom.
+St.GIGA broadcast games, magazines and radio into it on a schedule, you downloaded them
+onto an **8M Memory Pack**, and what you had not caught by the end of the slot you had
+missed. The service went dark in 2000, and everything that survives survives because
+somebody wrote it to a pack and kept it.
+
+RetroXR models all three layers of that, as of **v0.5.0**.
+
+## The three pieces
+
+The Satellaview is the object people picture, but it is not the thing you put a game into.
+Three separate objects stack up:
+
+| Piece | What it is | Where it goes |
+| --- | --- | --- |
+| **Satellaview** | The base station — tuner and modem, two lamps, no slot at all | The Super Famicom stands **on** it |
+| **BS-X** | A Super Famicom cartridge carrying the shell program | **Into** the console's cartridge slot |
+| **8M Memory Pack** | The flash medium a broadcast is written to | **Into** the BS-X cartridge |
+
+That layering is the real hardware's, not a simplification. The base station genuinely has
+no mouth on it — it is a receiver — so the media goes in above it. See
+[expansion hardware](/guide/playing/expansion-hardware/) for how a stack is assembled.
+
+<Aside type="note" title="The BS-X runs without the base station">
+	A BS-X cartridge in a bare Super Famicom boots and puts you in the town, exactly as the
+	hardware did. There is simply nothing being broadcast at you. Bolt the base station on
+	when you want the other half.
+</Aside>
+
+## What you need
+
+- **`BS-X.bin`** in `libretro/system/snes9x/` — the shell program the cartridge runs. Until
+  it is installed, the BS-X is not offered in the spawn menu at all. See
+  [BIOS and firmware](/guide/cores/bios/).
+- **snes9x**, which RetroXR selects for you when the stack is built.
+- Your `.bs` files in the `satellaview` folder of your ROM library.
+
+## The lamps mean something
+
+The base station wears **POWER** and **ACCESS**, and both report the machine rather than
+being decoration. POWER follows the console bolted above it. ACCESS is the tuner's own —
+the emulated BS-X flips it while data is moving, snes9x reports that over libretro's LED
+interface, and the lamp lights **because the emulated machine said so**.
+
+New in v0.5.0: the LED interface that carries it went into RetroXR's snes9x fork for
+exactly this.
+
+## 8M Memory Packs
+
+A pack is a **medium, not a game**, and RetroXR treats it as one.
+
+A blank pack is something you had to *buy* — a broadcast needs somewhere to land, and every
+other platform's media arrives as a dump of something that already exists. So the
+Satellaview shelf in `SPAWN` → `Systems` is the one place that can **mint a new one**:
+press **+ New Memory Pack** and a blank, correctly formatted 8 Mbit pack appears in your
+library.
+
+Point at a pack in the room and press `TAB` (or the options button in VR) and you get
+**what is written on it** — the programmes across its eight one-megabit blocks — rather
+than the Saves and Achievements list a game cartridge offers. The image is re-read every
+time you open it, because a pack seated in a running BS-X is being written to while you
+watch.
+
+<Aside type="caution" title="snes9x fixes for this landed in v0.5.0">
+	Saving a download to an 8M pack needed two fixes in RetroXR's snes9x fork: flash pack
+	writing for BS-X, and a bug where the 8 Mbit flash was initialised to the wrong values.
+	An older build will not keep what you catch.
+</Aside>
+
+## Satellaview+ — the broadcast came back
+
+[**Satellaview+**](https://satellaview-plus.com) is a community project that puts a
+scheduled Satellaview broadcast back on the air — a real timetable, running now, in the
+same shape the original service had. Its client keeps a folder of the current
+transmissions on your PC.
+
+That folder is all RetroXR needs, because a broadcast really is a file appearing where the
+emulated tuner looks for it.
+
+<Steps>
+
+1. Run the **Satellaview+ client** on the same PC, and let it fill its `roms/satellaview`
+   folder.
+
+2. **Point RetroXR's sat folder at it**, so the two are looking at the same place — the
+   emulated tuner reads a broadcast straight out of that directory.
+
+3. Build the stack — Satellaview, Super Famicom, BS-X cartridge — and put an **8M Memory
+   Pack** in the cartridge.
+
+4. Power on, walk into the town, and use the satellite terminal to download whatever is
+   being transmitted in this hour's slot. The ACCESS lamp will tell you it is working.
+
+</Steps>
+
+Whatever you catch is written to the pack, and the pack is yours. Miss the slot and it is
+gone, which is the point.
+
+<Aside type="caution" title="PCVR only, for now">
+	This needs the Satellaview+ client running alongside RetroXR, and there is **no in-app
+	client on Quest yet** — a standalone headset has nowhere to run one. On Quest the
+	Satellaview still works; you play the dumps you already have rather than a live
+	broadcast.
+</Aside>
