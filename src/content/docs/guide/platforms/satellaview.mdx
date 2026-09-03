@@ -4,6 +4,10 @@ description: Nintendo's satellite modem for the Super Famicom, the 8M Memory Pac
 ---
 
 import { Aside, Steps } from '@astrojs/starlight/components';
+import Turntable from '../../../../components/Turntable.astro';
+import stackPoster from '../../../../assets/satellaview/stack_poster.png';
+import memoryPackPoster from '../../../../assets/satellaview/memory_pack_poster.png';
+import packContents from '../../../../assets/satellaview/pack_contents.png';
 
 In 1995 Nintendo bolted a **satellite modem** to the underside of the Super Famicom.
 St.GIGA broadcast games, magazines and radio into it on a schedule, you downloaded them
@@ -23,6 +27,13 @@ Three separate objects stack up:
 | **Satellaview** | The base station — tuner and modem, two lamps, no slot at all | The Super Famicom stands **on** it |
 | **BS-X** | A Super Famicom cartridge carrying the shell program | **Into** the console's cartridge slot |
 | **8M Memory Pack** | The flash medium a broadcast is written to | **Into** the BS-X cartridge |
+
+<Turntable
+	src="/video/satellaview/stack.mp4"
+	poster={stackPoster}
+	alt="The assembled Satellaview stack rotating: the base station on the bottom, the Super Famicom standing on it, the BS-X cartridge upright in the console's slot, and an 8M Memory Pack seated in the well in the cartridge's roof."
+	caption="All four layers at once — base station, console, BS-X cartridge, memory pack. The Super Famicom wears the procedural stand-in; it has no modelled shell yet."
+/>
 
 That layering is the real hardware's, not a simplification. The base station genuinely has
 no mouth on it — it is a receiver — so the media goes in above it. See
@@ -74,22 +85,70 @@ exactly this.
 
 A pack is a **medium, not a game**, and RetroXR treats it as one.
 
+![An 8M Memory Pack: a red cartridge shell with a large blank cream label across its face.](../../../../assets/satellaview/memory_pack_poster.png)
+
+### Minting a blank one
+
 A blank pack is something you had to *buy* — a broadcast needs somewhere to land, and every
 other platform's media arrives as a dump of something that already exists. So the
-Satellaview shelf in `SPAWN` → `Systems` is the one place that can **mint a new one**:
-press **+ New Memory Pack** and a blank, correctly formatted 8 Mbit pack appears in your
-library.
+Satellaview shelf is the one place in RetroXR that can **mint a new medium**.
 
-Point at a pack in the room and press `TAB` (or the options button in VR) and you get
-**what is written on it** — the programmes across its eight one-megabit blocks — rather
-than the Saves and Achievements list a game cartridge offers. The image is re-read every
-time you open it, because a pack seated in a running BS-X is being written to while you
-watch.
+Open `SPAWN` → **`Games`**, find **Satellaview**, and the button at the top right of its
+shelf is **+ New Memory Pack**. Press it and a blank, correctly formatted 8 Mbit pack
+appears in your library, ready to receive.
+
+New packs are named for you and simply count up — `MEMORY PACK.bs`, `MEMORY PACK 2.bs`,
+`MEMORY PACK 3.bs` — so mint as many as you want to keep transmissions on separate media.
+They land in `roms/satellaview/` beside everything else, which is where they have to be.
+
+### Reading what is on one
+
+Point at a pack in the room and **click the left thumbstick** (or press `TAB` on desktop)
+and you get **what is written on it** — each programme and the blocks it occupies — rather
+than the Saves and Achievements list a game cartridge offers.
+
+![The pack contents panel for a pack holding two programmes: KANADERU SCORE on block 0, and a Japanese-titled programme on blocks 1-3, with a heading reading 4 of 8 blocks used, 4 free.](../../../../assets/satellaview/pack_contents.png)
+
+A pack is allotted in **eight blocks of one megabit**, and the panel shows which programme
+holds which. The image is re-read every time you open it, because a pack seated in a
+running BS-X is being written to while you watch.
+
+The list is deliberately **read-only** — there is no delete. The block-erase behaviour has
+not been pinned down, and a wrong guess destroys a download that can only be obtained from
+a live broadcast.
 
 <Aside type="caution" title="snes9x fixes for this landed in v0.5.0">
 	Saving a download to an 8M pack needed two fixes in RetroXR's snes9x fork: flash pack
 	writing for BS-X, and a bug where the 8 Mbit flash was initialised to the wrong values.
 	An older build will not keep what you catch.
+</Aside>
+
+## Some programmes need an IPS patch
+
+A few broadcasts cannot start from a dump alone. **BS F-Zero Grand Prix** is the clearest
+case: it was a SoundLink title whose music and timing arrived over the satellite during a
+live event, and with nothing being broadcast it never leaves its opening screen — the CPU
+ends up executing its own ROM header as code. Grand Prix 2, which was not a live event,
+runs untouched.
+
+The Satellaview community's fix is an **IPS patch** that re-enables the in-game music and
+lets START move past that screen. Those patches are not RetroXR's to ship, so it looks for
+one you have put **beside the programme**:
+
+```
+roms/satellaview/BS F-Zero ... .bs     <- your dump, never written to
+roms/satellaview/BS F-Zero ... .ips    <- the patch, dropped in by hand
+```
+
+Match the base name and RetroXR does the rest. Your original is **never modified**: the
+patch is applied to a copy held outside the ROM folder, keyed by a hash of both files, so
+replacing the patch rebuilds it on the next launch. A programme with no `.ips` beside it is
+handed to the core untouched, with no copy made at all.
+
+<Aside type="note" title="Why the copy is not kept in the ROM folder">
+	A second `.bs` there would show up as a second entry on your shelf — and, worse, snes9x
+	resolves its broadcast directory from the loaded file's own folder, so it matters which
+	copy is the one being run.
 </Aside>
 
 ## Satellaview+ — the broadcast came back
