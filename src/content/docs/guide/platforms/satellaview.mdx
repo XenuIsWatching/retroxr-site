@@ -36,11 +36,29 @@ no mouth on it — it is a receiver — so the media goes in above it. See
 
 ## What you need
 
-- **`BS-X.bin`** in `libretro/system/snes9x/` — the shell program the cartridge runs. Until
-  it is installed, the BS-X is not offered in the spawn menu at all. See
-  [BIOS and firmware](/guide/cores/bios/).
 - **snes9x**, which RetroXR selects for you when the stack is built.
 - Your `.bs` files in the `satellaview` folder of your ROM library.
+- **The BS-X shell program**, by either of the two routes below.
+
+### Two ways to get a BS-X
+
+**As firmware.** Put `BS-X.bin` in `libretro/system/snes9x/` and the BS-X appears in the
+spawn menu as a unit you can spawn like any other. Until it is installed, it is not offered
+at all. See [BIOS and firmware](/guide/cores/bios/).
+
+**As a ROM in your library.** Drop a BS-X `.sfc` into the same `satellaview` folder your
+`.bs` files live in — **including an English-translated dump**, which is how most people
+will want to read the town — and spawn it straight from the library. You get the real BS-X
+cartridge, with the well in its roof that a memory pack goes into, not a plain slab.
+
+<Aside type="tip" title="The library wins">
+	If you have both, the dump you can see in your library is the one that gets spawned. It
+	is the copy you chose, and the one whose region and translation you can check by
+	looking.
+</Aside>
+
+Inside the `satellaview` folder the **extension is what separates the two kinds of file**:
+a `.sfc` is the shell, a `.bs` is a memory pack.
 
 ## The lamps mean something
 
@@ -93,7 +111,8 @@ emulated tuner looks for it.
    emulated tuner reads a broadcast straight out of that directory.
 
 3. Build the stack — Satellaview, Super Famicom, BS-X cartridge — and put an **8M Memory
-   Pack** in the cartridge.
+   Pack** in the cartridge. A translated BS-X `.sfc` sitting in that same folder works here
+   exactly as the firmware copy does, and is the easier one to navigate.
 
 4. Power on, walk into the town, and use the satellite terminal to download whatever is
    being transmitted in this hour's slot. The ACCESS lamp will tell you it is working.
