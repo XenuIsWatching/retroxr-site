@@ -119,6 +119,16 @@ emulated tuner looks for it.
 
 </Steps>
 
+<Aside type="caution" title="The broadcast files go in the root of the folder, flat">
+	snes9x looks for `BSX<hhhh>-<d>.bin` **directly beside the ROM it loaded** — it joins the
+	name onto that one directory and nothing else. So the transmission files have to sit in
+	the root of `roms/satellaview/`, alongside your BS-X `.sfc` and your `.bs` packs.
+
+	Leave them in the dated and hourly subfolders the service publishes them under and the
+	BS-X finds nothing, boots the town and reports **no signal** — which looks exactly like a
+	slot with nothing being broadcast in it.
+</Aside>
+
 Whatever you catch is written to the pack, and the pack is yours. Miss the slot and it is
 gone, which is the point.
 
