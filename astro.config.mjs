@@ -17,7 +17,12 @@ export default defineConfig({
 				'A VR retro-gaming room where the hardware is real — pick up a console, ' +
 				'run a cable to the TV, push the cartridge in and hit power. Powered by libretro.',
 			logo: {
-				src: './src/assets/retroxr-lockup-header.svg',
+				// Two files, not one: the wordmark's "Retro" is near-white and vanished
+				// into the light theme's own near-white nav bar. Starlight swaps these
+				// on the site's theme, which a media query inside a single SVG cannot
+				// do -- it is loaded as an <img> and cannot see the page's data-theme.
+				light: './src/assets/retroxr-lockup-header-light.svg',
+				dark: './src/assets/retroxr-lockup-header.svg',
 				alt: 'RetroXR',
 				replacesTitle: true,
 			},
