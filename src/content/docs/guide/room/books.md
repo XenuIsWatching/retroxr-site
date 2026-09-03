@@ -46,7 +46,7 @@ squeeze **grip** to flip.
 
 ## Book settings
 
-Point at the book and press the **menu button** for a small panel with two controls:
+Point at the book and **click the left thumbstick** for a small panel with two controls:
 
 - **Size** — 0.5× to 2.5×, for everything from a pocket manual to a broadsheet.
 - **Half pages** — splits a scanned two-page spread down the middle, so a magazine scanned

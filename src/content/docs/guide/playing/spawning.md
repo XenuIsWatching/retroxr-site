@@ -8,7 +8,7 @@ sidebar:
 Everything in the room got there because you spawned it. The spawn menu is where that
 happens.
 
-- **In VR** — press the **Menu button** on your **left** controller.
+- **In VR** — **press your left thumbstick in**.
 - **On desktop** — press `Tab`.
 
 The panel appears in front of you, facing the way you were looking. Point at it and pull

@@ -51,7 +51,7 @@ Inserting a disc never starts playback on its own — you press play, like you w
 | `UP` `DOWN` `LEFT` `RIGHT` `SEL` | Navigate the disc's own menus |
 | `LANG` `SUB` | Cycle audio and subtitle tracks |
 
-Point at the player and press the **menu button** to open a floating panel that picks
+Point at the player and **click the left thumbstick** to open a floating panel that picks
 audio and subtitle tracks by name, rather than cycling blindly through them.
 
 ## From across the room

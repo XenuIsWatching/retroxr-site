@@ -12,9 +12,8 @@ yourself. It takes about ten minutes, most of which is waiting for a core to dow
 
 Everything starts from the spawn menu.
 
-- **In VR** — press the **Menu button** on your **left** controller (the small ☰ button
-  under the thumbstick). The panel appears in front of you, facing wherever you were
-  looking.
+- **In VR** — **press your left thumbstick in**, like a button. The panel appears in front
+  of you, facing wherever you were looking.
 - **On desktop** — press `Tab`.
 
 Along the top are the sections you will use: `SPAWN`, `CORES`, `CONTROLS`, `OPTIONS`,

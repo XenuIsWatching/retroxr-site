@@ -11,7 +11,7 @@ sidebar:
 | --- | --- |
 | **Grip** | Grab whatever your hand is near — an object, a plug, a cartridge |
 | **Trigger** | Click the menu, grab at a distance, drag a page |
-| **Menu button** *(left)* | Open and close the spawn menu |
+| **Thumbstick click** *(left)* | Open and close the spawn menu — or, pointed at an object, open its panel |
 | **Thumbstick** | Move, and turn |
 
 Let go of grip and the thing in your hand drops. Objects have weight — they fall, roll and
@@ -23,7 +23,9 @@ Point at an object across the room and use the trigger to grab it from where you
 rather than walking over. The same ray clicks the menu panel.
 
 Pointing at certain objects — a book, the DVD player, a machine with settings — and
-pressing the **menu button** opens a small panel of options for that specific thing.
+**clicking the left thumbstick** opens a small panel of options for that specific thing.
+It is the same press that opens the spawn menu: what you are pointing at decides which
+you get.
 
 ## Moving
 
