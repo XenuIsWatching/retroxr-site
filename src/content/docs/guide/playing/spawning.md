@@ -60,7 +60,7 @@ are animated away rather than simply disappearing.
 
 **Controllers** — pads, peripherals and the receivers they plug into.
 
-Consoles that grew add-ons — a Mega-CD, a 32X, a 64DD, a Super Game Boy — spawn their
+Consoles that grew add-ons — a Sega CD, a 32X, a 64DD, a Super Game Boy — spawn their
 expansion from the **Systems** grid, filed under the system whose media it takes. See
 [expansion hardware](/guide/playing/expansion-hardware/).
 
