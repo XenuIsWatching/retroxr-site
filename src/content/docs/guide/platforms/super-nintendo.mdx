@@ -1,0 +1,111 @@
+---
+title: Super Nintendo
+description: The Super Nintendo and Super Famicom in RetroXR, and the two Super Game Boy adapters that let it play Game Boy cartridges on your television.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The Super Nintendo — the Super Famicom in Japan — takes cartridges from your
+`roms/super_nes` folder and plays them like any other console here. What makes it worth a
+page of its own is what goes **into** its cartridge slot.
+
+Three of RetroXR's [expansion units](/guide/playing/expansion-hardware/) are Super Famicom
+cartridges, and each turns the machine into something else:
+
+- The **Super Game Boy** and **Super Game Boy 2**, below.
+- The **BS-X**, which puts you in the Satellaview's town — see
+  [Satellaview](/guide/platforms/satellaview/).
+- The **Sufami Turbo**, which takes two small cartridges at once — see
+  [Sufami Turbo](/guide/platforms/sufami-turbo/).
+
+<Aside type="note" title="The console wears a stand-in">
+	The Super Nintendo has no modelled shell yet — it spawns as the procedural box. The
+	adapters, their slots and their cartridges are all real objects regardless.
+</Aside>
+
+## The Super Game Boy
+
+A Super Game Boy is a Super Famicom cartridge with a **Game Boy slot in its roof**. Push it
+into the console, drop a Game Boy cartridge into it, and the handheld's game runs on your
+television inside a border.
+
+You spawn it from the **Super Nintendo** card in `SPAWN` → `Games`, not from the Game Boy's
+— it is a Super Famicom cartridge, even though what it plays is a Game Boy game. The Game
+Boy cartridge you put in it comes from your ordinary Game Boy library; there is no separate
+folder and nothing new to import.
+
+### It needs bsnes, and RetroXR switches for you
+
+**snes9x cannot run a Super Game Boy at any price.** Its source defines a Super Game Boy
+game type right beside the BS-X and Sufami Turbo ones, which makes it look supported, but
+the constant is vestigial: the adapter is not in the subsystem list the core actually
+advertises, and a load attempt is refused.
+
+So this stack pins **bsnes**. A Super Famicom is a snes9x machine in RetroXR until one of
+these goes into it, at which point the stack's own core wins and RetroXR switches — and
+downloads bsnes if you do not have it.
+
+### The BIOS is the adapter's own cartridge
+
+The program a Super Game Boy runs is not in the game you put into it — it is the adapter's
+own ROM, and you supply it:
+
+| Unit | File | Goes in |
+| --- | --- | --- |
+| **Super Game Boy** | `SGB1.sfc` | `libretro/system/bsnes/` |
+| **Super Game Boy 2** | `SGB2.sfc` | `libretro/system/bsnes/` |
+
+Each unit is gated on **its own** file, so if you have one dump you are offered one
+adapter. Until the file is there, that adapter is not in the menu at all.
+
+<Aside type="tip" title="bsnes does not want the boot ROMs">
+	higan and bsnes-mercury ask for `sgb1.boot.rom` and `sgb2.boot.rom`. bsnes has both
+	compiled in, so the two `.sfc` dumps are all you need here.
+</Aside>
+
+### SGB1 and SGB2 are different machines
+
+This is not a reskin. The original derives its clock from the SNES and runs the Game Boy
+about **2.4% fast**; the 1998 revision carries its own crystal and runs at true handheld
+speed. Because the cartridge *is* the program the console runs, handing the core a
+different dump is the whole of the difference — a core that emulated the adapter internally
+would have needed an option toggled instead.
+
+<Aside type="caution" title="Which one you get is decided by the dump, not the filename">
+	bsnes reads the SNES header title at `0x7FC0` — `Super GAMEBOY` or `Super GAMEBOY2` —
+	matches it against its own board database, and takes the oscillator from the board that
+	matched. The filenames above are only where **RetroXR looks**.
+
+	So an SGB1 dump installed as `SGB2.sfc` gives you two adapters that are both an SGB1,
+	and the spawn gate will not catch it — a checksum mismatch is accepted deliberately. The
+	`BIOS / Extras` view is where that verdict shows.
+</Aside>
+
+### What it looks like when it is working
+
+A Game Boy frame is **160×144**. A Super Game Boy frame is **256×224**, because in SGB mode
+the SNES is the machine doing the drawing. If your picture is the small one, the adapter is
+not in play.
+
+Measured against Donkey Kong (SGB Enhanced) with the No-Intro `SGB1.sfc`: 1596 frames at
+256×224, with the arcade-cabinet border drawn in colour around the Game Boy screen.
+
+The border arrives when the game sends its SGB packets, which for Donkey Kong is somewhere
+past ten seconds — so a blank surround early on is not a fault. A game with no SGB support
+at all still gets the adapter's default frame.
+
+## Where Super Game Boy saves go
+
+The battery is in the **Game Boy cartridge**, not in the adapter, so the save belongs to the
+game you put in — which is what RetroXR models.
+
+<Aside type="caution" title="bsnes keeps these saves somewhere of its own">
+	bsnes does not expose save RAM through the usual libretro call at all; it writes through
+	its own file layer to `libretro/save/bsnes/<rom name>.srm`.
+
+	Two consequences. The save is keyed to the ROM's **filename** rather than to the
+	cartridge the way every other core's is, so renaming a ROM orphans its save and two
+	copies under different names keep separate ones. And the Saves panel, save backup and
+	netplay's SRAM transfer all read the other path, so a Super Game Boy save is not yet
+	visible to them. Not reconciled.
+</Aside>
