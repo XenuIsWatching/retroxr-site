@@ -28,10 +28,16 @@ cartridge-plus-disk pairing. Hence both.
 
 ## Playing a cartridge with its expansion disk
 
-Put the cartridge in the console and the disk in the drive. That is the whole of it —
+Put the ordinary cartridge into the **console's own slot**, on top of the stack, and the
+expansion disk into the **drive underneath**. That is the whole of it — you never name or
+rename anything.
+
 RetroXR hands the core **both at once**, through mupen64plus_next's `ndd` subsystem, in the
-order the core asks for them (disk first, cartridge second, which is the reverse of which
-one a lone machine would boot from).
+order the core asks for them: disk first, cartridge second, which is the reverse of which
+one a lone machine would boot from.
+
+So for the worked example: the Japanese **F-Zero X** cartridge goes in the console, and the
+**F-Zero X Expansion Kit** disk goes in the drive.
 
 <Aside type="caution" title="The filename convention is the core's fallback, not the way in">
 	mupen64plus_next also supports a much older workaround: on an ordinary single-file load
