@@ -93,7 +93,13 @@ export default defineConfig({
 							],
 						},
 						'guide/platforms/sega-genesis',
-						'guide/platforms/nintendo-64',
+						{
+							label: 'Nintendo 64',
+							items: [
+								'guide/platforms/nintendo-64',
+								'guide/platforms/nintendo-64dd',
+							],
+						},
 						'guide/platforms/playstation',
 						'guide/platforms/atari-2600',
 						'guide/platforms/ds-and-3ds',

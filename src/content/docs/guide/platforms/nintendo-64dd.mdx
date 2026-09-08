@@ -1,0 +1,89 @@
+---
+title: Nintendo 64DD
+description: The magnetic disk drive that bolts under a Nintendo 64 — which core runs which half of the library, the IPL you have to supply, and how to tell whether the disk actually attached.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The 64DD is the magnetic disk drive that only ever shipped in Japan, and the reason there is
+a hatch in the Nintendo 64's floor. It is **taller than the console it carries**: the N64
+stands on top of it, and a cartridge can be in the console while a disk is in the drive.
+
+Put your disks in `roms/nintendo_64dd`. See
+[expansion hardware](/guide/playing/expansion-hardware/) for how to stack the two.
+
+## Two cores, two halves of the library
+
+**Neither N64 core can do all of the 64DD**, so which one runs depends on what you are
+playing. RetroXR picks for you; this is what it is picking between.
+
+| What you are playing | Core |
+| --- | --- |
+| **Disk only** — Mario Artist, Kyojin no Doshin | **parallel_n64** |
+| **Cartridge + expansion disk** — F-Zero X Expansion Kit | **mupen64plus_next** |
+
+mupen64plus_next **refuses a bare `.ndd`** outright — it does not list the extension at all,
+so you get "failed to load ROM" and nothing rendered. parallel_n64, in turn, cannot do the
+cartridge-plus-disk pairing. Hence both.
+
+## Playing a cartridge with its expansion disk
+
+Put the cartridge in the console and the disk in the drive. That is the whole of it —
+RetroXR hands the core **both at once**, through mupen64plus_next's `ndd` subsystem, in the
+order the core asks for them (disk first, cartridge second, which is the reverse of which
+one a lone machine would boot from).
+
+<Aside type="caution" title="The filename convention is the core's fallback, not the way in">
+	mupen64plus_next also supports a much older workaround: on an ordinary single-file load
+	it probes for a disk sitting **beside the cartridge**, named after it with `.ndd`
+	appended — `F-Zero X (Japan).z64` next to `F-Zero X (Japan).z64.ndd`.
+
+	That convention cannot express a disk you put into a drive in a room, so RetroXR does
+	not rely on it. It only matters if the subsystem load is unavailable — an old core
+	bridge, say — in which case RetroXR logs a warning saying the disk in the drive **will
+	be ignored** and the cartridge will boot as though the drive were empty.
+</Aside>
+
+<Aside type="tip" title="The extension is not the format">
+	`.ndd` is only a name. The disk format is detected from the file's content and size, so
+	a MAME or D64 dump renamed to `.ndd` loads exactly the same way.
+</Aside>
+
+## The IPL is mandatory
+
+The 64DD has its own boot ROM, and you have to supply it: the **Japanese retail IPL**, 4 MiB,
+md5 `8d3d9f294b6e174bc7b1d2fd1c727530`. Where it goes depends on which core is running, so
+install both:
+
+| Core | Path |
+| --- | --- |
+| parallel_n64 | `system/parallel_n64/64DD_IPL.bin` |
+| mupen64plus_next | `system/mupen64plus_next/Mupen64plus/IPL.n64` |
+
+<Aside type="caution" title="Both cores declare it optional. It is not.">
+	The `.info` files mark the IPL optional, and that flag is simply wrong here — believe the
+	measurement, not the declaration.
+
+	Without it, parallel_n64 logs "Disabling 64DD" and then **the process dies**: exit 127,
+	with no crash handler, which looks like a hang rather than a fault. If a 64DD launch
+	appears to freeze RetroXR, the missing IPL is the first thing to check.
+</Aside>
+
+## Telling whether the disk actually attached
+
+Nothing is printed either way, so **the game's own screen is the only oracle** — and a
+cartridge that merely booted looks exactly like a success until you read it.
+
+The worked example is F-Zero X. On its own, the title screen reads `(c) 1998 Nintendo`.
+With the Expansion Kit attached, the same screen gains a **64DD** line and reads
+`(c) 1998, 1999`. Run the cartridge alone once so you know what the negative looks like.
+
+## Where disk saves go
+
+The two cores disagree, and it is worth knowing which one you are on.
+
+**mupen64plus_next** writes beside the disk, as `<diskname>.disk_save`, and repoints writes
+at that file so your original dump is never modified. The consequence to design around: if
+your ROM folder is **read-only**, 64DD saves fail silently with only a warning.
+
+**parallel_n64** instead writes a **62 MB save per disk** into its own system folder.
