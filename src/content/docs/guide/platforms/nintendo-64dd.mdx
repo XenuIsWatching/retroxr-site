@@ -29,8 +29,7 @@ cartridge-plus-disk pairing. Hence both.
 ## Playing a cartridge with its expansion disk
 
 Put the ordinary cartridge into the **console's own slot**, on top of the stack, and the
-expansion disk into the **drive underneath**. That is the whole of it — you never name or
-rename anything.
+expansion disk into the **drive underneath**. That is the whole of it.
 
 RetroXR hands the core **both at once**, through mupen64plus_next's `ndd` subsystem, in the
 order the core asks for them: disk first, cartridge second, which is the reverse of which
@@ -39,20 +38,9 @@ one a lone machine would boot from.
 So for the worked example: the Japanese **F-Zero X** cartridge goes in the console, and the
 **F-Zero X Expansion Kit** disk goes in the drive.
 
-<Aside type="caution" title="The filename convention is the core's fallback, not the way in">
-	mupen64plus_next also supports a much older workaround: on an ordinary single-file load
-	it probes for a disk sitting **beside the cartridge**, named after it with `.ndd`
-	appended — `F-Zero X (Japan).z64` next to `F-Zero X (Japan).z64.ndd`.
-
-	That convention cannot express a disk you put into a drive in a room, so RetroXR does
-	not rely on it. It only matters if the subsystem load is unavailable — an old core
-	bridge, say — in which case RetroXR logs a warning saying the disk in the drive **will
-	be ignored** and the cartridge will boot as though the drive were empty.
-</Aside>
-
-<Aside type="tip" title="The extension is not the format">
-	`.ndd` is only a name. The disk format is detected from the file's content and size, so
-	a MAME or D64 dump renamed to `.ndd` loads exactly the same way.
+<Aside type="tip" title="Any of the usual dump formats work">
+	The disk format is detected from the file's content and size rather than from its
+	extension, so MAME and D64 dumps load just as well as anything else.
 </Aside>
 
 ## The IPL is mandatory
