@@ -100,7 +100,13 @@ export default defineConfig({
 								'guide/platforms/nintendo-64dd',
 							],
 						},
-						'guide/platforms/game-boy-advance',
+						{
+							label: 'Game Boy Advance',
+							items: [
+								'guide/platforms/game-boy-advance',
+								'guide/platforms/e-reader',
+							],
+						},
 						'guide/platforms/playstation',
 						'guide/platforms/atari-2600',
 						'guide/platforms/ds-and-3ds',
