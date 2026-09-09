@@ -1,6 +1,6 @@
 ---
 title: Nintendo 64
-description: The Nintendo 64 in RetroXR, and the 64DD disk drive that bolts underneath it.
+description: The Nintendo 64 in RetroXR — its controller and the three paks that go into the back of one, the Expansion Pak, and the 64DD underneath.
 ---
 
 import { Aside } from '@astrojs/starlight/components';
@@ -13,6 +13,72 @@ that only ever shipped in Japan, and the reason the hatch in the console's floor
 The drive is taller than the console it carries, so the N64 stands on top of it, and a
 cartridge can be in the console while a disk is in the drive.
 
+## The controller, and the port in its back
+
+New in **v0.6.0**: a modelled N64 controller, with the **expansion port** in its underside
+that the console's peripherals plug into. Spawn a pak, push it into the back of the pad, and
+the machine is told what is in there — RetroXR sets the running core's pak option for that
+port to match.
+
+Three paks go in it, and only one fits at a time, exactly as on the hardware.
+
+| Pak | What it does |
+| --- | --- |
+| **Controller Pak** | 32 KiB of save storage, counted in pages |
+| **Rumble Pak** | Force feedback in games that support it |
+| **Transfer Pak** | Takes a Game Boy cartridge, for games that read one |
+
+<Aside type="note" title="A pak works on a real gamepad too">
+	The expansion port is not only on the virtual controller. If you play on a physical pad,
+	the receiver it connects through has a port of its own — otherwise the paks would exist
+	and the one socket that took them would be on a controller you were not holding.
+</Aside>
+
+<Aside type="note" title="The models are placeholders">
+	The controller is modelled; the three paks currently wear placeholder shapes. They seat,
+	work and save regardless.
+</Aside>
+
+## Controller Pak saves
+
+A Controller Pak is a **memory card that lives in a controller**, and RetroXR treats it as
+one: point at a seated pak and open its panel and you get the notes written on it, counted
+in **pages** the way every N64 game counts them. A pak has 123 usable pages — the first
+five hold the ID block, the index, its backup and the note table.
+
+Each pak keeps its own file, named for the pak rather than for a game or a slot, so a pak
+carries its notes between controllers and between machines. Its saves are stored per-pak as
+a `.mpk` image.
+
+<Aside type="caution" title="A pak whose file has gone missing runs unbacked">
+	Only a pak this session created will have its image file made for it. If a pak comes
+	back from a saved room and its file is gone, it deliberately runs **without backing**
+	rather than silently starting a fresh blank one.
+
+	That is on purpose: a blank pak where your notes used to be looks exactly like a wipe,
+	and would become one the moment a game wrote to it.
+</Aside>
+
+## Transfer Pak saves
+
+The Transfer Pak takes a **Game Boy cartridge**, which is what Pokémon Stadium and friends
+read. Socket a Game Boy cart into the pak and the console gets both halves: the cartridge's
+ROM, and its save.
+
+The important part is that **the save is the Game Boy cartridge's own**, kept exactly where
+that cartridge's save is always kept. Play the cart in a Game Boy, carry it to the Transfer
+Pak, and it is the same save — which is what the hardware did, and the whole point of the
+accessory.
+
+## The Expansion Pak
+
+The N64's memory expansion goes in the console itself, under the lid on top, replacing the
+Jumper Pak that ships there. Both are in RetroXR as of v0.6.0.
+
+Fitting the Expansion Pak **sets the core option for you**, so a game that wants the extra
+memory gets it and one that does not is unaffected. There is nothing to configure — the
+state of the console is the setting.
+
 <Aside type="note" title="The console wears a stand-in">
-	The Nintendo 64 has no modelled shell yet — it spawns as the procedural box.
+	The Nintendo 64 has a new primitive model as of v0.6.0, but not a modelled shell.
 </Aside>

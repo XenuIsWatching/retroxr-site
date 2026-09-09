@@ -1,0 +1,74 @@
+---
+title: 'RetroXR v0.6.0: cards you swipe, paks you plug in'
+date: 2026-09-09T20:00:00Z
+authors: ryan
+excerpt: The GBA Card e-Reader, with printed cards you physically slide through the slot — and a modelled N64 controller with its Controller, Rumble and Transfer Paks, plus the Expansion Pak, the FM Sound Unit and the Power Base Converter.
+tags:
+  - release
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+**[Full changelog](https://github.com/XenuIsWatching/RetroXR/compare/v0.5.1...v0.6.0)** ·
+[Download](/download/) ·
+[SideQuest](https://sidequestvr.com/app/61366/retroxr) ·
+[Discord](https://discord.gg/mdjdBDTdW)
+
+## Major new features
+
+### 🃏 The GBA e-Reader
+
+Nintendo printed **dotcodes along the edges of trading cards** — whole small games, NES
+titles, extra levels for Super Mario Advance 4 — and you swiped the card through a scanner
+plugged into your Game Boy Advance.
+
+v0.6.0 does that as a gesture. Push the reader into the handheld, pick up a card, and
+**slide it through the slit in the cartridge's roof**, dotcode edge first. There is no bay
+and nothing to seat — a card that could be seated would be caught half way through a swipe.
+
+All three revisions are here — Card e-Reader, Card e-Reader+ and the USA e-Reader — and
+they are not interchangeable, because cards are region-locked and a reader answers a
+foreign card with its own Region Error screen.
+
+<Aside type="caution" title="Your cards must carry their No-Intro names">
+	A card is one or two `.raw` strips, and the strips are paired **by filename** — which
+	edge a strip belongs on is recorded nowhere in the file itself. Keep the No-Intro forms
+	(`(Strip 1)`/`(Strip 2)`, or `(Long Strip)`/`(Short Strip)`) or a two-strip card is
+	silently split into two half-cards.
+</Aside>
+
+Full detail, including where the reader's own dump goes, on the new
+[Game Boy Advance](/guide/platforms/game-boy-advance/) page.
+
+### 🎮 An N64 controller, and the paks that go in it
+
+The Nintendo 64 got a modelled controller — and, more to the point, the **expansion port in
+its back**. Spawn a pak, push it in, and the core is told what is there:
+
+- **Controller Pak** — 32 KiB of saves, counted in pages like every N64 game counts them.
+- **Rumble Pak** — force feedback, in the games that support it.
+- **Transfer Pak** — socket a **Game Boy cartridge** into it for the games that read one.
+
+Two things about saves are worth knowing. A Controller Pak keeps **its own file**, so a pak
+carries its notes between controllers and machines rather than belonging to a game or a
+slot. And a Transfer Pak's Game Boy save is the **cartridge's own** — play the cart in a
+Game Boy, carry it to the Transfer Pak, same save, exactly as the hardware did.
+
+The port is on the pad *receiver* as well, so a player on a real gamepad can use paks too.
+
+See [Nintendo 64](/guide/platforms/nintendo-64/).
+
+## Minor new features
+
+- **The Expansion Pak** goes into the console, replacing the Jumper Pak, and **sets the
+  core option for you** — the state of the machine is the setting. The N64 also has a new
+  primitive model.
+- **The FM Sound Unit** attaches to a Master System for the expanded soundtrack a number of
+  Japanese releases shipped with, again setting the core options itself.
+- **The Power Base Converter** goes into a Genesis and plays Master System cartridges. See
+  [Sega Genesis](/guide/platforms/sega-genesis/).
+
+## Bug fixes
+
+A Godot engine deadlock during the loading screen is fixed, along with a long tail of
+smaller things.
